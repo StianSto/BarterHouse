@@ -1,5 +1,8 @@
 /node_modules
-.vscode
+.vscode/*
+!.vscode/settings.json.default
 .DS_Store
 /dist
+/src/dist
 .env
+.eslintcache
