@@ -1,0 +1,37 @@
+{
+  "name": "barterhouse",
+  "version": "0.0.1",
+  "description": "BarterHouse is an online auctioning website that focuses on the trading aspect of auctioning. it is colorful and inviting and easy to use. this website was made as a project durign my time at Noroff",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+		"watch": "sass --watch src/scss:dist/css & npm run dev",
+		"dev": "vite",
+    "build": "vite build",
+    "preview": "npm run build && vite preview"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/StianSto/BarterHouse.git"
+  },
+  "keywords": [
+    "auction",
+    "trading",
+    "social"
+  ],
+  "author": "Stian Stordal <stordalstian@gmail.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/StianSto/BarterHouse/issues"
+  },
+  "homepage": "https://github.com/StianSto/BarterHouse#readme",
+  "devDependencies": {
+    "eslint": "^8.33.0",
+    "prettier": "^2.8.3",
+    "sass": "^1.58.0",
+    "vite": "^4.1.1"
+  },
+  "dependencies": {
+    "bootstrap": "^5.2.3"
+  }
+}
