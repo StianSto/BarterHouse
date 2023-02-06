@@ -2,7 +2,8 @@
 @import '../../node_modules/bootstrap/scss/functions';
 
 // 2. Include any default variable overrides here
-
+@import './abstracts/';
+@import './base/';
 // 3. Include remainder of required Bootstrap stylesheets
 @import '../../node_modules/bootstrap/scss/bootstrap';
 
@@ -10,3 +11,13 @@
 @import '../../node_modules/bootstrap/scss/utilities/api';
 
 // 5. Add additional custom code here
+.hero {
+  background: $primary;
+  background: linear-gradient(
+    128deg,
+    rgba(208, 49, 79, 1) 0%,
+    rgba(226, 94, 119, 1) 30%,
+    rgba(232, 86, 113, 1) 67%,
+    rgba(107, 22, 38, 1) 120%
+  );
+}

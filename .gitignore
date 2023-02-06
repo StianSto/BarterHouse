@@ -1,6 +1,6 @@
 /node_modules
 .vscode/*
-!.vscode/settings.json.default
+!.vscode/settings.json
 .DS_Store
 /dist
 /src/dist
