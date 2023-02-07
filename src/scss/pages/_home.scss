@@ -1,4 +1,4 @@
-.hero {
+#hero {
   background: $primary;
   background: linear-gradient(
     128deg,
@@ -7,4 +7,38 @@
     rgba(232, 86, 113, 1) 67%,
     rgba(107, 22, 38, 1) 120%
   );
+  min-height: 60vmin;
+  max-height: 400px;
+}
+
+@media screen and (min-width: 500px) {
+  #hero {
+    background: url('../../assets/images/hero-background-items.png'),
+      linear-gradient(
+        128deg,
+        rgba(208, 49, 79, 1) 0%,
+        rgba(226, 94, 119, 1) 30%,
+        rgba(232, 86, 113, 1) 67%,
+        rgba(107, 22, 38, 1) 120%
+      );
+    background-repeat: no-repeat;
+    background-position: 350% 30%;
+    background-size: 90%, 100%;
+  }
+}
+
+@media screen and (min-width: 900px) {
+  #hero {
+    background: url('../../assets/images/hero-background-items.png'),
+      linear-gradient(
+        128deg,
+        rgba(208, 49, 79, 1) 0%,
+        rgba(226, 94, 119, 1) 30%,
+        rgba(232, 86, 113, 1) 67%,
+        rgba(107, 22, 38, 1) 120%
+      );
+    background-repeat: no-repeat;
+    background-position: 120% 30%;
+    background-size: 60%, 100%;
+  }
 }
