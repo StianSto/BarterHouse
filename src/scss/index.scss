@@ -4,6 +4,11 @@
 // 2. Include any default variable overrides here
 @import './abstracts/';
 @import './base/';
+@import './components/';
+@import './layout/';
+@import './pages/';
+@import './themes/';
+@import './vendors/';
 // 3. Include remainder of required Bootstrap stylesheets
 @import '../../node_modules/bootstrap/scss/bootstrap';
 
