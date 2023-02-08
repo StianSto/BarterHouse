@@ -20,13 +20,14 @@
 }
 
 nav {
+  min-height: 80px;
   & .profile-img {
     width: 50px;
     aspect-ratio: 1;
   }
 
   .nav-btn {
-    height: 60px;
+    min-height: 60px;
 
     & a {
       height: 60px;

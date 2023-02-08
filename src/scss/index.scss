@@ -30,3 +30,26 @@
     background-color: transparent !important;
   }
 }
+
+.btn-sortby {
+  &-full {
+    background-image: url('../assets/icons/sort-big.svg');
+    background-size: calc(100% - 0.5em);
+  }
+  &-grid {
+    background-image: url('../assets/icons/sort-grid.svg');
+    background-size: calc(100% - 1em);
+  }
+  background-color: $white;
+  aspect-ratio: 1;
+  width: 50px;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+#quickAccess {
+  & *:checked + .btn {
+    background-color: $info !important;
+    color: color-contrast($info);
+  }
+}
