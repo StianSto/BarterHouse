@@ -12,10 +12,10 @@ function productCardsSmall() {
   return clone;
 }
 
-for (let index = 0; index < 6; index++) {
+for (let index = 0; index < 11; index++) {
   const clone = productCardsSmall();
 
-  const quickAccessGrid = document.querySelector('#quickAccessGrid > .row');
+  const quickAccessGrid = document.querySelector('#listingsContainer > .row');
   quickAccessGrid.appendChild(clone);
 }
 
