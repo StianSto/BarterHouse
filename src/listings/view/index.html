@@ -17,9 +17,9 @@
   </head>
   <body>
     <header>
-      <nav class="navbar navbar-expand-lg bg-white p-md-0 shadow">
-        <div class="container-fluid mw-lg p-0">
-          <a class="navbar-brand ff-brand fs-1 ps-4 py-md-0" href="#"
+      <nav class="navbar navbar-expand-lg bg-white p-0 m-0 shadow">
+        <div class="container-fluid mw-lg pt-2 px-0">
+          <a class="navbar-brand ff-brand fs-1 p-4 py-3" href="#"
             ><span class="text-secondary ff-brand fw-light">Barter</span
             ><span class="text-primary">House</span></a
           >
@@ -111,8 +111,8 @@
       </nav>
     </header>
 
-    <div id="root" class="mx-auto px-0">
-      <section id="listingPitch" class="container mt-5 mw-lg px-4">
+    <div id="root" class="mx-auto mw-lg px-4">
+      <section id="listingPitch" class="container mt-5">
         <div class="row gx-3 flex-column flex-md-row">
           <h1 class="mt-4 mb-3 display-5">Title of Listing</h1>
           <div class="row col-12 col-md-5 flex-md-column">
@@ -155,7 +155,7 @@
             <div class="row align-items-center">
               <img
                 src="../../assets/images/irene-kredenets-KStSiM1UvPw-unsplash.jpg"
-                style="aspect-ratio: 1; width: 100px;"
+                style="aspect-ratio: 1; width: 100px"
                 class="rounded-circle p-3"
                 alt=""
               />
@@ -216,6 +216,7 @@
                     step="1"
                     class="form-control border-start-rounded ps-4"
                     name=""
+                    min="0"
                     id="placeBidValue"
                     aria-describedby="helpId"
                     placeholder="place a bid here"
@@ -223,7 +224,9 @@
                   <small> funds available: $120 </small>
                 </div>
                 <div class="col-6 d-flex align-items-center">
-                  <button class="btn btn-secondary text-white py-2 px-4">
+                  <button
+                    class="btn btn-secondary text-white py-2 px-4 ms-auto"
+                  >
                     Place Bid
                   </button>
                 </div>
@@ -232,51 +235,138 @@
           </div>
         </div>
       </section>
-			<section id="listingDetails">
-				
-			</section>
-    </div>
-  </body>
-
-  <template id="productCardSmall">
-    <div class="col">
-      <div class="card p-0 h-100 justify-content-between">
-        <div>
-          <img
-            src="../assets/images/irene-kredenets-KStSiM1UvPw-unsplash.jpg"
-            class="listing-img | img-fluid rounded-top bg-light w-100"
-            style="aspect-ratio: 5 / 4; object-fit: cover"
-            alt="Card title"
-          />
+      <section id="listingDetails" class="container mt-5">
+        <div class="btn-group w-100" id="listingDetailsOptions">
+          <button
+            class="btn btn-outline-dark active"
+            data-bs-toggle="collapse"
+            data-bs-target="#listingDetailsDescription"
+            aria-expanded="false"
+            aria-controls="listingDetailsDescription"
+          >
+            Description
+          </button>
+          <button
+            class="btn btn-outline-dark"
+            data-bs-toggle="collapse"
+            data-bs-target="#listingDetailsHistory"
+            aria-expanded="false"
+            aria-controls="listingDetailsHistory"
+          >
+            History
+          </button>
         </div>
-        <div class="d-flex justify-content-between h-100">
-          <div class="card-body">
-            <h3 class="card-title fs-4">Card title</h3>
-            <p class="text-primary small">
-              <i class="fa fa-clock me-1"></i>
-              2 days left
+
+        <div
+          class="collapse show"
+          id="listingDetailsDescription"
+          data-bs-parent="#listingDetails"
+        >
+          <div
+            class="p-4 p-md-5 border rounded-2 mt-2"
+            style="height: 300px; overflow-y: scroll"
+          >
+            <p>
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Eveniet
+              at possimus odio optio consectetur soluta doloribus neque? Illo
+              sequi omnis quis quam nobis commodi est saepe, rerum eum odio
+              necessitatibus porro blanditiis asperiores facilis minima qui
+              aliquam, velit sunt consequatur obcaecati dolorum ipsa at eos
+              incidunt? Quidem, debitis quasi. Quisquam dolor voluptate
+              assumenda labore illum, corporis minima quibusdam provident
+              commodi in, laudantium reprehenderit voluptatem necessitatibus
+              veritatis saepe quis. Eveniet, voluptatibus? Quis, totam nemo.
+              Autem perferendis quam quo ab tempore voluptatum. Praesentium
+              odit, facilis nemo blanditiis temporibus ad illum! Dolor nisi
+              tenetur unde rerum corporis id inventore consectetur quaerat
+              placeat ea. commodi in, laudantium reprehenderit voluptatem
+              necessitatibus veritatis saepe quis. Eveniet, voluptatibus? Quis,
+              totam nemo. Autem perferendis quam quo ab tempore voluptatum.
+              Praesentium odit, facilis nemo blanditiis temporibus ad illum!
+              Dolor nisi tenetur unde rerum corporis id inventore consectetur
+              quaerat placeat ea.
             </p>
-            <div class="card-text mt-4 fs-6 fs-sm-5">
-              <span class="m-0 small"> Highest Bid: </span>
-              <span class="m-0 small d-none text-secondary">
-                In the lead!
-              </span>
-              <span class="me-4 fw-bold fs-4 d-flex flex-nowrap">$ 40</span>
-              <p class="fs-6 fs-md-3 m-0 d-flex align-items-center d-none">
-                <img
-                  src="https://t4.ftcdn.net/jpg/04/08/24/43/360_F_408244382_Ex6k7k8XYzTbiXLNJgIL8gssebpLLBZQ.jpg"
-                  alt=""
-                  class="rounded-circle"
-                  style="aspect-ratio: 1; width: 30px"
-                />
-                <span class="fs-6 fs-md-5 ms-2">Ron F. Swanson</span>
-              </p>
-            </div>
           </div>
         </div>
-      </div>
+        <div
+          class="collapse border rounded-2 mt-2"
+          id="listingDetailsHistory"
+          data-bs-parent="#listingDetails"
+          style="height: 300px"
+        >
+          <div class="table-responsive p-2 p-md-4" style="height: 300px">
+            <table class="table table-white table-hover">
+              <thead>
+                <tr>
+                  <th scope="col-auto">Bidder</th>
+                  <th scope="col-2">Amount</th>
+                  <th scope="col-auto">Date</th>
+                </tr>
+              </thead>
+              <tbody style="overflow-y: scroll">
+                <tr class="">
+                  <td scope="row">Leslie F. Knope</td>
+                  <td>$ 40</td>
+                  <td>21.02.23</td>
+                </tr>
+                <tr class="">
+                  <td scope="row">Tammy</td>
+                  <td>$ 25</td>
+                  <td>20.02.23</td>
+                </tr>
+                <tr class="">
+                  <td scope="row">Tammy</td>
+                  <td>$ 25</td>
+                  <td>20.02.23</td>
+                </tr>
+                <tr class="">
+                  <td scope="row">Tammy</td>
+                  <td>$ 25</td>
+                  <td>20.02.23</td>
+                </tr>
+                <tr class="">
+                  <td scope="row">Tammy</td>
+                  <td>$ 25</td>
+                  <td>20.02.23</td>
+                </tr>
+                <tr class="">
+                  <td scope="row">Tammy</td>
+                  <td>$ 25</td>
+                  <td>20.02.23</td>
+                </tr>
+                <tr class="">
+                  <td scope="row">Tammy</td>
+                  <td>$ 25</td>
+                  <td>20.02.23</td>
+                </tr>
+                <tr class="">
+                  <td scope="row">Tammy</td>
+                  <td>$ 25</td>
+                  <td>20.02.23</td>
+                </tr>
+                <tr class="">
+                  <td scope="row">Tammy</td>
+                  <td>$ 25</td>
+                  <td>20.02.23</td>
+                </tr>
+                <tr class="">
+                  <td scope="row">Tammy</td>
+                  <td>$ 25</td>
+                  <td>20.02.23</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
     </div>
-  </template>
+
+    <section class="mt-5 px-4 mw-lg mx-auto" id="profileListings">
+      <h2 class="px-2">Ron Swanson's Listings</h2>
+    </section>
+  </body>
+
+  <footer class="mt-5"></footer>
 
   <template id="productCardSmallPlaceholder">
     <div class="col">

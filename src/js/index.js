@@ -5,38 +5,57 @@ import '../scss/index.scss';
 // eslint-disable-next-line no-unused-vars
 import * as bootstrap from 'bootstrap';
 
-function productCardsSmall() {
-  const productCardSmall = document.querySelector(`template#productCardSmall`);
-  const clone = productCardSmall.content.cloneNode(true);
+// code
 
-  return clone;
-}
+import getAllListings from './api/listings/get';
+// import { renderListingSmall } from './render/renderListings';
+import { createSlider } from './render/slider';
 
-for (let index = 0; index < 11; index++) {
-  const clone = productCardsSmall();
+const getListings = await getAllListings();
+const listings = await getListings.json();
 
-  const quickAccessGrid = document.querySelector('#listingsContainer > .row');
-  quickAccessGrid.appendChild(clone);
-}
+// function productCardsSmall({ media, title }) {
+//   const productCardSmall = document.querySelector(`template#productCardSmall`);
+//   const clone = productCardSmall.content.cloneNode(true);
 
-function productCardLarge() {
-  const productCardSmall = document.querySelector(`template#productCardLarge`);
-  const clone = productCardSmall.content.cloneNode(true);
+//   clone.querySelector('.listing-img').src = media[0]
+//     ? media[0]
+//     : '/assets/images/irene-kredenets-KStSiM1UvPw-unsplash.jpg';
+//   clone.querySelector('.card-title').textContent = title;
 
-  return clone;
-}
+//   return clone;
+// }
 
-for (let index = 0; index < 3; index++) {
-  const clone = productCardLarge();
+const slider = createSlider(listings);
 
-  const quickAccessSlider = document.querySelector(
-    '#quickAccessSlider > .carousel-inner'
-  );
-  const carouselItem = document.createElement('div');
-  carouselItem.classList.add('carousel-item', 'px-2');
-  carouselItem.append(clone);
-  if (index === 0) {
-    carouselItem.classList.add('active');
-  }
-  quickAccessSlider.appendChild(carouselItem);
-}
+const container = document.querySelector('#profileListings');
+container.appendChild(slider);
+
+// listings.forEach((listing) => {
+//   const clone = productCardsSmall(listing);
+
+//   const quickAccessGrid = document.querySelector('#listingsContainer > .row');
+//   quickAccessGrid.appendChild(clone);
+// });
+
+// function productCardLarge() {
+//   const productCardSmall = document.querySelector(`template#productCardLarge`);
+//   const clone = productCardSmall.content.cloneNode(true);
+
+//   return clone;
+// }
+
+// for (let index = 0; index < 3; index++) {
+//   const clone = productCardLarge();
+
+//   const quickAccessSlider = document.querySelector(
+//     '#quickAccessSlider > .carousel-inner'
+//   );
+//   const carouselItem = document.createElement('div');
+//   carouselItem.classList.add('carousel-item', 'px-2');
+//   carouselItem.append(clone);
+//   if (index === 0) {
+//     carouselItem.classList.add('active');
+//   }
+//   quickAccessSlider.appendChild(carouselItem);
+// }
