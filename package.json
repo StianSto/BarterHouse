@@ -33,6 +33,7 @@
   "devDependencies": {
     "eslint": "^8.33.0",
     "husky": "^8.0.3",
+    "jsdocs": "^0.0.1-security.40",
     "lint-staged": "^13.1.0",
     "live-server": "^1.2.2",
     "prettier": "^2.8.3",
