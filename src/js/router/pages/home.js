@@ -1,4 +1,6 @@
+
 import { getAllListings } from '../../api/listings/read/getListings';
+
 import { renderListingSmall } from '../../render/renderListings';
 import { createSlider } from '../../render/slider';
 

@@ -1,3 +1,4 @@
+
 import { navTemplate } from '../render/templates/nav';
 import * as pages from './pages/';
 
@@ -12,16 +13,19 @@ export async function router() {
   switch (url) {
     case '/':
     case '/index.html':
+
       pages.home();
       break;
 
     case '/listings/':
     case '/listings/index.html':
+
       pages.listings();
       break;
 
     case '/listings/view/':
     case '/listings/view/index.html':
+
       pages.viewListing();
       break;
   }

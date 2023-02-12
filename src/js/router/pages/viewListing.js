@@ -1,3 +1,4 @@
+
 // import { login } from '../../api/auth/login';
 // import { getProfileListings } from '../../api/profile/read/getProfileListings';
 import { getAllListings } from '../../api/listings';
@@ -37,3 +38,4 @@ export async function viewListing() {
 //   tags: ['shoe', 'fashion'],
 //   media: ['https://m.media-amazon.com/images/I/71qFb2FIz5L._UL1500_.jpg'],
 // };
+
