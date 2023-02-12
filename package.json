@@ -13,7 +13,8 @@
     "format": "prettier -w src/**/*.js",
     "lint": "eslint src/**/*.js",
     "lint-fix": "eslint src/**/*.js --cache --fix",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "docs": "jsdoc -c ./conf.json -r"
   },
   "repository": {
     "type": "git",
@@ -33,7 +34,7 @@
   "devDependencies": {
     "eslint": "^8.33.0",
     "husky": "^8.0.3",
-    "jsdocs": "^0.0.1-security.40",
+    "jsdoc": "^4.0.0",
     "lint-staged": "^13.1.0",
     "live-server": "^1.2.2",
     "prettier": "^2.8.3",

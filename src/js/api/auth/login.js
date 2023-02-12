@@ -3,10 +3,10 @@ import headers from '../headers';
 const LOGIN_ENDPOINT = 'auction/auth/login';
 
 /**
- *
+ * sends a login request to the Noroff API with the email and password passed in
  * @param {string} email - a registered users email
  * @param {string} password - users password
- * @returns {object} returns a promise from the api.
+ * @return {Response} returns a promise from the api.
  *
  */
 export async function login(email, password) {

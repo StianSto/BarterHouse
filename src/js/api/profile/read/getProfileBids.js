@@ -12,6 +12,13 @@ const paramsProfileListings = new Map([
   ['_listings', null],
 ]);
 
+/**
+This function sends a GET request to the API endpoint for the specified user's bids on listings. If no additional query parameters are provided, it will use the default: ´sort: "created"´, `sortOrder: "desc"`, `limit: 10`, `offset: null`, `_listings: null`. function returns the response from the API 
+@function getProfileBids
+@param {string} user - The user's ID.
+@param {Array} [paramsMap=[]] - An array of additional parameters to include in the URL.
+@return {Promise} - Returns a Promise
+*/
 export async function getProfileBids(user, paramsMap = []) {
   const params = new Map([...paramsProfileListings, ...paramsMap]);
   const path = PROFILES_ENDPOINT + user + '/bids';

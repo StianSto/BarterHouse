@@ -24,10 +24,21 @@ export async function getAllProfiles(flags = flagsProfilesDefault) {
 
 // GET SINGLE PROFILE
 
-const flagsProfileDefault = new Map([['_listings', true]]);
+const paramsDefault = new Map([['_listings', true]]);
 
-export async function getProfile(user, flags = flagsProfileDefault) {
-  const URL = createUrl(PROFILES_ENDPOINT + user, flags);
+/**
+
+@function
+@async
+@param {string} user - The user id of the profile to retrieve.
+@param {Map} queryParams - The query parameters to specify the data to retrieve.
+@returns {Promise} - The API response of the requested profile.
+@description
+This function retrieves a single profile from the API by sending a GET request to the API endpoint with the specified user id.
+*/
+export async function getProfile(user, queryParams) {
+  const params = new Map([...paramsDefault, ...queryParams]);
+  const URL = createUrl(PROFILES_ENDPOINT + user, params);
   const response = await fetch(URL, {
     method: 'GET',
     headers: headers('application/json'),
