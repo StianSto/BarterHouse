@@ -1,3 +1,4 @@
+
 import { renderNav } from '../render/renderNav';
 import * as pages from './pages/';
 
@@ -5,6 +6,7 @@ import * as pages from './pages/';
 const url = window.location.pathname;
 
 renderNav();
+
 
 export async function router() {
   switch (url) {

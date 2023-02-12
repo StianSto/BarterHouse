@@ -13,6 +13,7 @@ const params = new Map([
 
 export async function home() {
   const getListings = await getAllListings(params);
+
   const listings = await getListings.json();
 
   const quickAccessContainer = document.querySelector('#quickAccessSlider');
