@@ -1,12 +1,10 @@
-import { navTemplate } from '../render/templates/nav';
+import { renderNav } from '../render/renderNav';
 import * as pages from './pages/';
 
 // import { storage } from '../storage/localStorage';
 const url = window.location.pathname;
 
-const nav = navTemplate();
-const header = document.querySelector('header');
-header.append(nav);
+renderNav();
 
 export async function router() {
   switch (url) {
