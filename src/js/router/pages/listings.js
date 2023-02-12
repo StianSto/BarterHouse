@@ -1,4 +1,6 @@
-import getAllListings from '../../api/listings/get';
+
+import { getAllListings } from '../../api/listings/read/getListings';
+
 import { renderListingSmall } from '../../render/renderListings';
 
 export async function listings() {
