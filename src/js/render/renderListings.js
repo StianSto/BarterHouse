@@ -13,7 +13,5 @@ export function renderListingSmall({ media = '', title = '', bids = '' }) {
     ? '$ ' + bids[0].amount
     : 'no bids';
 
-  console.log(listing.querySelector('.listing-small'));
-
   return listing.querySelector('.listing-small');
 }

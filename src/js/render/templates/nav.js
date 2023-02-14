@@ -97,7 +97,5 @@ export function navTemplate() {
 	`,
     'text/html'
   );
-
-  console.log(nav.querySelector('nav'));
   return nav.querySelector('nav');
 }

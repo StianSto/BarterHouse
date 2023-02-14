@@ -60,18 +60,6 @@ export function navTemplate() {
 						data-bs-toggle="dropdown"
 						aria-expanded="false"
 					/>
-					<ul class="dropdown-menu dropdown-menu-end">
-						<li><a class="dropdown-item" href="#">My Profile</a></li>
-						<li><a class="dropdown-item" href="#">Watchlist</a></li>
-						<li class="d-flex flex-nowrap align-items-center mt-2">
-							<a class="dropdown-item text-primary" href="#"
-								>Log out
-								<i
-									class="fa fa-solid fa-door-open fs-6 text-primary ms-3"
-								></i>
-							</a>
-						</li>
-					</ul>
 				</div>
 			</div>
 		</div>
