@@ -9,7 +9,7 @@ const paramsProfileListings = new Map([
   ['sortOrder', 'desc'],
   ['limit', 10],
   ['offset', null],
-  ['_listings', null],
+  ['_listings', true],
 ]);
 
 /**

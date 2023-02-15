@@ -3,11 +3,11 @@ import headers from '../../headers';
 
 const PROFILES_ENDPOINT = 'auction/profiles/';
 
-export async function updateProfile(user, avatar) {
+export async function updateProfile(user, body) {
   const URL = createUrl(`${PROFILES_ENDPOINT}${user}/media`);
   const response = await fetch(URL, {
     method: 'PUT',
-    body: JSON.stringify({ avatar }),
+    body,
     headers: headers('application/json'),
   });
 

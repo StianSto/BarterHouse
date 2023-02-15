@@ -72,7 +72,6 @@ export function renderNav() {
 
     navLinks = navLinksUnauthorized;
   } else {
-    console.log(123);
     navProfile.append(dropdownMenuProfile());
   }
 
@@ -88,10 +87,11 @@ export function renderNav() {
 }
 
 function dropdownMenuProfile() {
+  const profile = storage.load('userDetails');
   const dropdown = new DOMParser().parseFromString(
     `
 	<ul class="dropdown-menu dropdown-menu-end">
-		<li class="dropdown-item" ><a href="/profile/" class="text-decoration-none text-black">My Profile</a></li>
+		<li class="dropdown-item" ><a href="/profiles/?name=${profile.name}" class="text-decoration-none text-black">My Profile</a></li>
 		<li class="dropdown-item" ><a href="/listings/?watchlist" class="text-decoration-none text-black">Watchlist</a></li>
 		<li class="dropdown-item d-flex flex-nowrap align-items-center mt-2 text-primary" id="logout">
 			Log out
@@ -105,7 +105,6 @@ function dropdownMenuProfile() {
   );
 
   const logoutBtn = dropdown.querySelector('#logout');
-  console.log(logoutBtn);
   logoutBtn.addEventListener('click', logout);
 
   return dropdown.querySelector('.dropdown-menu');
