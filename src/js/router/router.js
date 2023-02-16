@@ -33,6 +33,11 @@ export async function router() {
       renderNav();
       pages.profiles();
       break;
+    case '/create/':
+    case '/create/index.html':
+      renderNav();
+      pages.create();
+      break;
   }
 }
 

@@ -147,3 +147,10 @@
   position: fixed;
   z-index: -100;
 }
+
+.form-control {
+  &:focus {
+    border-color: $info;
+    box-shadow: 0 0 0 0.2rem rgba(167, 148, 40, 0.25);
+  }
+}
