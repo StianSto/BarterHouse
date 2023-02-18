@@ -38,6 +38,11 @@ export async function router() {
       renderNav();
       pages.create();
       break;
+    case '/listings/edit/':
+    case '/listings/edit/index.html':
+      renderNav();
+      pages.edit();
+      break;
   }
 }
 

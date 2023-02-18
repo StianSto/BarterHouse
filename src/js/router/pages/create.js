@@ -1,7 +1,7 @@
 import { setCreateListingFormListener } from '../../handlers/createListingFormListener';
 import { setInlineTagsInputListener } from '../../handlers/inlineTagsInputListener';
 
-class Images {
+export class Images {
   constructor(array = []) {
     this.array = [...array];
   }
@@ -29,24 +29,24 @@ class Images {
     this.array = [];
   }
 }
-let images = new Images();
+let images;
 
 export async function create() {
+  images = new Images();
   const modalAddImages = document.querySelector('#modalAddImages');
   const save = modalAddImages.querySelector('[data-save]');
 
   const form = document.querySelector('#createListing');
-  console.log(form);
   setCreateListingFormListener(form);
 
   const tagsContainer = document.querySelector('#tagsContainer');
   setInlineTagsInputListener(tagsContainer);
 
-  save.addEventListener('click', saveImages);
+  save.addEventListener('click', saveImages(images));
   const addImageBtn = document.querySelector('#addImageBtn');
   const imageInputsContainer = document.querySelector('#imageInputs');
   addImageBtn.addEventListener('click', () => {
-    imageInputsContainer.append(addImageInput());
+    imageInputsContainer.append(addImageInput(images));
   });
 
   const modalBtnAddImages = document.querySelector('#images');
@@ -56,18 +56,19 @@ export async function create() {
   addImagePreview();
 }
 
-function saveImages() {
+export function saveImages(imagesObject) {
   const modalAddImages = document.querySelector('#modalAddImages');
   const imagesInputs = [...modalAddImages.querySelectorAll('input')];
   const sources = [...imagesInputs.map((img) => img.value)];
-  images.update(sources);
-  addImagePreview();
+  imagesObject.update(sources);
+  addImagePreview(imagesObject);
 }
 
-function reloadModal() {
+export function reloadModal(imagesObject) {
   const imageInputsContainer = document.querySelector('#imageInputs');
-  const imageList = images.getAllImages();
-  const arr = imageList.map((value) => {
+  const imagesArr = imagesObject.getAllImages();
+
+  const arr = imagesArr.map((value) => {
     const input = addImageInput();
     input.querySelector('input').value = value;
     return input;
@@ -76,7 +77,7 @@ function reloadModal() {
   imageInputsContainer.replaceChildren(...arr);
 }
 
-function addImageInput() {
+export function addImageInput() {
   const input = imageInputDOM();
   const removeBtn = input.querySelector('[data-remove]');
   removeBtn.addEventListener('click', () => input.remove());
@@ -86,16 +87,17 @@ function addImageInput() {
   return input;
 }
 
-function addImagePreview() {
+export function addImagePreview(imagesObject) {
   const container = document.querySelector('#previewImagesContainer');
-  const imagesArr = images.getAllImages();
+  const imagesArr = imagesObject.getAllImages();
 
   const array = imagesArr.map((src, index) => {
     const imagePreview = imagePreviewDOM();
     imagePreview.querySelector('img').src = src;
     imagePreview.querySelector('.btn-close').addEventListener('click', () => {
-      images.remove(index);
-      addImagePreview();
+      imagesObject.remove(index);
+      addImagePreview(imagesObject);
+      reloadModal(imagesObject);
     });
     return imagePreview;
   });
@@ -103,7 +105,7 @@ function addImagePreview() {
   container.replaceChildren(...array);
 }
 
-const imagePreviewDOM = () => {
+export const imagePreviewDOM = () => {
   const el = new DOMParser().parseFromString(
     `
 	<div
@@ -129,7 +131,7 @@ const imagePreviewDOM = () => {
   return el.querySelector('body > *');
 };
 
-const imageInputDOM = () => {
+export const imageInputDOM = () => {
   const el = new DOMParser().parseFromString(
     `
 		<div class="draggable | mb-3 row align-items-center pe-2" draggable='true'>
@@ -149,7 +151,7 @@ const imageInputDOM = () => {
   return el.querySelector('body > *');
 };
 
-function draggable(container) {
+export function draggable(container) {
   container.addEventListener('dragover', (event) => {
     event.preventDefault();
     const setAfterElement = getDragAfterElement(container, event.clientY);
@@ -163,7 +165,7 @@ function draggable(container) {
 
 // this function is heavily inspired by WebDevSimplified
 // https://github.com/WebDevSimplified/Drag-And-Drop/blob/master/script.js
-function getDragAfterElement(container, posY) {
+export function getDragAfterElement(container, posY) {
   const draggable = [
     ...container.querySelectorAll('.draggable:not(.dragging)'),
   ];
