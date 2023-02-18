@@ -15,10 +15,8 @@ export async function viewListing() {
   similarListings.appendChild(createSlider(listings));
 
   // const response = await login(postData.email, postData.password);
-  // console.log(response);
   // if (response.ok) {
   //   const result = await response.json();
-  //   console.log(result);
   //   storage.save('token', result.accessToken);
   // }
 }

@@ -1,3 +1,4 @@
+import { logout } from '../api/auth/logout';
 import { storage } from '../storage/localStorage';
 import { navTemplate } from './templates/navTemplate';
 
@@ -48,8 +49,8 @@ const linkElement = new DOMParser().parseFromString(
 const navLoginRegisterContainer = new DOMParser().parseFromString(
   `
 	<div class="btn-unauth | row row-cols-2 d-none d-md-flex gap-2">
-		<button class="btn btn-primary col-auto px-4">Login</button>
-		<button class="btn btn-outline-primary col-auto px-4">Register</button>
+		<a href="/auth/?form=login" class="col-auto p-0"><button class="btn btn-primary px-4">Login</button></a>
+		<a href="/auth/?form=register" class="col-auto p-0"><button class="btn btn-outline-primary col-auto px-4">Register</button></a>
 	</div>
 	`,
   'text/html'
@@ -57,21 +58,22 @@ const navLoginRegisterContainer = new DOMParser().parseFromString(
 
 export function renderNav() {
   const token = Boolean(storage.load('token'));
-  console.log(token);
   const navDOM = navTemplate();
   const linksContainer = navDOM.querySelector('#navLinks');
+  const navProfile = navDOM.querySelector('#navProfile');
 
-  if (token) {
+  if (!token) {
     const navProfileMobile = navDOM.querySelector('#navProfileMobile');
     navProfileMobile.innerHTML = '';
 
-    const navProfile = navDOM.querySelector('#navProfile');
     navProfile.replaceWith(
       navLoginRegisterContainer.querySelector('.btn-unauth')
     );
 
-    console.log(navProfile);
     navLinks = navLinksUnauthorized;
+  } else {
+    console.log(123);
+    navProfile.append(dropdownMenuProfile());
   }
 
   navLinks.forEach(({ name, path }) => {
@@ -83,4 +85,28 @@ export function renderNav() {
   });
   const header = document.querySelector('header');
   header.append(navDOM.querySelector('nav'));
+}
+
+function dropdownMenuProfile() {
+  const dropdown = new DOMParser().parseFromString(
+    `
+	<ul class="dropdown-menu dropdown-menu-end">
+		<li class="dropdown-item" ><a href="/profile/" class="text-decoration-none text-black">My Profile</a></li>
+		<li class="dropdown-item" ><a href="/listings/?watchlist" class="text-decoration-none text-black">Watchlist</a></li>
+		<li class="dropdown-item d-flex flex-nowrap align-items-center mt-2 text-primary" id="logout">
+			Log out
+			<i
+				class="fa fa-solid fa-door-open fs-6 text-primary ms-3"
+			></i>
+		</li>
+	</ul>
+	`,
+    'text/html'
+  );
+
+  const logoutBtn = dropdown.querySelector('#logout');
+  console.log(logoutBtn);
+  logoutBtn.addEventListener('click', logout);
+
+  return dropdown.querySelector('.dropdown-menu');
 }
