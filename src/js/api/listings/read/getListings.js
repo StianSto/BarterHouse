@@ -56,7 +56,7 @@ makes a GET request to get a single listing by id and specified parameters. the 
 @param {Map} [params=defaultParamsSingleListing] - The parameters to be added to the request URL.
 @return {Promise} - The response of the GET request to the listings endpoint.
 @example
-cosnt params = new Map([
+const params = new Map([
 	['_seller', "John_Doe"],
   ['_bids', true],
 ])

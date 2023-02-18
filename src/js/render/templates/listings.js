@@ -1,6 +1,7 @@
 export const listingSmall = `
     <div class="listing-small | col">
 	
+		<a href="" class="text-decoration-none text-black">
       <div class="card p-0 h-100 justify-content-between">
         <div>
           <img
@@ -35,7 +36,7 @@ export const listingSmall = `
             </div>
           </div>
         </div>
-
       </div>
+		</a>
     </div>
 	`;

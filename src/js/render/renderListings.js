@@ -3,8 +3,15 @@ import { listingSmall } from './templates/listings';
 const defaultImage =
   'https://garden.spoonflower.com/c/11559317/p/f/m/wVUPX7NeVeeoRhPz3Mfzkqn9BCj1zYLRCGSjo-lR3N_5qJPAOioIs2I/Solid%20light%20grey%20g1_3-1.jpg';
 
-export function renderListingSmall({ media = '', title = '', bids = '' }) {
+export function renderListingSmall({
+  media = '',
+  title = '',
+  bids = '',
+  id = '',
+}) {
   const listing = new DOMParser().parseFromString(listingSmall, 'text/html');
+
+  listing.querySelector('.listing-small > a').href = `/listings/view/?id=${id}`;
   listing.querySelector('[data-listing="title"]').textContent = title;
   listing.querySelector('[data-listing="media"]').src = media[0]
     ? media[0]
