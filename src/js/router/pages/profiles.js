@@ -45,6 +45,8 @@ async function insertProfileListings() {
   const getListings = await getProfileListings(nameParam);
   const listings = await getListings.json();
 
+  console.log('listings :>> ', listings);
+
   if (listings.length === 0) {
     const noListings = document.createElement('p');
     noListings.innerText = 'no listings';
