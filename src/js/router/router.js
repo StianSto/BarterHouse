@@ -28,6 +28,11 @@ export async function router() {
       renderNav();
       pages.viewListing();
       break;
+    case '/profiles/':
+    case '/profiles/index.html':
+      renderNav();
+      pages.profiles();
+      break;
   }
 }
 

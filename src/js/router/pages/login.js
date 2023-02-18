@@ -6,7 +6,6 @@ const params = new URLSearchParams(url);
 
 export function auth(authtype = params.get('form')) {
   const form = renderAuthForm(authtype);
-  console.log(form);
 
   const h1 = document.createElement('h1');
   h1.classList.add('text-center', 'mt-4', 'fs-3', 'fw-light');

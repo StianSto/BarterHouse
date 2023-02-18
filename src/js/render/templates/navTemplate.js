@@ -4,7 +4,7 @@ export function navTemplate() {
 	
 	<nav class="navbar navbar-expand-lg bg-white p-0 m-0 shadow">
 		<div class="container-fluid mw-lg pt-2 px-0">
-			<a class="navbar-brand ff-brand fs-1 p-4 py-2" href="#"
+			<a class="navbar-brand ff-brand fs-1 p-4 py-2" href="/"
 				><span class="text-secondary ff-brand fw-light">Barter</span
 				><span class="text-primary">House</span></a
 			>

@@ -36,7 +36,7 @@ const paramsDefault = new Map([['_listings', true]]);
 @description
 This function retrieves a single profile from the API by sending a GET request to the API endpoint with the specified user id.
 */
-export async function getProfile(user, queryParams) {
+export async function getProfile(user, queryParams = []) {
   const params = new Map([...paramsDefault, ...queryParams]);
   const URL = createUrl(PROFILES_ENDPOINT + user, params);
   const response = await fetch(URL, {

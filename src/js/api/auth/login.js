@@ -19,6 +19,12 @@ export async function login(data) {
   if (response.ok) {
     const results = await response.json();
     storage.save('token', results.accessToken);
+    storage.save('userDetails', {
+      name: results.name,
+      email: results.email,
+      credits: results.credits,
+      avatar: results.avatar,
+    });
   }
 
   return response;
