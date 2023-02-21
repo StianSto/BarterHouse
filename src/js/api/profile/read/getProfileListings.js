@@ -10,7 +10,7 @@ const paramsDefault = new Map([
   ['offset', null],
   ['tag', null],
   ['_active', null],
-  ['_bids', null],
+  ['_bids', true],
 ]);
 
 /**

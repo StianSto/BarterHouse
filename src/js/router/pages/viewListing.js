@@ -2,7 +2,9 @@ import { getListing } from '../../api/listings';
 import { getProfileListings } from '../../api/profile/read/getProfileListings';
 import { getProfile } from '../../api/profile/read/getProfiles';
 import { getSearchParams } from '../../functions/searchParams';
+import { setaddBidListener } from '../../handlers/addBidListener';
 import { createSlider } from '../../render/slider';
+import { storage } from '../../storage/localStorage';
 
 const getListingParams = new Map([
   ['_seller', true],
@@ -33,9 +35,16 @@ export async function viewListing() {
     ? seller.avatar
     : '../../../assets/images/irene-kredenets-KStSiM1UvPw-unsplash.jpg';
 
+  const funds = document.querySelectorAll('[data-funds]');
+  const credits = storage.load('userDetails').credits;
+  funds.forEach((el) => (el.textContent = `$ ${credits}`));
+
   addBidders(bids);
   addSliders(listing.seller.name);
   addMedia(media);
+
+  const addBidForm = document.querySelector('#addBid');
+  setaddBidListener(addBidForm, id);
 }
 
 async function addSliders(profile) {
