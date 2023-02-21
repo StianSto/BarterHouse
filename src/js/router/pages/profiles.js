@@ -1,7 +1,7 @@
 import { getListing } from '../../api/listings';
-import { getProfileBids } from '../../api/profile/read/getProfileBids';
 import { getProfileListings } from '../../api/profile/read/getProfileListings';
 import { getProfile } from '../../api/profile/read/getProfiles';
+import { quickAccess } from '../../functions/quickAccess';
 import { setUpdateAvatarListener } from '../../handlers/updateAvatarListener';
 import { renderListingSmall } from '../../render/renderListings';
 import { createSlider } from '../../render/slider';
@@ -44,8 +44,6 @@ async function insertProfileListings() {
 
   const getListings = await getProfileListings(nameParam);
   const listings = await getListings.json();
-
-  console.log('listings :>> ', listings);
 
   if (listings.length === 0) {
     const noListings = document.createElement('p');
@@ -90,11 +88,7 @@ async function authorizedUser() {
 }
 
 export async function watchlist() {
-  const name = storage.load('userDetails').name;
-  if (!name) return;
-
-  const bids = await getProfileBids(name);
-  const mybids = await bids.json();
+  const mybids = await quickAccess.watchlist();
   const idSet = [...new Set(mybids.map((bid) => bid.listing.id))];
 
   const listings = idSet.map(async (id) => {
@@ -106,6 +100,10 @@ export async function watchlist() {
   for (const item of listings) {
     results.push(await item);
   }
+
+  results.forEach((el) => {
+    el.bids.sort((a, b) => b.amount - a.amount);
+  });
 
   return results;
 }
