@@ -22,34 +22,35 @@ export function renderListingSmall({
 
   bids.sort((a, b) => b.amount - a.amount);
 
-  const highestBid = document.createElement('p');
-  highestBid.classList.add('mb-0');
-  if (bids[0] && bids[0].bidderName === storage.load('userDetails').name) {
-    highestBid.classList.add('text-secondary');
-    highestBid.textContent = 'In the lead!';
-  } else {
-    highestBid.textContent = 'Highest Bid';
-  }
-  const bid = listing.querySelector('[data-listing="bid"]');
-  bid.before(highestBid);
-
-  const today = new Date();
-  const ends = new Date(endsAt);
-
-  const count = countdown(endsAt, listing);
-  console.log(count);
-
-  (() => {
-    if (ends < today) {
-      console.log(bids);
-      if (bids.length === 0) return;
-      bids[0].bidderName === storage.load('userDetails').name
-        ? (highestBid.textContent = 'You have won!')
-        : (highestBid.textContent = `${bids[0].bidderName} has won!`);
-    }
-  })();
-
-  bid.textContent = bids[0]?.amount ? '$ ' + bids[0].amount : 'no bids';
+  addCountdown(endsAt, bids, listing);
 
   return listing.querySelector('.listing-small');
+}
+
+function addCountdown(endsAt, bids, listing) {
+  const highestBid = document.createElement('p');
+  highestBid.classList.add('mb-0');
+
+  const count = countdown(endsAt, listing);
+  const endsIn = listing.querySelector('[data-listing="endsIn"]');
+
+  if (count < 0) {
+    if (bids[0] && bids[0].bidderName === storage.load('userDetails').name) {
+      highestBid.textContent = 'You have won!';
+      highestBid.textContent = `${bids[0].bidderName} has won!`;
+      endsIn.textContent = 'Auction has ended';
+    }
+  } else {
+    if (bids[0] && bids[0].bidderName === storage.load('userDetails').name) {
+      highestBid.classList.add('text-secondary');
+      highestBid.textContent = 'In the lead!';
+    } else {
+      highestBid.textContent = 'Highest Bid!';
+    }
+
+    endsIn.textContent = count + ' days left';
+    const bid = listing.querySelector('[data-listing="bid"]');
+    bid.textContent = bids[0]?.amount ? '$ ' + bids[0].amount : 'no bids';
+    bid.before(highestBid);
+  }
 }

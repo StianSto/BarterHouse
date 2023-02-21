@@ -70,7 +70,7 @@
             <div
               id="mediaCarousel"
               class="carousel carousel-dark slide carousel-fade"
-              data-bs-ride="false"
+              data-bs-ride="carousel"
             >
               <div
                 class="carousel-inner d-flex align-items-center"
@@ -142,7 +142,6 @@
             <div class="row align-items-center">
               <img
                 id="profileImg"
-                src=""
                 style="aspect-ratio: 1; width: 100px"
                 class="col-auto rounded-circle p-3"
                 alt=""
@@ -170,14 +169,14 @@
             <div class="my-5">
               <p class="fs-5">Current Highest Bid:</p>
               <div class="d-flex align-items-center">
-                <p class="col-auto fs-2 fw-bold m-0 mx-2 me-4" id="highestBid">
-                  $ 40
-                </p>
+                <p
+                  class="col-auto fs-2 fw-bold m-0 mx-2 me-4"
+                  id="highestBid"
+                ></p>
                 <div class="col-8">
                   <div class="row align-items-center w-auto flex-nowrap">
                     <img
                       id="highestBidderImg"
-                      src="../../assets/images/irene-kredenets-KStSiM1UvPw-unsplash.jpg"
                       style="aspect-ratio: 1; max-width: 40px"
                       class="rounded-circle col ms-3 p-0"
                       alt=""
@@ -201,7 +200,7 @@
                   up $ 25
                 </button>
               </div>
-              <div class="row">
+              <form class="row" id="addBid">
                 <div class="my-3 position-relative col-6">
                   <label
                     for="placeBidValue"
@@ -212,13 +211,16 @@
                     type="number"
                     step="1"
                     class="form-control border-start-rounded ps-4"
-                    name=""
+                    name="amount"
                     min="0"
                     id="placeBidValue"
                     aria-describedby="helpId"
                     placeholder="place a bid here"
                   />
-                  <small> funds available: $120 </small>
+                  <small>
+                    funds available:
+                    <span data-funds class="fw-bold"></span
+                  ></small>
                 </div>
                 <div class="col-6 d-flex align-items-center">
                   <button
@@ -227,7 +229,7 @@
                     Place Bid
                   </button>
                 </div>
-              </div>
+              </form>
             </div>
           </div>
         </div>

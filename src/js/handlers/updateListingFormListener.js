@@ -17,8 +17,6 @@ export function setUpdateListingFormListener(form, id) {
     const media = imagesList.map((image) => image.src);
     body.media = media;
 
-    console.log(body);
-
     const response = await updateListing(id, body);
     if (response.ok) {
       alert('succesfully updated your listing');

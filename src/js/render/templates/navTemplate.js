@@ -43,7 +43,7 @@ export function navTemplate() {
 				<ul class="mt-4 d-lg-none list-unstyled ff-brand" id="navLinks">
 				</ul>
 				<a
-					href=""
+					href="/create/"
 					class="nav-btn | fs-5 text-black ms-auto me-4 px-0 d-none d-lg-flex text-decoration-none py-3"
 				>
 					<div class="my-auto d-flex align-items-center gap-2">

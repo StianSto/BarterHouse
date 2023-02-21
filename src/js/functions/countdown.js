@@ -24,14 +24,15 @@ export default function countdown(endsAt, element) {
     secondsLeft = Math.floor((timeLeft % m) / s);
   }
   calculateTime();
-  daysLeft < 0
-    ? (endsIn.textContent = 'Auction ended')
-    : daysLeft > 1
-    ? (endsIn.textContent = `${daysLeft} days left`)
-    : setInterval(function () {
-        calculateTime();
-        console.dir(endsIn);
-        endsIn.parentElement.classList.add('text-primary');
-        endsIn.textContent = `${hoursLeft}h, ${minutesLeft}m, ${secondsLeft}s`;
-      }, 1000);
+
+  console.log(daysLeft);
+  if (daysLeft === 0) {
+    setInterval(function () {
+      calculateTime();
+      endsIn.parentElement.classList.add('text-primary');
+      endsIn.textContent = `${hoursLeft}h, ${minutesLeft}m, ${secondsLeft}s`;
+    }, 1000);
+    return daysLeft;
+  }
+  return daysLeft;
 }
