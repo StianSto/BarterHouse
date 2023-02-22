@@ -1,5 +1,5 @@
 /* eslint-disable indent */
-export default function countdown(endsAt, element) {
+export default function countdown(endsAt, element = document) {
   const endsIn = element.querySelector('[data-listing="endsIn"]');
 
   let s = 1000; // 1000 ms
@@ -25,7 +25,6 @@ export default function countdown(endsAt, element) {
   }
   calculateTime();
 
-  console.log(daysLeft);
   if (daysLeft === 0) {
     setInterval(function () {
       calculateTime();
@@ -34,5 +33,6 @@ export default function countdown(endsAt, element) {
     }, 1000);
     return daysLeft;
   }
+  if (daysLeft < 0) return false;
   return daysLeft;
 }

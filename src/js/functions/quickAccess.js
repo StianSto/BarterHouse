@@ -2,7 +2,7 @@ import { getProfileBids } from '../api/profile/read/getProfileBids';
 import { getProfileListings } from '../api/profile/read/getProfileListings';
 import { storage } from '../storage/localStorage';
 
-const user = storage.load('userDetails').name;
+const user = storage.load('userDetails')?.name;
 
 export const quickAccess = {
   myListings: async () => {

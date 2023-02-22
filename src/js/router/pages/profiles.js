@@ -1,4 +1,3 @@
-import { getListing } from '../../api/listings';
 import { getProfileListings } from '../../api/profile/read/getProfileListings';
 import { getProfile } from '../../api/profile/read/getProfiles';
 import { quickAccess } from '../../functions/quickAccess';
@@ -88,24 +87,32 @@ async function authorizedUser() {
 }
 
 export async function watchlist() {
-  const mybids = await quickAccess.watchlist();
-  const idSet = [...new Set(mybids.map((bid) => bid.listing.id))];
+  const myBids = await quickAccess.watchlist();
 
-  const listings = idSet.map(async (id) => {
-    const response = await getListing(id);
-    return await response.json();
+  let results = {};
+
+  myBids.filter((bid) => {
+    const { listing, ...bidData } = bid;
+    listing['bids'] = [bidData];
+
+    let today = new Date();
+    let ends = new Date(bid.listing.endsAt);
+
+    if (ends.getTime() < today.getTime()) return;
+    if (results[bid.listing.id]) {
+      let a = results[bid.listing.id].amount;
+      let b = bid.amount;
+
+      if (b > a) return (results[listing.id] = listing);
+      return;
+    }
+
+    results[listing.id] = listing;
   });
 
-  let results = [];
-  for (const item of listings) {
-    results.push(await item);
-  }
+  const listings = Object.values(results);
 
-  results.forEach((el) => {
-    el.bids.sort((a, b) => b.amount - a.amount);
-  });
-
-  return results;
+  return listings;
 }
 
 const quickAccessDOM = `

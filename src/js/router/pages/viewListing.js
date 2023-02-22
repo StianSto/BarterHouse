@@ -1,6 +1,7 @@
 import { getListing } from '../../api/listings';
 import { getProfileListings } from '../../api/profile/read/getProfileListings';
 import { getProfile } from '../../api/profile/read/getProfiles';
+import countdown from '../../functions/countdown';
 import { getSearchParams } from '../../functions/searchParams';
 import { setaddBidListener } from '../../handlers/addBidListener';
 import { createSlider } from '../../render/slider';
@@ -23,6 +24,22 @@ export async function viewListing() {
   const createdDate = new Date(created);
   const endsDate = new Date(endsAt);
 
+  const addBidForm = document.querySelector('#addBid');
+  const endsIn = document.querySelector('[data-listing="endsIn"]');
+  const timer = countdown(endsAt);
+
+  if (timer === false) {
+    addBidForm.remove();
+    document.querySelector('#currentStatus').textContent = 'Winner:';
+    endsIn.textContent = 'Auction ended!';
+  } else if (timer < 1) {
+    endsIn.textContent;
+    setaddBidListener(addBidForm, id);
+  } else {
+    endsIn.textContent = `${timer} ${timer === 1 ? 'day' : 'days'} left`;
+    setaddBidListener(addBidForm, id);
+  }
+
   // add content to page
   document.querySelector('#title').textContent = title;
   document.querySelector('#name').textContent = seller.name;
@@ -42,9 +59,6 @@ export async function viewListing() {
   addBidders(bids);
   addSliders(listing.seller.name);
   addMedia(media);
-
-  const addBidForm = document.querySelector('#addBid');
-  setaddBidListener(addBidForm, id);
 }
 
 async function addSliders(profile) {
@@ -104,6 +118,10 @@ function createBidHistory(bid) {
 }
 
 function addMedia(media) {
+  if (media.length === 0)
+    media.push(
+      'https://www.chanchao.com.tw/VietnamPrintPack/images/default.jpg'
+    );
   const mediaCarousel = document.querySelector('#mediaCarousel');
   const indicatorContainer = mediaCarousel.querySelector(
     '.carousel-indicators'

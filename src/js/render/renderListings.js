@@ -16,9 +16,9 @@ export function renderListingSmall({
 
   listing.querySelector('.listing-small > a').href = `/listings/view/?id=${id}`;
   listing.querySelector('[data-listing="title"]').textContent = title;
-  listing.querySelector('[data-listing="media"]').src = media[0]
-    ? media[0]
-    : defaultImage;
+  const img = listing.querySelector('[data-listing="media"]');
+  img.src = media[0] ? media[0] : defaultImage;
+  img.loading = 'lazy';
 
   bids.sort((a, b) => b.amount - a.amount);
 
@@ -34,9 +34,12 @@ function addCountdown(endsAt, bids, listing) {
   const count = countdown(endsAt, listing);
   const endsIn = listing.querySelector('[data-listing="endsIn"]');
 
-  if (count < 0) {
+  if (!count) {
+    endsIn.textContent = 'Auction has ended';
     if (bids[0] && bids[0].bidderName === storage.load('userDetails').name) {
       highestBid.textContent = 'You have won!';
+      highestBid.classList.add('text-secondary');
+    } else if (bids[0]) {
       highestBid.textContent = `${bids[0].bidderName} has won!`;
       endsIn.textContent = 'Auction has ended';
     }
@@ -44,13 +47,13 @@ function addCountdown(endsAt, bids, listing) {
     if (bids[0] && bids[0].bidderName === storage.load('userDetails').name) {
       highestBid.classList.add('text-secondary');
       highestBid.textContent = 'In the lead!';
-    } else {
-      highestBid.textContent = 'Highest Bid!';
+    } else if (bids[0]) {
+      highestBid.textContent = `${bids[0].bidderName} is leading`;
     }
 
     endsIn.textContent = count + ' days left';
-    const bid = listing.querySelector('[data-listing="bid"]');
-    bid.textContent = bids[0]?.amount ? '$ ' + bids[0].amount : 'no bids';
-    bid.before(highestBid);
   }
+  const bid = listing.querySelector('[data-listing="bid"]');
+  bid.textContent = bids[0]?.amount ? '$ ' + bids[0].amount : 'no bids';
+  bid.before(highestBid);
 }
