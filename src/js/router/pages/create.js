@@ -1,3 +1,4 @@
+import { authGuard } from '../../functions/authGuard';
 import { setCreateListingFormListener } from '../../handlers/createListingFormListener';
 import { setInlineTagsInputListener } from '../../handlers/inlineTagsInputListener';
 
@@ -32,6 +33,8 @@ export class Images {
 let images;
 
 export async function create() {
+  authGuard();
+
   images = new Images();
   const modalAddImages = document.querySelector('#modalAddImages');
   const save = modalAddImages.querySelector('[data-save]');
@@ -42,7 +45,7 @@ export async function create() {
   const tagsContainer = document.querySelector('#tagsContainer');
   setInlineTagsInputListener(tagsContainer);
 
-  save.addEventListener('click', saveImages(images));
+  save.addEventListener('click', () => saveImages(images));
   const addImageBtn = document.querySelector('#addImageBtn');
   const imageInputsContainer = document.querySelector('#imageInputs');
   addImageBtn.addEventListener('click', () => {
@@ -50,13 +53,14 @@ export async function create() {
   });
 
   const modalBtnAddImages = document.querySelector('#images');
-  modalBtnAddImages.addEventListener('click', reloadModal);
+  modalBtnAddImages.addEventListener('click', () => reloadModal(images));
 
   draggable(imageInputsContainer);
-  addImagePreview();
+  addImagePreview(images);
 }
 
 export function saveImages(imagesObject) {
+  console.log(123);
   const modalAddImages = document.querySelector('#modalAddImages');
   const imagesInputs = [...modalAddImages.querySelectorAll('input')];
   const sources = [...imagesInputs.map((img) => img.value)];
@@ -90,6 +94,7 @@ export function addImageInput() {
 export function addImagePreview(imagesObject) {
   const container = document.querySelector('#previewImagesContainer');
   const imagesArr = imagesObject.getAllImages();
+  console.log(imagesArr);
 
   const array = imagesArr.map((src, index) => {
     const imagePreview = imagePreviewDOM();

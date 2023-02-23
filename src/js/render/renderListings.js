@@ -34,9 +34,11 @@ function addCountdown(endsAt, bids, listing) {
   const count = countdown(endsAt, listing);
   const endsIn = listing.querySelector('[data-listing="endsIn"]');
 
+  const user = storage.load('userDetails')?.name;
+
   if (!count) {
     endsIn.textContent = 'Auction has ended';
-    if (bids[0] && bids[0].bidderName === storage.load('userDetails').name) {
+    if (bids[0] && bids[0].bidderName === user) {
       highestBid.textContent = 'You have won!';
       highestBid.classList.add('text-secondary');
     } else if (bids[0]) {
@@ -44,7 +46,7 @@ function addCountdown(endsAt, bids, listing) {
       endsIn.textContent = 'Auction has ended';
     }
   } else {
-    if (bids[0] && bids[0].bidderName === storage.load('userDetails').name) {
+    if (bids[0] && bids[0].bidderName === user) {
       highestBid.classList.add('text-secondary');
       highestBid.textContent = 'In the lead!';
     } else if (bids[0]) {

@@ -3,6 +3,7 @@ import { getAllListings } from '../../api/listings/read/getListings';
 import { watchlist } from '../pages/profiles';
 import { renderListingSmall } from '../../render/renderListings';
 import { createSlider } from '../../render/slider';
+import { storage } from '../../storage/localStorage';
 const params = new Map([
   ['sort', 'created'],
   ['sortOrder', 'desc'],
@@ -14,14 +15,14 @@ const params = new Map([
 ]);
 
 export async function home() {
+  if (storage.load('token')) {
+    const watchlistListings = await watchlist();
+
+    const quickAccessContainer = document.querySelector('#quickAccessSlider');
+    quickAccessContainer.append(createSlider(watchlistListings));
+  }
   const getListings = await getAllListings(params);
   const listings = await getListings.json();
-
-  const watchlistListings = await watchlist();
-
-  const quickAccessContainer = document.querySelector('#quickAccessSlider');
-  quickAccessContainer.append(createSlider(watchlistListings));
-
   const listingsContainer = document.querySelector('#listingsContainer > .row');
   listingsContainer.append(...listings.map(renderListingSmall));
 }

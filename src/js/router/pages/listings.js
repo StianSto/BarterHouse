@@ -1,4 +1,5 @@
 import { getAllListings } from '../../api/listings/read/getListings';
+import { getSearchParams } from '../../functions/searchParams';
 import { renderListingSmall } from '../../render/renderListings';
 import { storage } from '../../storage/localStorage';
 
@@ -11,14 +12,16 @@ export async function listings() {
   );
 
   let params;
-  let savedParams = new Map(storage.load('filterSettings'));
 
   let formData = new FormData(filterForm);
 
+  const viewCategory = getSearchParams().get('view');
+  if (viewCategory) paramView();
+
+  let savedParams = new Map(storage.load('filterSettings'));
   savedParams.size === 0
     ? (params = new Map(formData))
     : (params = savedParams);
-
   render(params);
   renderBadges(params);
 
@@ -48,16 +51,12 @@ export async function listings() {
 async function render(params) {
   const getListings = await getAllListings(params);
   const listings = await getListings.json();
-
   const listingsContainer = document.querySelector('#listingsContainer > .row');
-  console.log(listings);
-
   listingsContainer.append(...listings.map(renderListingSmall));
 }
 
 function renderBadges(params) {
   const container = document.querySelector('#filtersBadges');
-  container.replaceChildren();
   const sort = params.get('sort');
   const sortOrder = params.get('sortOrder');
 
@@ -91,12 +90,11 @@ function renderBadges(params) {
 
   if (limit) limit += ' per page';
 
-  const badges = [sortBy, active, tag, limit].filter((item) => {
-    if (!item || item == 'null') return;
-    return item;
-  });
+  const badges = [sortBy, active, tag, limit].filter((item) =>
+    !item || item == 'null' ? false : item
+  );
 
-  container.append(...badges.map(badge));
+  container.replaceChildren(...badges.map(badge));
 }
 
 const badge = (title) => {
@@ -119,3 +117,27 @@ const badge = (title) => {
 
   return badge;
 };
+
+function paramView(view) {
+  let param = new Map([]);
+
+  switch (view) {
+    case 'newest':
+      param.set('sort', 'created');
+      param.set('sortOrder', 'desc');
+      break;
+    case 'oldest':
+      param.set('sort', 'created');
+      param.set('sortOrder', 'asc');
+      break;
+    case 'myListings':
+      param.set('_seller', storage.load('userDetails').name);
+      param.set('sortOrder', 'asc');
+      break;
+
+    default:
+      break;
+  }
+
+  return param;
+}

@@ -31,7 +31,7 @@ export default function countdown(endsAt, element = document) {
       endsIn.parentElement.classList.add('text-primary');
       endsIn.textContent = `${hoursLeft}h, ${minutesLeft}m, ${secondsLeft}s`;
     }, 1000);
-    return daysLeft;
+    return true;
   }
   if (daysLeft < 0) return false;
   return daysLeft;
