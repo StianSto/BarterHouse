@@ -5,24 +5,25 @@ import {
   createTag,
 } from '../../handlers/inlineTagsInputListener';
 import { setUpdateListingFormListener } from '../../handlers/updateListingFormListener';
+import { draggable } from '../../render/draggable';
 import {
   addImageInput,
   addImagePreview,
-  draggable,
   Images,
   reloadModal,
   saveImages,
 } from './create';
 
-let images = new Images();
-
 export async function edit() {
+  let images = new Images();
   const params = getSearchParams();
   const id = params.get('id');
 
+  const form = document.querySelector('#updateListing');
+  setUpdateListingFormListener(form, id, images);
+
   const response = await getListing(id);
   const listing = await response.json();
-
   const { title, tags, endsAt, description, media } = listing;
 
   const dateObject = new Date(endsAt);
@@ -47,20 +48,17 @@ export async function edit() {
 
   const modalAddImages = document.querySelector('#modalAddImages');
   const save = modalAddImages.querySelector('[data-save]');
-
   save.addEventListener('click', () => saveImages(images));
+
   const addImageBtn = document.querySelector('#addImageBtn');
   const imageInputsContainer = document.querySelector('#imageInputs');
   addImageBtn.addEventListener('click', () => {
-    imageInputsContainer.append(addImageInput());
+    addImageInput(imageInputsContainer);
   });
 
-  const modalBtnAddImages = document.querySelector('#images');
-  modalBtnAddImages.addEventListener('click', reloadModal(images));
+  const modalBtnAddImages = document.querySelector('#images > button');
+  modalBtnAddImages.addEventListener('click', () => reloadModal(images));
 
-  draggable(imageInputsContainer);
   addImagePreview(images);
-
-  const form = document.querySelector('#updateListing');
-  setUpdateListingFormListener(form, id);
+  draggable(imageInputsContainer);
 }

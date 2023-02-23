@@ -1,27 +1,21 @@
 import { getAllListings } from '../../api/listings/read/getListings';
-import { getSearchParams } from '../../functions/searchParams';
 import { renderListingSmall } from '../../render/renderListings';
 import { storage } from '../../storage/localStorage';
 
 export async function listings() {
   const filterForm = document.querySelector('#filterListingsModal');
   const filterFormBtn = filterForm.querySelector('#filterBtn');
-
   const saveFilterSettings = filterForm.querySelector(
     '#filterListingsSaveSettings'
   );
 
-  let params;
-
   let formData = new FormData(filterForm);
-
-  const viewCategory = getSearchParams().get('view');
-  if (viewCategory) paramView();
-
   let savedParams = new Map(storage.load('filterSettings'));
+  let params;
   savedParams.size === 0
     ? (params = new Map(formData))
     : (params = savedParams);
+
   render(params);
   renderBadges(params);
 
@@ -42,7 +36,8 @@ export async function listings() {
 
   const moreListingsBtn = document.querySelector('#loadListings');
   moreListingsBtn.addEventListener('click', async () => {
-    offset += parseFloat(params.get('limit'));
+    let limit = parseFloat(params.get('limit'));
+    offset += limit;
     params.set('offset', offset);
     render(params);
   });
@@ -117,27 +112,3 @@ const badge = (title) => {
 
   return badge;
 };
-
-function paramView(view) {
-  let param = new Map([]);
-
-  switch (view) {
-    case 'newest':
-      param.set('sort', 'created');
-      param.set('sortOrder', 'desc');
-      break;
-    case 'oldest':
-      param.set('sort', 'created');
-      param.set('sortOrder', 'asc');
-      break;
-    case 'myListings':
-      param.set('_seller', storage.load('userDetails').name);
-      param.set('sortOrder', 'asc');
-      break;
-
-    default:
-      break;
-  }
-
-  return param;
-}

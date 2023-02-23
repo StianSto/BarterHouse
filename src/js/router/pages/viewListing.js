@@ -28,6 +28,17 @@ export async function viewListing() {
   const endsIn = document.querySelector('[data-listing="endsIn"]');
   const timer = countdown(endsAt);
 
+  if (!storage.load('token')) {
+    const logInToBid = document.createElement('p');
+    logInToBid.innerText = 'log in to add a bid';
+    addBidForm.replaceWith(logInToBid);
+  } else {
+    const funds = document.querySelectorAll('[data-funds]');
+    const credits = storage.load('userDetails').credits;
+    funds.forEach((el) => (el.textContent = `$ ${credits}`));
+    addSliders(listing.seller.name);
+  }
+
   if (timer === false) {
     addBidForm.remove();
     document.querySelector('#currentStatus').textContent = 'Winner:';
@@ -52,12 +63,7 @@ export async function viewListing() {
     ? seller.avatar
     : '../../../assets/images/irene-kredenets-KStSiM1UvPw-unsplash.jpg';
 
-  const funds = document.querySelectorAll('[data-funds]');
-  const credits = storage.load('userDetails').credits;
-  funds.forEach((el) => (el.textContent = `$ ${credits}`));
-
   addBidders(bids);
-  addSliders(listing.seller.name);
   addMedia(media);
 }
 
@@ -118,15 +124,20 @@ function createBidHistory(bid) {
 }
 
 function addMedia(media) {
-  if (media.length === 0)
-    media.push(
-      'https://www.chanchao.com.tw/VietnamPrintPack/images/default.jpg'
-    );
+  const templateCarouselIndicator = document.querySelector(
+    '#templateCarouselIndicator'
+  );
+  const templateCarouselItem = document.querySelector('#templateCarouselItem');
   const mediaCarousel = document.querySelector('#mediaCarousel');
   const indicatorContainer = mediaCarousel.querySelector(
     '.carousel-indicators'
   );
   const mediaContainer = mediaCarousel.querySelector('.carousel-inner');
+
+  if (media.length === 0)
+    media.push(
+      'https://www.chanchao.com.tw/VietnamPrintPack/images/default.jpg'
+    );
 
   media.forEach((img, index) => {
     const indicatorTemplate = templateCarouselIndicator.content.cloneNode(true);
@@ -148,8 +159,3 @@ function addMedia(media) {
     mediaContainer.append(item);
   });
 }
-
-const templateCarouselIndicator = document.querySelector(
-  '#templateCarouselIndicator'
-);
-const templateCarouselItem = document.querySelector('#templateCarouselItem');

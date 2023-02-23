@@ -28,9 +28,3 @@ export function auth(authtype = params.get('form')) {
   container.replaceChildren(form);
   container.append(link);
 }
-
-// const profile = {
-//   name: 'surdeigogmoreller',
-//   email: 'surdeigogmoreller@stud.noroff.no',
-//   password: 'surdeigogmoreller',
-// };

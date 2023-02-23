@@ -14,11 +14,14 @@ export function renderListingSmall({
 }) {
   const listing = new DOMParser().parseFromString(listingSmall, 'text/html');
 
-  listing.querySelector('.listing-small > a').href = `/listings/view/?id=${id}`;
-  listing.querySelector('[data-listing="title"]').textContent = title;
-  const img = listing.querySelector('[data-listing="media"]');
-  img.src = media[0] ? media[0] : defaultImage;
-  img.loading = 'lazy';
+  const listingLink = listing.querySelector('.listing-small > a');
+  const listingTitle = listing.querySelector('[data-listing="title"]');
+  const listingImg = listing.querySelector('[data-listing="media"]');
+
+  listingLink.href = `/listings/view/?id=${id}`;
+  listingTitle.textContent = title;
+  listingImg.src = media[0] ? media[0] : defaultImage;
+  listingImg.loading = 'lazy';
 
   bids.sort((a, b) => b.amount - a.amount);
 
@@ -27,6 +30,7 @@ export function renderListingSmall({
   return listing.querySelector('.listing-small');
 }
 
+// calculates and adds a static countdown to listing. if listing has less than a day left and is still active, it adds a live countdown
 function addCountdown(endsAt, bids, listing) {
   const highestBid = document.createElement('p');
   highestBid.classList.add('mb-0');

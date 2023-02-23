@@ -1,6 +1,7 @@
 import { authGuard } from '../../functions/authGuard';
 import { setCreateListingFormListener } from '../../handlers/createListingFormListener';
 import { setInlineTagsInputListener } from '../../handlers/inlineTagsInputListener';
+import { dragElementEvents, draggable } from '../../render/draggable';
 
 export class Images {
   constructor(array = []) {
@@ -30,79 +31,68 @@ export class Images {
     this.array = [];
   }
 }
-let images;
 
 export async function create() {
   authGuard();
 
-  images = new Images();
-  const modalAddImages = document.querySelector('#modalAddImages');
-  const save = modalAddImages.querySelector('[data-save]');
+  let images = new Images();
 
   const form = document.querySelector('#createListing');
-  setCreateListingFormListener(form);
-
   const tagsContainer = document.querySelector('#tagsContainer');
-  setInlineTagsInputListener(tagsContainer);
-
-  save.addEventListener('click', () => saveImages(images));
   const addImageBtn = document.querySelector('#addImageBtn');
   const imageInputsContainer = document.querySelector('#imageInputs');
+  const modalBtnAddImages = document.querySelector('#images > button');
+  const save = document.querySelector('[data-save]');
+
+  setCreateListingFormListener(form, images);
+  setInlineTagsInputListener(tagsContainer);
   addImageBtn.addEventListener('click', () => {
-    imageInputsContainer.append(addImageInput(images));
+    addImageInput(imageInputsContainer);
   });
-
-  const modalBtnAddImages = document.querySelector('#images');
-  modalBtnAddImages.addEventListener('click', () => reloadModal(images));
-
   draggable(imageInputsContainer);
+  modalBtnAddImages.addEventListener('click', () => reloadModal(images));
+  save.addEventListener('click', () => saveImages(images));
   addImagePreview(images);
 }
 
-export function saveImages(imagesObject) {
-  console.log(123);
+export function saveImages(imagesState) {
   const modalAddImages = document.querySelector('#modalAddImages');
   const imagesInputs = [...modalAddImages.querySelectorAll('input')];
   const sources = [...imagesInputs.map((img) => img.value)];
-  imagesObject.update(sources);
-  addImagePreview(imagesObject);
+  imagesState.update(sources);
+  addImagePreview(imagesState);
 }
 
-export function reloadModal(imagesObject) {
-  const imageInputsContainer = document.querySelector('#imageInputs');
-  const imagesArr = imagesObject.getAllImages();
+export function reloadModal(imagesState) {
+  const container = document.querySelector('#imageInputs');
+  const imagesArr = imagesState.getAllImages();
 
-  const arr = imagesArr.map((value) => {
-    const input = addImageInput();
-    input.querySelector('input').value = value;
-    return input;
-  });
-
-  imageInputsContainer.replaceChildren(...arr);
+  imagesArr.forEach((value) => addImageInput(container, value));
 }
 
-export function addImageInput() {
-  const input = imageInputDOM();
-  const removeBtn = input.querySelector('[data-remove]');
-  removeBtn.addEventListener('click', () => input.remove());
+export function addImageInput(imageInputsContainer, value = null) {
+  const imageInput = imageInputElement();
+  const removeBtn = imageInput.querySelector('[data-remove]');
+  removeBtn.addEventListener('click', () => imageInput.remove());
 
-  input.addEventListener('dragstart', () => input.classList.add('dragging'));
-  input.addEventListener('dragend', () => input.classList.remove('dragging'));
-  return input;
+  dragElementEvents(imageInput);
+  const input = imageInput.querySelector('input');
+  if (value) input.value = value;
+  imageInputsContainer.append(imageInput);
+  input.focus();
 }
 
-export function addImagePreview(imagesObject) {
+export function addImagePreview(imagesState) {
   const container = document.querySelector('#previewImagesContainer');
-  const imagesArr = imagesObject.getAllImages();
-  console.log(imagesArr);
+  const imagesArr = imagesState.getAllImages();
 
   const array = imagesArr.map((src, index) => {
-    const imagePreview = imagePreviewDOM();
+    const imagePreview = imagePreviewElement();
     imagePreview.querySelector('img').src = src;
     imagePreview.querySelector('.btn-close').addEventListener('click', () => {
-      imagesObject.remove(index);
-      addImagePreview(imagesObject);
-      reloadModal(imagesObject);
+      imagesState.remove(index);
+      addImagePreview(imagesState);
+      reloadModal(imagesState);
     });
     return imagePreview;
   });
@@ -110,7 +100,7 @@ export function addImagePreview(imagesObject) {
   container.replaceChildren(...array);
 }
 
-export const imagePreviewDOM = () => {
+export const imagePreviewElement = () => {
   const el = new DOMParser().parseFromString(
     `
 	<div
@@ -136,12 +126,12 @@ export const imagePreviewDOM = () => {
   return el.querySelector('body > *');
 };
 
-export const imageInputDOM = () => {
+export const imageInputElement = () => {
   const el = new DOMParser().parseFromString(
     `
 		<div class="draggable | mb-3 row align-items-center pe-2" draggable='true'>
 			<i class="fa fa-grip-vertical col-auto fs-4 text-black-50" aria-hidden="true"></i>
-			<input type="text" class="form-control col" name="" id="" aria-describedby="helpId" placeholder="">
+			<input type="text" class="form-control col" name="" id="box" aria-describedby="helpId" placeholder="">
 			<button
 				class="rounded-circle btn btn-primary p-0 mx-2"
 				style="height: 24px; width: 24px"
@@ -155,36 +145,3 @@ export const imageInputDOM = () => {
   );
   return el.querySelector('body > *');
 };
-
-export function draggable(container) {
-  container.addEventListener('dragover', (event) => {
-    event.preventDefault();
-    const setAfterElement = getDragAfterElement(container, event.clientY);
-    const dragging = document.querySelector('.dragging');
-
-    setAfterElement == null
-      ? container.appendChild(dragging)
-      : container.insertBefore(dragging, setAfterElement);
-  });
-}
-
-// this function is heavily inspired by WebDevSimplified
-// https://github.com/WebDevSimplified/Drag-And-Drop/blob/master/script.js
-export function getDragAfterElement(container, posY) {
-  const draggable = [
-    ...container.querySelectorAll('.draggable:not(.dragging)'),
-  ];
-
-  return draggable.reduce(
-    (closest, child) => {
-      const rect = child.getBoundingClientRect();
-      const offset = posY - rect.top - rect.height / 2;
-      if (offset < 0 && offset > closest.offset) {
-        return { offset, element: child };
-      } else {
-        return closest;
-      }
-    },
-    { offset: Number.NEGATIVE_INFINITY }
-  ).element;
-}

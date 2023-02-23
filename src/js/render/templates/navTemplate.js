@@ -30,7 +30,7 @@ export function navTemplate() {
 				<div class="d-lg-none d-flex align-items-center" id="navProfileMobile">
 					<a href="">
 						<img
-							src="https://www.nzherald.co.nz/resizer/lKgrR0xF3qocbN-mTVRaFmX0XIc=/576x613/smart/filters:quality(70)/cloudfront-ap-southeast-2.images.arcpublishing.com/nzme/S7UIQ527KPM6YO6MMOMZD64GM4.jpg"
+							src=""
 							alt=""
 							class="profile-img rounded-circle"
 						/>
@@ -53,7 +53,7 @@ export function navTemplate() {
 				</a>
 				<div id="navProfile" class="d-none d-lg-block dropdown">
 					<img
-						src="https://www.nzherald.co.nz/resizer/lKgrR0xF3qocbN-mTVRaFmX0XIc=/576x613/smart/filters:quality(70)/cloudfront-ap-southeast-2.images.arcpublishing.com/nzme/S7UIQ527KPM6YO6MMOMZD64GM4.jpg"
+						src=""
 						alt=""
 						class="profile-img rounded-circle dropdown-toggle"
 						role="button"
