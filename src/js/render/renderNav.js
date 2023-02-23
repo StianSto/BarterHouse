@@ -57,8 +57,11 @@ const navLoginRegisterContainer = new DOMParser().parseFromString(
 );
 
 export function renderNav() {
+  console.log('rendernav');
   const token = Boolean(storage.load('token'));
+  const user = storage.load('userDetails');
   const navDOM = navTemplate();
+
   const linksContainer = navDOM.querySelector('#navLinks');
   const navProfile = navDOM.querySelector('#navProfile');
 
@@ -72,6 +75,8 @@ export function renderNav() {
 
     navLinks = navLinksUnauthorized;
   } else {
+    const profileImg = navDOM.querySelectorAll('.profile-img');
+    profileImg.forEach((img) => (img.src = user.avatar));
     navProfile.append(dropdownMenuProfile());
   }
 

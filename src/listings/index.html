@@ -22,22 +22,30 @@
       <div id="subnav" class="mt-5 mw-lg mx-auto px-4">
         <ul class="row text-primary p-0 d-none d-lg-flex">
           <li class="d-inline-block col-auto">
-            <a href="" class="text-decoration-none">Home</a>
+            <a href="/" class="text-decoration-none">Home</a>
           </li>
           <li class="d-inline-block col-auto">
-            <a href="" class="text-decoration-none">Hottest</a>
+            <a href="/listings/?view=hottest" class="text-decoration-none"
+              >Hottest</a
+            >
           </li>
           <li class="d-inline-block col-auto">
-            <a href="" class="text-decoration-none">Newest</a>
+            <a href="/listings/?view=newest" class="text-decoration-none"
+              >Newest</a
+            >
           </li>
           <li class="d-inline-block col-auto">
-            <a href="" class="text-decoration-none">Watchlist</a>
+            <a href="/listings/?view=watchlist" class="text-decoration-none"
+              >Watchlist</a
+            >
           </li>
           <li class="d-inline-block col-auto ms-auto">
-            <a href="" class="text-decoration-none">My Listings</a>
+            <a href="/listings/?view=myListings" class="text-decoration-none"
+              >My Listings</a
+            >
           </li>
           <li class="d-inline-block col-auto">
-            <a href="" class="text-decoration-none">My Profile</a>
+            <a href="/profile/" class="text-decoration-none">My Profile</a>
           </li>
         </ul>
 
@@ -45,8 +53,8 @@
           <input
             type="text"
             class="form-control rounded-2"
-            placeholder="Search listings, profiles etc..."
-            aria-label="Search listings, profiles etc..."
+            placeholder="Search listings"
+            aria-label="Search listings"
             aria-describedby="button-searchbar"
           />
           <button
@@ -64,7 +72,7 @@
         >
           <li class="col list-unstyled mb-2">
             <a
-              href=""
+              href="/listings/?tag=vehicles"
               class="text-decoration-none text-black-50 d-flex flex-column align-items-center"
               ><i class="fa fa-solid fa-laptop fs-3"></i>
               <span>Vehicles</span>
@@ -72,7 +80,7 @@
           </li>
           <li class="col list-unstyled mb-2">
             <a
-              href=""
+              href="/listings/?tag=vehicles"
               class="text-decoration-none text-black-50 d-flex flex-column align-items-center"
               ><i class="fa fa-solid fa-laptop fs-3"></i>
               <span>Vehicles</span>
@@ -80,7 +88,7 @@
           </li>
           <li class="col list-unstyled mb-2">
             <a
-              href=""
+              href="/listings/?tag=vehicles"
               class="text-decoration-none text-black-50 d-flex flex-column align-items-center"
               ><i class="fa fa-solid fa-laptop fs-3"></i>
               <span>Vehicles</span>
@@ -88,7 +96,7 @@
           </li>
           <li class="col list-unstyled mb-2">
             <a
-              href=""
+              href="/listings/?tag=vehicles"
               class="text-decoration-none text-black-50 d-flex flex-column align-items-center"
               ><i class="fa fa-solid fa-laptop fs-3"></i>
               <span>Vehicles</span>
@@ -96,7 +104,7 @@
           </li>
           <li class="col list-unstyled mb-2">
             <a
-              href=""
+              href="/listings/?tag=vehicles"
               class="text-decoration-none text-black-50 d-flex flex-column align-items-center"
               ><i class="fa fa-solid fa-laptop fs-3"></i>
               <span>Vehicles</span>
@@ -104,7 +112,7 @@
           </li>
           <li class="col list-unstyled mb-2">
             <a
-              href=""
+              href="/listings/?tag=vehicles"
               class="text-decoration-none text-black-50 d-flex flex-column align-items-center"
               ><i class="fa fa-solid fa-laptop fs-3"></i>
               <span>Vehicles</span>
@@ -112,7 +120,7 @@
           </li>
           <li class="col list-unstyled mb-2">
             <a
-              href=""
+              href="/listings/?tag=vehicles"
               class="text-decoration-none text-black-50 d-flex flex-column align-items-center"
               ><i class="fa fa-solid fa-laptop fs-3"></i>
               <span>Vehicles</span>
@@ -120,7 +128,7 @@
           </li>
           <li class="col list-unstyled mb-2">
             <a
-              href=""
+              href="/listings/?tag=vehicles"
               class="text-decoration-none text-black-50 d-flex flex-column align-items-center"
               ><i class="fa fa-solid fa-laptop fs-3"></i>
               <span>Vehicles</span>
@@ -136,23 +144,7 @@
         <div
           id="filtersBadges"
           class="row gy-2 gx-2 align-items-center me-auto w-100 py-2"
-        >
-          <div class="col-auto">
-            <span class="px-4 py-1 rounded-pill text-bg-light small fs-md-6"
-              >Newest</span
-            >
-          </div>
-          <div class="col-auto">
-            <span class="px-4 py-1 rounded-pill text-bg-light small fs-md-6"
-              >Accessories</span
-            >
-          </div>
-          <div class="col-auto">
-            <span class="px-4 py-1 rounded-pill text-bg-light small fs-md-6"
-              >$20 - $100</span
-            >
-          </div>
-        </div>
+        ></div>
         <button
           class="btn fs-3 me-auto me-md-1 d-flex align-items-center"
           data-bs-toggle="modal"
@@ -168,7 +160,10 @@
           class="row row-cols-2 row-cols-md-3 gx-2 gx-md-3 gx-lg-4 gy-2 gy-md-3 gy-lg-4"
         ></div>
         <div class="row justify-content-center mt-4">
-          <button class="col-auto px-5 py-2 btn btn-outline-primary">
+          <button
+            class="col-auto px-5 py-2 btn btn-outline-primary"
+            id="loadListings"
+          >
             See More Listings
           </button>
         </div>
@@ -287,7 +282,7 @@
 
   <!-- Modal Body -->
   <!-- if you want to close by clicking outside the modal, delete the last endpoint:data-bs-backdrop and data-bs-keyboard -->
-  <div
+  <form
     class="modal fade"
     id="filterListingsModal"
     tabindex="-1"
@@ -315,32 +310,39 @@
         <div class="modal-body">
           <div class="mt-2">
             <label for="filterListingsSortOrder">Sort By</label>
-            <select
-              class="form-select"
-              aria-label="Default select example"
-              id="filterListingsSortOrder"
-            >
-              <option value="sort=created&sortOrder=desc" selected>
-                Newest
-              </option>
-              <option value="sort=created&sortOrder=asc">Oldest</option>
-              <option value="sort=title&sortOrder=asc">Title A - Z</option>
-              <option value="sort=title&sortOrder=desc">Title Z - A</option>
-            </select>
+            <div class="input-group">
+              <select
+                class="form-select"
+                name="sort"
+                aria-label="Default select example"
+                id="filterListingsSortOrder"
+              >
+                <option value="created" selected>Created</option>
+                <option value="title">Title</option>
+              </select>
+              <select
+                class="form-select"
+                name="sortOrder"
+                aria-label="Default select example"
+                id="filterListingsSortOrder"
+              >
+                <option value="desc" selected>Descending</option>
+                <option value="asc">Ascending</option>
+              </select>
+            </div>
           </div>
 
           <div class="mt-2">
             <label for="filterListingsActive">Show listings</label>
             <select
               class="form-select"
+              name="active"
               aria-label="Default select example"
               id="filterListingsSortOrder"
             >
-              <option value="sort=created&sortOrder=desc" selected>
-                All listings
-              </option>
-              <option value="sort=created&sortOrder=desc">Active</option>
-              <option value="sort=created&sortOrder=desc">Expired</option>
+              <option value="null" selected>All listings</option>
+              <option value="true">Active</option>
+              <option value="false">Expired</option>
             </select>
           </div>
 
@@ -350,13 +352,20 @@
               type="email"
               class="form-control"
               id="floatingInputValue"
+              name="_tag"
               placeholder="enter one tag like 'car', 'phone' etc..."
             />
           </div>
 
           <div class="mt-3 input-group">
             <span class="input-group-text">Listings per page</span>
-            <input type="number" class="form-control" step="1" value="10" />
+            <input
+              type="number"
+              name="limit"
+              class="form-control"
+              step="1"
+              value="20"
+            />
           </div>
 
           <div class="mt-4 ms-3">
@@ -378,9 +387,16 @@
           <button type="button" class="btn btn-grey" data-bs-dismiss="modal">
             Close
           </button>
-          <button type="button" class="btn btn-secondary">Filter</button>
+          <button
+            type="button"
+            class="btn btn-secondary"
+            data-bs-dismiss="modal"
+            id="filterBtn"
+          >
+            Filter
+          </button>
         </div>
       </div>
     </div>
-  </div>
+  </form>
 </html>

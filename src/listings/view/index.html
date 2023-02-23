@@ -21,97 +21,143 @@
     <div id="root" class="mx-auto mw-lg px-4">
       <section id="listingPitch" class="container mt-5">
         <div class="row gx-3 flex-column flex-md-row">
-          <h1 class="mt-4 mb-3 display-5">Title of Listing</h1>
+          <h1 class="mt-4 mb-3 display-5" id="title">Title of Listing</h1>
           <div class="row col-12 col-md-5 flex-md-column">
-            <img
-              src="../../assets/images/irene-kredenets-KStSiM1UvPw-unsplash.jpg"
-              class="col-9 col-md-12"
-              style="aspect-ratio: 1; object-fit: cover"
-              alt=""
-            />
             <div
-              class="row col-3 col-md-12 p-0 px-2 mt-2 m-0 gx-2 gy-2 row-cols-1 row-cols-md-3"
+              id="mediaCarousel"
+              class="carousel carousel-dark slide carousel-fade"
+              data-bs-ride="carousel"
             >
-              <div class="col m-0">
-                <img
-                  src="../../assets/images/irene-kredenets-KStSiM1UvPw-unsplash.jpg"
-                  class="w-100"
-                  style="aspect-ratio: 1; object-fit: cover"
-                  alt=""
-                />
+              <div
+                class="carousel-inner d-flex align-items-center"
+                role="listbox"
+                id="listingImagesCarousel"
+              >
+                <template id="templateCarouselItem">
+                  <div class="carousel-item">
+                    <img
+                      src=""
+                      class="w-100 d-block"
+                      alt="Second slide"
+                      style="aspect-ratio: 1; object-fit: cover"
+                    />
+                  </div>
+                </template>
               </div>
-              <div class="col m-0">
-                <img
-                  src="../../assets/images/irene-kredenets-KStSiM1UvPw-unsplash.jpg"
-                  class="w-100"
-                  style="aspect-ratio: 1; object-fit: cover"
-                  alt=""
-                />
-              </div>
-              <div class="col m-0">
-                <img
-                  src="../../assets/images/irene-kredenets-KStSiM1UvPw-unsplash.jpg"
-                  class="w-100"
-                  style="aspect-ratio: 1; object-fit: cover"
-                  alt=""
-                />
+              <button
+                class="carousel-control-prev align-items-end mb-4"
+                type="button"
+                data-bs-target="#mediaCarousel"
+                data-bs-slide="prev"
+              >
+                <span
+                  class="carousel-control-prev-icon"
+                  aria-hidden="true"
+                ></span>
+                <span class="visually-hidden">Previous</span>
+              </button>
+              <button
+                class="carousel-control-next align-items-end mb-4"
+                type="button"
+                data-bs-target="#mediaCarousel"
+                data-bs-slide="next"
+              >
+                <span
+                  class="carousel-control-next-icon"
+                  aria-hidden="true"
+                ></span>
+                <span class="visually-hidden">Next</span>
+              </button>
+              <div class="carousel-indicators position-relative mb-0">
+                <template id="templateCarouselIndicator">
+                  <img
+                    src=""
+                    class=""
+                    alt=""
+                    style="
+                      aspect-ratio: 1;
+                      object-fit: cover;
+                      width: 60px;
+                      height: 60px;
+                    "
+                    data-bs-target="#mediaCarousel"
+                    data-bs-slide-to=""
+                  />
+                </template>
               </div>
             </div>
           </div>
           <div class="col-12 col-md-7 ms-md-3">
             <div class="row align-items-center">
               <img
-                src="../../assets/images/irene-kredenets-KStSiM1UvPw-unsplash.jpg"
+                id="profileImg"
                 style="aspect-ratio: 1; width: 100px"
-                class="rounded-circle p-3"
+                class="col-auto rounded-circle p-3"
                 alt=""
               />
-              <span class="col-auto fs-2">Ron F. Swanson</span>
+              <span class="col fs-2" id="name">Ron F. Swanson</span>
             </div>
-            <div class="">
-              <p class="m-0">Started: 21.02.23</p>
-              <p class="m-0">
-                Ends: 23.02.23
-                <span class="text-primary ms-3">2 days left</span>
-              </p>
+            <div class="row align-items-center">
+              <div class="col-auto me-3">
+                <small class="m-0 d-block"
+                  >Started: <span id="started"></span
+                ></small>
+                <small class="m-0 d-block">
+                  Ends:
+                  <span id="ends"></span>
+                </small>
+              </div>
+              <span
+                class="countdown | col text-primary fs-5"
+                data-listing="endsIn"
+                >2 days left</span
+              >
             </div>
-            <p class="my-3">
+            <p class="my-3" style="max-height: 100px" id="description">
               Lorem ipsum, dolor sit amet consectetur adipisicing elit. Dolore
               quo minima iure soluta et sed fugit sapiente excepturi eum ullam
               dolor suscipit aperiam magnam, similique labore, vitae quae. Eos,
               eligendi.
             </p>
             <div class="my-5">
-              <p class="fs-5">Current Highest Bid:</p>
+              <p class="fs-5" id="currentStatus">Current Highest Bid:</p>
               <div class="d-flex align-items-center">
-                <p class="col-auto fs-2 fw-bold m-0 mx-2">$ 40</p>
+                <p
+                  class="col-auto fs-2 fw-bold m-0 mx-2 me-4"
+                  id="highestBid"
+                ></p>
                 <div class="col-8">
                   <div class="row align-items-center w-auto flex-nowrap">
                     <img
-                      src="../../assets/images/irene-kredenets-KStSiM1UvPw-unsplash.jpg"
+                      id="highestBidderImg"
                       style="aspect-ratio: 1; max-width: 40px"
                       class="rounded-circle col ms-3 p-0"
                       alt=""
                     />
-                    <span class="col fs-6 fs-md-5"
-                      >Lesli F. Knope or something</span
-                    >
+                    <span
+                      class="col fs-6 fs-md-5"
+                      id="highestBidderName"
+                    ></span>
                   </div>
                 </div>
               </div>
             </div>
             <div class="">
-              <div class="row justify-content-start ms-0">
-                <button
-                  class="col-auto btn btn-outline-grey rounded-pill px-3 me-2"
-                >
-                  up $ 10
-                </button>
-                <button class="col-auto btn btn-outline-grey rounded-pill px-3">
-                  up $ 25
-                </button>
-              </div>
-              <div class="row">
+              <form class="row" id="addBid">
+                <div class="row justify-content-start ms-0">
+                  <button
+                    type="button"
+                    class="col-auto btn btn-outline-grey rounded-pill px-3 me-2"
+                  >
+                    up $ 10
+                  </button>
+                  <button
+                    type="button"
+                    class="col-auto btn btn-outline-grey rounded-pill px-3"
+                  >
+                    up $ 25
+                  </button>
+                </div>
                 <div class="my-3 position-relative col-6">
                   <label
                     for="placeBidValue"
@@ -122,13 +168,16 @@
                     type="number"
                     step="1"
                     class="form-control border-start-rounded ps-4"
-                    name=""
+                    name="amount"
                     min="0"
                     id="placeBidValue"
                     aria-describedby="helpId"
                     placeholder="place a bid here"
                   />
-                  <small> funds available: $120 </small>
+                  <small>
+                    funds available:
+                    <span data-funds class="fw-bold"></span
+                  ></small>
                 </div>
                 <div class="col-6 d-flex align-items-center">
                   <button
@@ -137,7 +186,7 @@
                     Place Bid
                   </button>
                 </div>
-              </div>
+              </form>
             </div>
           </div>
         </div>
@@ -173,7 +222,7 @@
             class="p-4 p-md-5 border rounded-2 mt-2"
             style="height: 300px; overflow-y: scroll"
           >
-            <p>
+            <p id="descriptionFull">
               Lorem ipsum dolor sit amet consectetur adipisicing elit. Eveniet
               at possimus odio optio consectetur soluta doloribus neque? Illo
               sequi omnis quis quam nobis commodi est saepe, rerum eum odio
@@ -207,61 +256,10 @@
                 <tr>
                   <th scope="col-auto">Bidder</th>
                   <th scope="col-2">Amount</th>
-                  <th scope="col-auto">Date</th>
+                  <th scope="col-auto">Created</th>
                 </tr>
               </thead>
-              <tbody style="overflow-y: scroll">
-                <tr class="">
-                  <td scope="row">Leslie F. Knope</td>
-                  <td>$ 40</td>
-                  <td>21.02.23</td>
-                </tr>
-                <tr class="">
-                  <td scope="row">Tammy</td>
-                  <td>$ 25</td>
-                  <td>20.02.23</td>
-                </tr>
-                <tr class="">
-                  <td scope="row">Tammy</td>
-                  <td>$ 25</td>
-                  <td>20.02.23</td>
-                </tr>
-                <tr class="">
-                  <td scope="row">Tammy</td>
-                  <td>$ 25</td>
-                  <td>20.02.23</td>
-                </tr>
-                <tr class="">
-                  <td scope="row">Tammy</td>
-                  <td>$ 25</td>
-                  <td>20.02.23</td>
-                </tr>
-                <tr class="">
-                  <td scope="row">Tammy</td>
-                  <td>$ 25</td>
-                  <td>20.02.23</td>
-                </tr>
-                <tr class="">
-                  <td scope="row">Tammy</td>
-                  <td>$ 25</td>
-                  <td>20.02.23</td>
-                </tr>
-                <tr class="">
-                  <td scope="row">Tammy</td>
-                  <td>$ 25</td>
-                  <td>20.02.23</td>
-                </tr>
-                <tr class="">
-                  <td scope="row">Tammy</td>
-                  <td>$ 25</td>
-                  <td>20.02.23</td>
-                </tr>
-                <tr class="">
-                  <td scope="row">Tammy</td>
-                  <td>$ 25</td>
-                  <td>20.02.23</td>
-                </tr>
-              </tbody>
+              <tbody style="overflow-y: scroll" id="bidHistory"></tbody>
             </table>
           </div>
         </div>
@@ -269,10 +267,7 @@
     </div>
 
     <section class="mt-5 px-4 mw-lg mx-auto" id="profileListings">
-      <h2 class="px-2">Ron Swanson's Listings</h2>
-    </section>
-    <section class="mt-5 px-4 mw-lg mx-auto" id="similarListings">
-      <h2 class="px-2">Similar istings</h2>
+      <h2 class="px-2"></h2>
     </section>
   </body>
 

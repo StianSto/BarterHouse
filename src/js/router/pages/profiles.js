@@ -1,24 +1,29 @@
-import { getListing } from '../../api/listings';
-import { getProfileBids } from '../../api/profile/read/getProfileBids';
 import { getProfileListings } from '../../api/profile/read/getProfileListings';
 import { getProfile } from '../../api/profile/read/getProfiles';
+import { authGuard } from '../../functions/authGuard';
+import { quickAccess } from '../../functions/quickAccess';
 import { setUpdateAvatarListener } from '../../handlers/updateAvatarListener';
 import { renderListingSmall } from '../../render/renderListings';
 import { createSlider } from '../../render/slider';
 import { profileTemplate } from '../../render/templates/profileTemplate';
+import { quickAccessTemplate } from '../../render/templates/quickAccessTemplate';
 import { storage } from '../../storage/localStorage';
 
-const url = window.location.search;
-const params = new URLSearchParams(url);
-const nameParam = params.get('name');
+let nameParam;
+const profile = profileTemplate();
 
 export async function profiles() {
+  authGuard();
+
+  const url = window.location.search;
+  const params = new URLSearchParams(url);
+  nameParam = params.get('name');
+  if (!nameParam) nameParam = storage.load('userDetails').name;
   if (nameParam === storage.load('userDetails').name) await authorizedUser();
-  insertProfileInfo();
+
+  insertProfileInfo(nameParam);
   insertProfileListings();
 }
-
-const profile = profileTemplate();
 
 async function insertProfileInfo() {
   const response = await getProfile(nameParam);
@@ -29,11 +34,6 @@ async function insertProfileInfo() {
   profile.querySelector('#profileEmail').innerText = user.email;
   profile.querySelector('#profileListings').innerText = user.listings.length;
   profile.querySelector('#profileWins').innerText = user.wins.length;
-  if (nameParam === storage.load('userDetails').name) {
-    profile.querySelector(
-      '#profileFunds'
-    ).innerHTML = `<span class="fs-3 text-black">Funds: </span>$ ${user.credits}`;
-  }
 
   const profileSection = document.querySelector('#profileSection');
   profileSection.append(profile);
@@ -45,8 +45,6 @@ async function insertProfileListings() {
   const getListings = await getProfileListings(nameParam);
   const listings = await getListings.json();
 
-  console.log('listings :>> ', listings);
-
   if (listings.length === 0) {
     const noListings = document.createElement('p');
     noListings.innerText = 'no listings';
@@ -57,16 +55,14 @@ async function insertProfileListings() {
 }
 
 async function authorizedUser() {
-  const quickAccess = new DOMParser().parseFromString(
-    quickAccessDOM,
-    'text/html'
-  );
-  const quickAccessContainer = quickAccess.querySelector('#quickAccessSlider');
+  const user = storage.load('userDetails');
+
+  const quickAccessSection = quickAccessTemplate();
+  const quickAccessContainer =
+    quickAccessSection.querySelector('#quickAccessSlider');
   const listings = await watchlist();
   quickAccessContainer.append(createSlider(listings));
-  document
-    .querySelector('#profileSection')
-    .after(quickAccess.querySelector('body > *'));
+  document.querySelector('#profileSection').after(quickAccessSection);
 
   const profileImg = profile.querySelector('#profileImg');
   const changeImgBtn = new DOMParser().parseFromString(
@@ -87,105 +83,41 @@ async function authorizedUser() {
   profileImg.after(changeImgBtn.querySelector('body > *'));
   const updateAvatarForm = document.querySelector('#changeAvatarModal > form');
   setUpdateAvatarListener(nameParam, updateAvatarForm);
+
+  // profile.querySelector(
+  //   '#profileFunds'
+  // ).innerHTML = `<span class="fs-3 text-black">Funds: </span>$ ${user.credits}`;
+  const userCredits = profile.querySelector('#profileFunds');
+  const userCreditsElement = document.createElement('span');
+  userCreditsElement.classList.add('fs-3');
+  userCreditsElement.innerText = 'Funds: $ ' + user.credits;
+  userCredits.append(userCreditsElement);
 }
 
+// will create an array of listings that the user has bid on. will rearrange the returned data s oeach listing includes bids
 export async function watchlist() {
-  const name = storage.load('userDetails').name;
-  if (!name) return;
+  const myBids = await quickAccess.watchlist();
+  let results = {};
 
-  const bids = await getProfileBids(name);
-  const mybids = await bids.json();
-  const idSet = [...new Set(mybids.map((bid) => bid.listing.id))];
+  myBids.filter((bid) => {
+    const { listing, ...bidData } = bid;
+    listing['bids'] = [bidData];
 
-  const listings = idSet.map(async (id) => {
-    const response = await getListing(id);
-    return await response.json();
+    let today = new Date();
+    let ends = new Date(bid.listing.endsAt);
+    if (ends.getTime() < today.getTime()) return;
+
+    if (results[bid.listing.id]) {
+      let a = results[bid.listing.id].amount;
+      let b = bid.amount;
+
+      if (b > a) return (results[listing.id] = listing);
+      return;
+    }
+
+    results[listing.id] = listing;
   });
 
-  let results = [];
-  for (const item of listings) {
-    results.push(await item);
-  }
-
-  return results;
+  const listings = Object.values(results);
+  return listings;
 }
-
-const quickAccessDOM = `
-
-<section id="quickAccess" class="mw-lg mx-auto px-4 mt-5 mb-5 p-3 row">
-        <h2>Quick Access</h2>
-        <div id="quickAccessButtons" class="col-auto">
-          <input
-            type="radio"
-            class="btn-check"
-            name="quickAccessView"
-            id="quickAccessViewFull"
-            autocomplete="off"
-            checked
-          />
-          <label
-            class="btn btn-outline-dark btn-sortby btn-sortby-full me-1"
-            for="quickAccessViewFull"
-          ></label>
-
-          <input
-            type="radio"
-            class="btn-check"
-            name="quickAccessView"
-            id="quickAccessViewGrid"
-            autocomplete="off"
-          />
-          <label
-            class="btn btn-outline-dark btn-sortby btn-sortby-grid me-1"
-            for="quickAccessViewGrid"
-          ></label>
-        </div>
-        <div id="quickAccessSort" class="mt-2 col-lg-auto">
-          <input
-            type="radio"
-            class="btn-check"
-            name="quickAccessSort"
-            id="quickAccessWatchlist"
-            autocomplete="off"
-            checked
-          />
-          <label
-            class="btn btn-outline-dark rounded-pill py-1 px-3"
-            for="quickAccessWatchlist"
-          >
-            <i class="fa fa-eye"></i
-            ><span class="d-none d-sm-inline ms-2">Watchlist</span>
-          </label>
-          <input
-            type="radio"
-            class="btn-check"
-            name="quickAccessSort"
-            id="quickAccessHottest"
-            autocomplete="off"
-          />
-          <label
-            class="btn btn-outline-dark rounded-pill py-1 px-3"
-            for="quickAccessHottest"
-          >
-            <i class="fa fa-fire"></i
-            ><span class="d-none d-sm-inline ms-2">Hottest</span>
-          </label>
-          <input
-            type="radio"
-            class="btn-check"
-            name="quickAccessSort"
-            id="quickAccessMyListings"
-            autocomplete="off"
-          />
-          <label
-            class="btn btn-outline-dark rounded-pill py-1 px-3"
-            for="quickAccessMyListings"
-          >
-            <i class="fa fa-user"></i>
-            <span class="d-none d-sm-inline ms-2">My Listings</span>
-          </label>
-        </div>
-
-        <div class="mt-5 px-0 mw-lg mx-auto" id="quickAccessSlider"></div>
-      </section>
-			`;

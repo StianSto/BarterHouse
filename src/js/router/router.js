@@ -1,13 +1,13 @@
 import { renderNav } from '../render/renderNav';
-import { storage } from '../storage/localStorage';
 import * as pages from './pages/';
 const url = window.location.pathname;
 
 export async function router() {
+  console.log(url);
   switch (url) {
     case '/':
     case '/index.html':
-      // authCheck();
+      console.log('home');
       renderNav();
       pages.home();
       break;
@@ -43,14 +43,5 @@ export async function router() {
       renderNav();
       pages.edit();
       break;
-  }
-}
-
-export function authCheck(redirect) {
-  const token = storage.load('token');
-  let url = `/auth/?form=login`;
-  if (redirect) url += `&redirect=${redirect}`;
-  if (!token) {
-    window.location.replace(url);
   }
 }

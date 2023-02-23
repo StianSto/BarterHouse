@@ -1,4 +1,4 @@
-import createUrl from '../../../functions/createFlagString';
+import createUrl from '../../../functions/createUrl';
 import headers from '../../headers';
 
 const PROFILES_ENDPOINT = 'auction/profiles/';
@@ -10,7 +10,7 @@ const paramsDefault = new Map([
   ['offset', null],
   ['tag', null],
   ['_active', null],
-  ['_bids', null],
+  ['_bids', true],
 ]);
 
 /**

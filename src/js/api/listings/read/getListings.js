@@ -1,5 +1,5 @@
 import headers from '../../headers';
-import createUrl from '../../../functions/createFlagString';
+import createUrl from '../../../functions/createUrl';
 import { LISTINGS_ENDPOINT } from '../../constants';
 
 // GET ALL LISTINGS
@@ -7,10 +7,10 @@ const defaultParams = new Map([
   ['sort', 'created'],
   ['sortOrder', 'desc'],
   ['limit', 10],
-  ['offset', null],
-  ['_active', null],
+  ['offset', 0],
+  ['_active', true],
   ['_seller', null],
-  ['_bids', null],
+  ['_bids', true],
 ]);
 
 /**
@@ -24,21 +24,30 @@ const params = new Map([
   ['sort', 'title'],
   ['sortOrder', 'asc'],
   ['limit', 10],
-  ['offset', 10],
+  ['offset', null],
   ['_active', true],
-  ['_seller', "John_Doe"],
+  ['_seller', null,
   ['_bids', true],
 ]);
 const response = await getAllListings(params)
 */
 
 export async function getAllListings(params = defaultParams) {
-  const URL = createUrl(LISTINGS_ENDPOINT, params);
+  let response;
+  let mergedParams = new Map([...defaultParams, ...params]);
 
-  const response = await fetch(URL, {
+  const URL = createUrl(LISTINGS_ENDPOINT, mergedParams);
+
+  response = await fetch(URL, {
     method: 'GET',
     headers: headers('application/json'),
   });
+
+  if (response.status === 429) {
+    alert(
+      'oops, it seems the server is overloaded with requests at the moment. please wait a minute before trying again :)'
+    );
+  }
 
   return response;
 }
@@ -56,7 +65,7 @@ makes a GET request to get a single listing by id and specified parameters. the 
 @param {Map} [params=defaultParamsSingleListing] - The parameters to be added to the request URL.
 @return {Promise} - The response of the GET request to the listings endpoint.
 @example
-cosnt params = new Map([
+const params = new Map([
 	['_seller', "John_Doe"],
   ['_bids', true],
 ])

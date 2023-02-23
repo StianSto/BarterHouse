@@ -1,4 +1,4 @@
-import createUrl from '../../../functions/createFlagString';
+import createUrl from '../../../functions/createUrl';
 import headers from '../../headers';
 
 const PROFILES_ENDPOINT = 'auction/profiles/';

@@ -1,13 +1,13 @@
-import createUrl from '../../../functions/createFlagString';
+import createUrl from '../../../functions/createUrl';
 import headers from '../../headers';
 
 const PROFILES_ENDPOINT = 'auction/profiles/';
 
 // GET MUTLIPLE PROFILES
-const paramsProfileListings = new Map([
+const paramsProfileBids = new Map([
   ['sort', 'created'],
   ['sortOrder', 'desc'],
-  ['limit', 10],
+  ['limit', null],
   ['offset', null],
   ['_listings', true],
 ]);
@@ -20,7 +20,7 @@ This function sends a GET request to the API endpoint for the specified user's b
 @return {Promise} - Returns a Promise
 */
 export async function getProfileBids(user, paramsMap = []) {
-  const params = new Map([...paramsProfileListings, ...paramsMap]);
+  const params = new Map([...paramsProfileBids, ...paramsMap]);
   const path = PROFILES_ENDPOINT + user + '/bids';
   const URL = createUrl(path, params);
 

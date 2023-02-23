@@ -1,6 +1,6 @@
 import { createListing } from '../api/listings';
 
-export function setCreateListingFormListener(form) {
+export function setCreateListingFormListener(form, imagesState) {
   form.addEventListener('submit', async (event) => {
     event.preventDefault();
 
@@ -10,17 +10,9 @@ export function setCreateListingFormListener(form) {
     const tagsList = [...form.querySelectorAll('.tag')];
     const tags = tagsList.map((tag) => tag.innerText);
     body.tags = tags;
-
-    const imagesList = [
-      ...form.querySelectorAll('#previewImagesContainer img'),
-    ];
-    const media = imagesList.map((image) => image.src);
-    body.media = media;
+    body.media = imagesState.getAllImages();
 
     const response = await createListing(body);
-    console.log(response);
-    if (response.ok) {
-      alert('created a new listing');
-    }
+    if (response.ok) alert('created a new listing');
   });
 }

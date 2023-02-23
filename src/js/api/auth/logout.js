@@ -5,5 +5,5 @@ export function logout() {
   storage.remove('token');
   storage.remove('userDetails');
 
-  window.location.reload();
+  window.location.replace('/');
 }

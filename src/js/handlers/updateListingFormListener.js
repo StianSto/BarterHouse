@@ -1,6 +1,6 @@
 import { updateListing } from '../api/listings';
 
-export function setUpdateListingFormListener(form, id) {
+export function setUpdateListingFormListener(form, id, imagesState) {
   form.addEventListener('submit', async (event) => {
     event.preventDefault();
 
@@ -11,13 +11,7 @@ export function setUpdateListingFormListener(form, id) {
     const tags = tagsList.map((tag) => tag.innerText);
     body.tags = tags;
 
-    const imagesList = [
-      ...form.querySelectorAll('#previewImagesContainer img'),
-    ];
-    const media = imagesList.map((image) => image.src);
-    body.media = media;
-
-    console.log(body);
+    body.media = imagesState.getAllImages();
 
     const response = await updateListing(id, body);
     if (response.ok) {

@@ -2,8 +2,8 @@ import { formInputTemplate } from './templates/formTemplate';
 
 export function renderAuthForm(authtype = 'login') {
   let form = document.createElement('form');
+  authForm(authtype, form);
 
-  authtype === 'login' ? renderLoginForm(form) : renderRegisterForm(form);
   const submitBtn = document.createElement('button');
   submitBtn.innerText = 'Submit';
   submitBtn.classList.add(
@@ -19,14 +19,9 @@ export function renderAuthForm(authtype = 'login') {
 
   return form;
 }
-
-function renderLoginForm(form) {
-  form.id = 'login';
-  form.append(...loginFormInputs.map(addinput));
-}
-function renderRegisterForm(form) {
-  form.id = 'register';
-  form.append(...registerFormInputs.map(addinput));
+function authForm(authtype, form) {
+  if (authtype === 'login') form.append(...loginFormInputs.map(addinput));
+  if (authtype === 'register') form.append(...registerFormInputs.map(addinput));
 }
 
 function addinput(inputData) {

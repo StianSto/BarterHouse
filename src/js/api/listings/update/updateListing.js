@@ -1,4 +1,4 @@
-import createUrl from '../../../functions/createFlagString';
+import createUrl from '../../../functions/createUrl';
 import { LISTINGS_ENDPOINT } from '../../constants';
 import headers from '../../headers';
 
