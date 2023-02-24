@@ -1,17 +1,16 @@
 export function setInlineTagsInputListener(tagsContainer) {
   const input = tagsContainer.querySelector('input');
 
+  input.addEventListener('focusout', eventListener);
   input.addEventListener('keyup', (event) => {
     if (event.keyCode !== 32) return;
     eventListener();
   });
-  input.addEventListener('focusout', eventListener);
 
   function eventListener() {
-    if (!input.value) return null;
-
-    const tag = createTag(input.value);
-
+    let tagValue = input.value.trim();
+    if (!tagValue) return null;
+    const tag = createTag(tagValue);
     input.value = '';
     input.before(tag);
   }

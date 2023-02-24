@@ -1,4 +1,4 @@
-export function navTemplate() {
+export const navTemplate = () => {
   const nav = new DOMParser().parseFromString(
     `
 	
@@ -69,4 +69,4 @@ export function navTemplate() {
   );
 
   return nav;
-}
+};

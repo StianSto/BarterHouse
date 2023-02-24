@@ -9,7 +9,6 @@ export async function setUpdateAvatarListener(user, form) {
     const body = Object.fromEntries(formData);
 
     const response = await updateProfile(user, JSON.stringify(body));
-
     if (response.ok) window.location.reload();
   });
 

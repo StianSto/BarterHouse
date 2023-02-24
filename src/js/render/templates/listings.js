@@ -1,5 +1,7 @@
-export const listingSmall = `
-    <div class="listing-small | col">
+export const listingSmall = () => {
+  const el = new DOMParser().parseFromString(
+    `
+    <div class="listing-small | col h-100">
 	
 		<a href="" class="text-decoration-none text-black">
       <div class="card p-0 h-100 justify-content-between">
@@ -16,11 +18,11 @@ export const listingSmall = `
         <div class="d-flex justify-content-between h-100">
           <div class="card-body d-flex flex-column">
             <h3 class="card-title fs-4" data-listing="title">Card title</h3>
-            <p class="small" >
+            <p class="small mb-auto" >
               <i class="fa fa-clock me-1"></i>
 							<span data-listing="endsIn"></span>
             </p>
-            <div class="card-text mt-4 fs-6 fs-sm-5 mt-auto" >
+            <div class="card-text mt-4 fs-6 fs-sm-5 mt-4" >
               <span class="me-4 fw-bold fs-4 d-flex flex-nowrap" data-listing="bid">$ 40</span>
             </div>
           </div>
@@ -28,4 +30,9 @@ export const listingSmall = `
       </div>
 		</a>
     </div>
-	`;
+	`,
+    'text/html'
+  );
+
+  return el.querySelector('body > *');
+};

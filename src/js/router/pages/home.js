@@ -28,10 +28,7 @@ export async function home() {
     const hero = document.querySelector('#hero');
     hero.after(quickAccessSection);
   }
-  const getListings = await getAllListings(paramsAllListings);
-  const listings = await getListings.json();
-  const listingsContainer = document.querySelector('#listingsContainer > .row');
-  listingsContainer.append(...listings.map(renderListingSmall));
+  render(paramsAllListings);
 
   let offset = 0;
   const moreListingsBtn = document.querySelector('#loadListings');
@@ -46,6 +43,8 @@ export async function home() {
 async function render(params) {
   const getListings = await getAllListings(params);
   const listings = await getListings.json();
-  const listingsContainer = document.querySelector('#listingsContainer > .row');
+  const listingsContainer = document.querySelector(
+    '#listingsContainer > [data-listing-grid]'
+  );
   listingsContainer.append(...listings.map(renderListingSmall));
 }

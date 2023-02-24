@@ -3,11 +3,9 @@ import * as pages from './pages/';
 const url = window.location.pathname;
 
 export async function router() {
-  console.log(url);
   switch (url) {
     case '/':
     case '/index.html':
-      console.log('home');
       renderNav();
       pages.home();
       break;

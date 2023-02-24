@@ -25,9 +25,7 @@ function authForm(authtype, form) {
 }
 
 function addinput(inputData) {
-  let inputContainer = formInputTemplate
-    .cloneNode(true)
-    .querySelector('.form-floating');
+  let inputContainer = formInputTemplate();
 
   const input = inputContainer.children[0];
   const label = inputContainer.children[1];
@@ -35,6 +33,7 @@ function addinput(inputData) {
   for (const [key, value] of Object.entries(inputData)) {
     input[key] = value;
   }
+
   label.for = inputData.name;
   label.innerText = inputData.placeholder;
 
