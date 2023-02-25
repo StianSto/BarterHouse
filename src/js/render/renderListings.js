@@ -12,7 +12,7 @@ export function renderListingSmall({
   id = '',
   endsAt = '',
 }) {
-  const listing = new DOMParser().parseFromString(listingSmall, 'text/html');
+  const listing = listingSmall();
 
   const listingLink = listing.querySelector('.listing-small > a');
   const listingTitle = listing.querySelector('[data-listing="title"]');
@@ -24,10 +24,9 @@ export function renderListingSmall({
   listingImg.loading = 'lazy';
 
   bids.sort((a, b) => b.amount - a.amount);
-
   addCountdown(endsAt, bids, listing);
 
-  return listing.querySelector('.listing-small');
+  return listing;
 }
 
 // calculates and adds a static countdown to listing. if listing has less than a day left and is still active, it adds a live countdown
@@ -47,7 +46,6 @@ function addCountdown(endsAt, bids, listing) {
       highestBid.classList.add('text-secondary');
     } else if (bids[0]) {
       highestBid.textContent = `${bids[0].bidderName} has won!`;
-      endsIn.textContent = 'Auction has ended';
     }
   } else {
     if (bids[0] && bids[0].bidderName === user) {

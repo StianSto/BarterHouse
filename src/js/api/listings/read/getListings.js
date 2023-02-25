@@ -43,12 +43,6 @@ export async function getAllListings(params = defaultParams) {
     headers: headers('application/json'),
   });
 
-  if (response.status === 429) {
-    alert(
-      'oops, it seems the server is overloaded with requests at the moment. please wait a minute before trying again :)'
-    );
-  }
-
   return response;
 }
 

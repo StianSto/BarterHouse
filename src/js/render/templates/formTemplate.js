@@ -1,5 +1,6 @@
-export const formInputTemplate = new DOMParser().parseFromString(
-  `
+export const formInputTemplate = () => {
+  const el = new DOMParser().parseFromString(
+    `
 	<div class="form-floating my-2">
 		<input
 			type=""
@@ -11,5 +12,8 @@ export const formInputTemplate = new DOMParser().parseFromString(
 		<label for="" class="form-label"></label>
 	</div>
 `,
-  'text/html'
-);
+    'text/html'
+  );
+
+  return el.querySelector('body > *');
+};

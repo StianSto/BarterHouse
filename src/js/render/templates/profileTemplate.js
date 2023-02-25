@@ -1,4 +1,4 @@
-export function profileTemplate() {
+export const profileTemplate = () => {
   const profileTemplate = new DOMParser().parseFromString(
     `
 	<div class="row justify-content-center">
@@ -31,4 +31,4 @@ export function profileTemplate() {
   );
 
   return profileTemplate.querySelector('body > div');
-}
+};

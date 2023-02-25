@@ -10,7 +10,6 @@ export function setUpdateListingFormListener(form, id, imagesState) {
     const tagsList = [...form.querySelectorAll('.tag')];
     const tags = tagsList.map((tag) => tag.innerText);
     body.tags = tags;
-
     body.media = imagesState.getAllImages();
 
     const response = await updateListing(id, body);

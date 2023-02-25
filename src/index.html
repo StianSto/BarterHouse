@@ -18,7 +18,7 @@
   <body>
     <header></header>
 
-    <div id="root" class="mx-auto px-0">
+    <main id="root" class="mx-auto px-0">
       <div id="subnav" class="mt-5 mw-lg mx-auto px-4">
         <ul class="row text-primary p-0 d-none d-lg-flex">
           <li class="d-inline-block col-auto">
@@ -161,10 +161,9 @@
         class="container-fluid mw-lg px-4 y-5 mt-5"
       >
         <h2 class="mb-3">Recent Listings</h2>
-        <div
-          class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 gx-1 gx-2 gx-md-3 gx-lg-4 gy-5 gy-sm-3"
-        ></div>
-        <div class="row justify-content-center my-4">
+        <div data-listing-grid></div>
+        <!-- row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 gx-1 gx-2 gx-md-3 gx-lg-4 gy-5 gy-sm-3 -->
+        <div class="row justify-content-center my-3 mb-5">
           <button
             class="col-auto px-5 py-2 btn btn-outline-primary"
             id="loadListings"
@@ -173,6 +172,14 @@
           </button>
         </div>
       </section>
-    </div>
+    </main>
+    <footer
+      class="row justify-content-center bg-primary m-0 mt-5"
+      style="height: 100px"
+    >
+      <p class="text-center text-white mt-auto">
+        copyright &copy; Stian Stordal
+      </p>
+    </footer>
   </body>
 </html>
