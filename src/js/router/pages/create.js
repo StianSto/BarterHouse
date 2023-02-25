@@ -65,6 +65,7 @@ export function saveImages(imagesState) {
 
 export function reloadModal(imagesState) {
   const container = document.querySelector('#imageInputs');
+  container.replaceChildren();
   const imagesArr = imagesState.getAllImages();
 
   imagesArr.forEach((value) => addImageInput(container, value));

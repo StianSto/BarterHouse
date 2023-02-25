@@ -15,6 +15,7 @@ const getListingParams = new Map([
 export async function viewListing() {
   const params = getSearchParams();
   const id = params.get('id');
+  const user = storage.load('userDetails');
 
   const response = await getListing(id, getListingParams);
   const listing = await response.json();
@@ -34,7 +35,7 @@ export async function viewListing() {
     addBidForm.replaceWith(logInToBid);
   } else {
     const funds = document.querySelectorAll('[data-funds]');
-    const credits = storage.load('userDetails').credits;
+    const credits = user.credits;
     funds.forEach((el) => (el.textContent = `$ ${credits}`));
     addSliders(listing.seller.name);
   }
@@ -51,9 +52,17 @@ export async function viewListing() {
     setaddBidListener(addBidForm, id);
   }
 
+  if (seller.name === user.name) {
+    const editBtn = document.createElement('a');
+    editBtn.href = `/listings/edit/?id=${id}`;
+    editBtn.classList.add('fa', 'fa-edit', 'fs-1', 'col-auto');
+    document.querySelector('#title').after(editBtn);
+  }
+
   // add content to page
   document.querySelector('#title').textContent = title;
   document.querySelector('#name').textContent = seller.name;
+  document.querySelector('#seller').href = `/profiles/?name=${seller.name}`;
   document.querySelector('#description').textContent = description;
   document.querySelector('#descriptionFull').textContent = description;
   document.querySelector('#ends').textContent = endsDate.toLocaleDateString();
@@ -79,6 +88,7 @@ async function addBidders(bids) {
   const highestBidElement = document.querySelector('#highestBid');
   const highestBidderElement = document.querySelector('#highestBidderName');
   const highestBidImgElement = document.querySelector('#highestBidderImg');
+  const highestBidderProfile = document.querySelector('#buyer');
 
   if (!bids[0]) {
     highestBidElement.textContent = 'no bids';
@@ -92,6 +102,7 @@ async function addBidders(bids) {
   const highestBidderResponse = await getProfile(highestBid.bidderName);
   const highestBidder = await highestBidderResponse.json();
   highestBidElement.textContent = `$ ${highestBid.amount}`;
+  highestBidderProfile.href = `/profiles/?name=${highestBid.bidderName}`;
   highestBidderElement.textContent = highestBid.bidderName;
   highestBidImgElement.src = highestBidder.avatar
     ? highestBidder.avatar

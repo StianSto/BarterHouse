@@ -21,7 +21,9 @@
     <div id="root" class="mx-auto mw-lg px-4">
       <section id="listingPitch" class="container mt-5">
         <div class="row gx-3 flex-column flex-md-row">
-          <h1 class="mt-4 mb-3 display-5" id="title">Title of Listing</h1>
+          <div class="row align-items-center">
+            <h1 class="col-auto mt-4 mb-3 display-5" id="title"></h1>
+          </div>
           <div class="row col-12 col-md-5 flex-md-column">
             <div
               id="mediaCarousel"
@@ -88,15 +90,17 @@
             </div>
           </div>
           <div class="col-12 col-md-7 ms-md-3">
-            <div class="row align-items-center">
-              <img
-                id="profileImg"
-                style="aspect-ratio: 1; width: 100px"
-                class="col-auto rounded-circle p-3"
-                alt=""
-              />
-              <span class="col fs-2" id="name">Ron F. Swanson</span>
-            </div>
+            <a href="" id="seller" class="link-dark text-decoration-none">
+              <div class="row align-items-center">
+                <img
+                  id="profileImg"
+                  style="aspect-ratio: 1; width: 100px"
+                  class="col-auto rounded-circle p-3"
+                  alt=""
+                />
+                <span class="col fs-2" id="name"></span>
+              </div>
+            </a>
             <div class="row align-items-center">
               <div class="col-auto me-3">
                 <small class="m-0 d-block"
@@ -127,18 +131,20 @@
                   id="highestBid"
                 ></p>
                 <div class="col-8">
-                  <div class="row align-items-center w-auto flex-nowrap">
-                    <img
-                      id="highestBidderImg"
-                      style="aspect-ratio: 1; max-width: 40px"
-                      class="rounded-circle col ms-3 p-0"
-                      alt=""
-                    />
-                    <span
-                      class="col fs-6 fs-md-5"
-                      id="highestBidderName"
-                    ></span>
-                  </div>
+                  <a href="" id="buyer" class="link-dark text-decoration-none">
+                    <div class="row align-items-center w-auto flex-nowrap">
+                      <img
+                        id="highestBidderImg"
+                        style="aspect-ratio: 1; max-width: 40px"
+                        class="rounded-circle col ms-3 p-0"
+                        alt=""
+                      />
+                      <span
+                        class="col fs-6 fs-md-5"
+                        id="highestBidderName"
+                      ></span>
+                    </div>
+                  </a>
                 </div>
               </div>
             </div>

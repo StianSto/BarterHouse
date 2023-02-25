@@ -27,7 +27,7 @@ export async function listings() {
     if (saveFilterSettings.checked) storage.save('filterSettings', [...params]);
 
     const listingsContainer = document.querySelector(
-      '#listingsContainer > .row'
+      '#listingsContainer > [data-listing-grid]'
     );
     listingsContainer.replaceChildren();
     render(params);
@@ -46,7 +46,9 @@ export async function listings() {
 async function render(params) {
   const getListings = await getAllListings(params);
   const listings = await getListings.json();
-  const listingsContainer = document.querySelector('#listingsContainer > .row');
+  const listingsContainer = document.querySelector(
+    '#listingsContainer > [data-listing-grid]'
+  );
   listingsContainer.append(...listings.map(renderListingSmall));
 }
 
