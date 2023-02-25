@@ -17,15 +17,15 @@ export default defineConfig({
     rollupOptions: {
       input: {
         main: resolve(__dirname, './src/index.html'),
+        auth: resolve(__dirname, './src/auth/index.html'),
+        create: resolve(__dirname, './src/create/index.html'),
         listings: resolve(__dirname, './src/listings/index.html'),
         view_listing: resolve(__dirname, './src/listings/view/index.html'),
         edit_listing: resolve(__dirname, './src/listings/edit/index.html'),
-        auth: resolve(__dirname, './src/auth/index.html'),
         profiles: resolve(__dirname, 'src/profiles/index.html'),
       },
     },
     outDir: '../dist',
     emptyOutDir: true,
   },
-  // base: './',
 });
