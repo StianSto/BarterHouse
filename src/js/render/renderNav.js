@@ -14,6 +14,7 @@ export function renderNav() {
     navProfileMobile.innerHTML = '';
     navProfile.replaceWith(navLoginRegisterContainer());
     navLinks = navLinksUnauthorized;
+    navDOM.querySelector('[data-btn-create]').remove();
   } else {
     const profileImg = navDOM.querySelectorAll('.profile-img');
     profileImg.forEach((img) => (img.src = user.avatar));
@@ -87,9 +88,9 @@ const linkElement = () => {
 const navLoginRegisterContainer = () => {
   const el = new DOMParser().parseFromString(
     `
-		<div class="btn-unauth btn-group border mt-4">
-			<a href="/auth/?form=login" class="btn btn-white text-primary fs-4 px-4">Login</a>
-			<a href="/auth/?form=register" class="btn btn-outline-white fs-4 px-4">Register</a>
+		<div class="btn-unauth btn-group border mt-4 mt-lg-0 ms-md-auto">
+			<a href="/auth/?form=login" class="btn btn-white text-primary fs-5 px-4 btn">Login</a>
+			<a href="/auth/?form=register" class="btn btn-primary fs-5 px-4">Register</a>
 		</div>
 		`,
     'text/html'

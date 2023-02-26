@@ -8,15 +8,6 @@
     height: 3px;
     transition: all 200ms ease-in-out;
   }
-
-  &:focus {
-    & > span:nth-child(1) {
-      translate: -12px;
-    }
-    & > span:nth-child(3) {
-      translate: 12px;
-    }
-  }
 }
 
 nav {
@@ -35,10 +26,9 @@ nav {
 }
 
 .navbar-toggler {
-  &:focus {
-    outline: none !important;
-    box-shadow: none !important;
-
+  outline: none !important;
+  box-shadow: none !important;
+  &[aria-expanded='true'] {
     & .menu-icon > span:nth-child(1) {
       translate: -12px;
     }

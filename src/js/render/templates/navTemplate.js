@@ -24,7 +24,7 @@ export const navTemplate = () => {
 				</div>
 			</button>
 			<div
-				class="collapse navbar-collapse bg-primary px-4 py-3 px-sm-5 py-sm-4 py-md-0 align-content-stretch"
+				class="collapse navbar-collapse bg-primary px-4 px-sm-5 align-content-stretch"
 				id="navbarSupportedContent"
 			>
 				<div class="d-lg-none d-flex align-items-center" id="navProfileMobile">
@@ -53,7 +53,7 @@ export const navTemplate = () => {
 				<ul class="mt-4 d-lg-none list-unstyled ff-brand" id="navLinks"></ul>
 				<a
 					href="/create/"
-					class="nav-btn | fs-5 text-black ms-auto me-4 px-0 d-none d-lg-flex text-decoration-none py-3"
+					class="nav-btn | fs-5 text-black ms-auto me-4 px-0 d-none d-lg-flex text-decoration-none py-3" data-btn-create
 				>
 					<div class="my-auto d-flex align-items-center gap-2">
 						<span class="text-primary fs-2">+ </span>
