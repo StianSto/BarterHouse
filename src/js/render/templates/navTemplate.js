@@ -27,7 +27,7 @@ export const navTemplate = () => {
 				class="collapse navbar-collapse bg-primary px-4 px-sm-5 align-content-stretch"
 				id="navbarSupportedContent"
 			>
-				<div class="d-lg-none d-flex align-items-center" id="navProfileMobile">
+				<div class="d-lg-none d-flex align-items-center mt-4 " id="navProfileMobile">
 					<a href="">
 						<img
 							src=""
@@ -40,16 +40,7 @@ export const navTemplate = () => {
 						<i class="fa fa-solid fa-door-open fs-1 text-white"></i>
 					</button>
 				</div>
-				<div id="navProfile" class="d-none d-lg-block dropdown mt-2">
-					<img
-						src=""
-						alt=""
-						class="profile-img rounded-circle dropdown-toggle"
-						role="button"
-						data-bs-toggle="dropdown"
-						aria-expanded="false"
-					/>
-				</div>
+				
 				<ul class="mt-4 d-lg-none list-unstyled ff-brand" id="navLinks"></ul>
 				<a
 					href="/create/"
@@ -60,6 +51,16 @@ export const navTemplate = () => {
 						<span> New Listing </span>
 					</div>
 				</a>
+				<div id="navProfile" class="d-none d-lg-block dropdown mt-2">
+					<img
+						src=""
+						alt=""
+						class="profile-img rounded-circle dropdown-toggle"
+						role="button"
+						data-bs-toggle="dropdown"
+						aria-expanded="false"
+					/>
+				</div>
 			</div>
 		</div>
 	</nav>

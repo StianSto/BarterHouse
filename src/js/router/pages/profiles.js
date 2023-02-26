@@ -40,7 +40,7 @@ async function insertProfileInfo() {
 }
 
 async function insertProfileListings() {
-  const listingsContainer = document.querySelector('#listingsContainer > .row');
+  const listingsContainer = document.querySelector('[data-listing-grid]');
 
   const getListings = await getProfileListings(nameParam);
   const listings = await getListings.json();
