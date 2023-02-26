@@ -38,6 +38,7 @@ export async function viewListing() {
     const credits = user.credits;
     funds.forEach((el) => (el.textContent = `$ ${credits}`));
     addSliders(listing.seller.name);
+    addBidders(bids);
   }
 
   if (timer === false) {
@@ -52,7 +53,7 @@ export async function viewListing() {
     setaddBidListener(addBidForm, id);
   }
 
-  if (seller.name === user.name) {
+  if (seller?.name === user?.name) {
     const editBtn = document.createElement('a');
     editBtn.href = `/listings/edit/?id=${id}`;
     editBtn.classList.add('fa', 'fa-edit', 'fs-1', 'col-auto');
@@ -72,7 +73,6 @@ export async function viewListing() {
     ? seller.avatar
     : '../../../assets/images/irene-kredenets-KStSiM1UvPw-unsplash.jpg';
 
-  addBidders(bids);
   addMedia(media);
 }
 

@@ -26,15 +26,12 @@ export function renderNav() {
     const anchorTag = link.querySelector('.link');
     anchorTag.innerText = name;
     anchorTag.href = path;
-    console.log(link);
     linksContainer.append(link);
   });
 
   const header = document.querySelector('header');
-  console.log(header);
   header.append(navDOM.querySelector('nav'));
   const logoutBtn = document.querySelectorAll('[data-logout]');
-  console.log(logoutBtn);
   logoutBtn.forEach((btn) => btn.addEventListener('click', () => logout()));
 }
 
