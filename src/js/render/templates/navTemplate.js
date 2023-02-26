@@ -24,7 +24,7 @@ export const navTemplate = () => {
 				</div>
 			</button>
 			<div
-				class="collapse navbar-collapse bg-primary px-4 py-3 px-sm-5 py-sm-4 py-md-0 align-content-stretch"
+				class="collapse navbar-collapse bg-primary px-4 px-sm-5 align-content-stretch"
 				id="navbarSupportedContent"
 			>
 				<div class="d-lg-none d-flex align-items-center" id="navProfileMobile">
@@ -36,22 +36,11 @@ export const navTemplate = () => {
 						/>
 						<span class="fs-4 ms-3 text-white">Ron F. Swanson</span>
 					</a>
-					<button class="btn ms-auto" id="logout">
+					<button class="btn ms-auto" data-logout>
 						<i class="fa fa-solid fa-door-open fs-1 text-white"></i>
 					</button>
 				</div>
-				<ul class="mt-4 d-lg-none list-unstyled ff-brand" id="navLinks">
-				</ul>
-				<a
-					href="/create/"
-					class="nav-btn | fs-5 text-black ms-auto me-4 px-0 d-none d-lg-flex text-decoration-none py-3"
-				>
-					<div class="my-auto d-flex align-items-center gap-2">
-						<span class="text-primary fs-2">+ </span>
-						<span> New Listing </span>
-					</div>
-				</a>
-				<div id="navProfile" class="d-none d-lg-block dropdown">
+				<div id="navProfile" class="d-none d-lg-block dropdown mt-2">
 					<img
 						src=""
 						alt=""
@@ -61,6 +50,16 @@ export const navTemplate = () => {
 						aria-expanded="false"
 					/>
 				</div>
+				<ul class="mt-4 d-lg-none list-unstyled ff-brand" id="navLinks"></ul>
+				<a
+					href="/create/"
+					class="nav-btn | fs-5 text-black ms-auto me-4 px-0 d-none d-lg-flex text-decoration-none py-3" data-btn-create
+				>
+					<div class="my-auto d-flex align-items-center gap-2">
+						<span class="text-primary fs-2">+ </span>
+						<span> New Listing </span>
+					</div>
+				</a>
 			</div>
 		</div>
 	</nav>

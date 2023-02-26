@@ -14,6 +14,7 @@ export function renderNav() {
     navProfileMobile.innerHTML = '';
     navProfile.replaceWith(navLoginRegisterContainer());
     navLinks = navLinksUnauthorized;
+    navDOM.querySelector('[data-btn-create]').remove();
   } else {
     const profileImg = navDOM.querySelectorAll('.profile-img');
     profileImg.forEach((img) => (img.src = user.avatar));
@@ -25,18 +26,17 @@ export function renderNav() {
     const anchorTag = link.querySelector('.link');
     anchorTag.innerText = name;
     anchorTag.href = path;
-    linksContainer.append(link.querySelector('li'));
+    linksContainer.append(link);
   });
+
   const header = document.querySelector('header');
   header.append(navDOM.querySelector('nav'));
+  const logoutBtn = document.querySelectorAll('[data-logout]');
+  logoutBtn.forEach((btn) => btn.addEventListener('click', () => logout()));
 }
 
 function dropdownMenuProfile() {
-  // const profile = storage.load('userDetails');
   const dropdown = profileDropdownTemplate();
-  const logoutBtn = dropdown.querySelector('#logout');
-  logoutBtn.addEventListener('click', logout);
-
   return dropdown;
 }
 
@@ -60,11 +60,6 @@ let navLinks = [
 ];
 
 let navLinksUnauthorized = [
-  {
-    name: 'Login / Register',
-    path: '/auth/login/',
-  },
-
   {
     name: 'Newest',
     path: '/listings/',
@@ -90,9 +85,9 @@ const linkElement = () => {
 const navLoginRegisterContainer = () => {
   const el = new DOMParser().parseFromString(
     `
-		<div class="btn-unauth | row row-cols-2 d-none d-md-flex gap-2">
-			<a href="/auth/?form=login" class="col-auto p-0"><button class="btn btn-primary px-4">Login</button></a>
-			<a href="/auth/?form=register" class="col-auto p-0"><button class="btn btn-outline-primary col-auto px-4">Register</button></a>
+		<div class="btn-unauth btn-group border mt-4 mt-lg-0 ms-md-auto">
+			<a href="/auth/?form=login" class="btn btn-white text-primary fs-5 px-4 btn">Login</a>
+			<a href="/auth/?form=register" class="btn btn-primary fs-5 px-4">Register</a>
 		</div>
 		`,
     'text/html'
@@ -107,7 +102,7 @@ const profileDropdownTemplate = () => {
 		<ul class="dropdown-menu dropdown-menu-end">
 			<li class="dropdown-item" data-profile="name" ><a href="/profiles/" class="text-decoration-none text-black">My Profile</a></li>
 			<li class="dropdown-item" ><a href="/listings/?watchlist" class="text-decoration-none text-black">Watchlist</a></li>
-			<li class="dropdown-item d-flex flex-nowrap align-items-center mt-2 text-primary" id="logout">
+			<li class="dropdown-item d-flex flex-nowrap align-items-center mt-2 text-primary" data-logout>
 				Log out
 				<i
 					class="fa fa-solid fa-door-open fs-6 text-primary ms-3"
