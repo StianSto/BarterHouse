@@ -6,6 +6,7 @@ import { getSearchParams } from '../../functions/searchParams';
 import { setaddBidListener } from '../../handlers/addBidListener';
 import { createSlider } from '../../render/slider';
 import { storage } from '../../storage/localStorage';
+import defaultAvatar from '../../../assets/images/default-avatar.png';
 
 const getListingParams = new Map([
   ['_seller', true],
@@ -71,7 +72,7 @@ export async function viewListing() {
     createdDate.toLocaleDateString();
   document.querySelector('#profileImg').src = seller.avatar
     ? seller.avatar
-    : '../../../assets/images/irene-kredenets-KStSiM1UvPw-unsplash.jpg';
+    : defaultAvatar;
 
   addMedia(media);
 }
@@ -106,7 +107,7 @@ async function addBidders(bids) {
   highestBidderElement.textContent = highestBid.bidderName;
   highestBidImgElement.src = highestBidder.avatar
     ? highestBidder.avatar
-    : '../../../assets/images/irene-kredenets-KStSiM1UvPw-unsplash.jpg';
+    : defaultAvatar;
 
   const history = document.querySelector('#bidHistory');
   history.append(...bids.map(createBidHistory));
@@ -120,6 +121,7 @@ function createBidHistory(bid) {
   const name = document.createElement('a');
   name.textContent = bid.bidderName;
   name.href = `/profiles/?name=${bid.bidderName}`;
+  name.classList.add('link-dark', 'text-decoration-none');
   colName.append(name);
 
   const colBid = document.createElement('td');

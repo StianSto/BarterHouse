@@ -8,6 +8,7 @@ import { createSlider } from '../../render/slider';
 import { profileTemplate } from '../../render/templates/profileTemplate';
 import { quickAccessTemplate } from '../../render/templates/quickAccessTemplate';
 import { storage } from '../../storage/localStorage';
+import defaultAvatar from '../../../assets/images/default-avatar.png';
 
 let nameParam;
 const profile = profileTemplate();
@@ -31,7 +32,7 @@ async function insertProfileInfo() {
 
   profile.querySelector('#profileImg').src = user.avatar
     ? user.avatar
-    : '../../../assets/images/default-avatar.png';
+    : defaultAvatar;
   profile.querySelector('#profileName').innerText = user.name;
   profile.querySelector('#profileEmail').innerText = user.email;
   profile.querySelector('#profileListings').innerText = user.listings.length;

@@ -1,6 +1,7 @@
 import { logout } from '../api/auth/logout';
 import { storage } from '../storage/localStorage';
 import { navTemplate } from './templates/navTemplate';
+import defaultAvatar from '../../assets/images/default-avatar.png';
 
 export function renderNav() {
   const token = Boolean(storage.load('token'));
@@ -17,7 +18,9 @@ export function renderNav() {
     navDOM.querySelector('[data-btn-create]').remove();
   } else {
     const profileImg = navDOM.querySelectorAll('.profile-img');
-    profileImg.forEach((img) => (img.src = user.avatar));
+    profileImg.forEach(
+      (img) => (img.src = user.avatar ? user.avatar : defaultAvatar)
+    );
     const name = navDOM.querySelector('.profile-img + span');
     name.textContent = user.name;
     navProfile.append(dropdownMenuProfile());
