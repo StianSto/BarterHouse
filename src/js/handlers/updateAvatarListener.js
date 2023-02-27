@@ -1,4 +1,5 @@
 import { updateProfile } from '../api/profile/update/update';
+import { storage } from '../storage/localStorage';
 
 export async function setUpdateAvatarListener(user, form) {
   form.addEventListener('submit', async (event) => {
@@ -9,7 +10,16 @@ export async function setUpdateAvatarListener(user, form) {
     const body = Object.fromEntries(formData);
 
     const response = await updateProfile(user, JSON.stringify(body));
-    if (response.ok) window.location.reload();
+    if (response.ok) {
+      const userDetails = await response.json();
+      delete userDetails['wins'];
+      if (!userDetails.avatar) {
+        userDetails.avatar = '../../assets/images/default-avatar.png';
+      }
+      console.log(userDetails);
+      storage.save('userDetails', userDetails);
+    }
+    window.location.reload();
   });
 
   const avatarInput = form.querySelector('#avatar');

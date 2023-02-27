@@ -34,7 +34,7 @@ export const navTemplate = () => {
 							alt=""
 							class="profile-img rounded-circle"
 						/>
-						<span class="fs-4 ms-3 text-white">Ron F. Swanson</span>
+						<span class="fs-4 ms-3 text-white"></span>
 					</a>
 					<button class="btn ms-auto" data-logout>
 						<i class="fa fa-solid fa-door-open fs-1 text-white"></i>
@@ -51,7 +51,7 @@ export const navTemplate = () => {
 						<span> New Listing </span>
 					</div>
 				</a>
-				<div id="navProfile" class="d-none d-lg-block dropdown mt-2">
+				<div id="navProfile" class="d-none d-lg-block dropdown">
 					<img
 						src=""
 						alt=""

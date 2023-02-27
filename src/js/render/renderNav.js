@@ -18,6 +18,8 @@ export function renderNav() {
   } else {
     const profileImg = navDOM.querySelectorAll('.profile-img');
     profileImg.forEach((img) => (img.src = user.avatar));
+    const name = navDOM.querySelector('.profile-img + span');
+    name.textContent = user.name;
     navProfile.append(dropdownMenuProfile());
   }
 

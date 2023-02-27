@@ -29,7 +29,9 @@ async function insertProfileInfo() {
   const response = await getProfile(nameParam);
   const user = await response.json();
 
-  profile.querySelector('#profileImg').src = user.avatar;
+  profile.querySelector('#profileImg').src = user.avatar
+    ? user.avatar
+    : '../../../assets/images/default-avatar.png';
   profile.querySelector('#profileName').innerText = user.name;
   profile.querySelector('#profileEmail').innerText = user.email;
   profile.querySelector('#profileListings').innerText = user.listings.length;
