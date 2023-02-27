@@ -32,7 +32,7 @@ git clone git@github.com:StianSto/BarterHouse.git
 3. Run app
 
 ```bash
-npm run watch
+npm run dev
 ```
 
 ... or if you want you run a preview of the production version
