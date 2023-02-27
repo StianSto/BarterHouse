@@ -95,9 +95,6 @@ function renderBadges(params) {
 }
 
 const badge = (title) => {
-  if (!title) {
-    console.log(title);
-  }
   const el = new DOMParser().parseFromString(
     `
 		<div class="col-auto">

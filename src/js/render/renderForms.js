@@ -2,6 +2,7 @@ import { formInputTemplate } from './templates/formTemplate';
 
 export function renderAuthForm(authtype = 'login') {
   let form = document.createElement('form');
+  form.id = authtype;
   authForm(authtype, form);
 
   const submitBtn = document.createElement('button');
