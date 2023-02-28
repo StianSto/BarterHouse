@@ -68,6 +68,11 @@ async function authorizedUser() {
   document.querySelector('#profileSection').after(quickAccessSection);
 
   const profileImg = profile.querySelector('#profileImg');
+
+  const previewImgValue = document.querySelector('#avatar');
+  const previewImg = document.querySelector('#changeProfileImage');
+  previewImgValue.value = user.avatar;
+  previewImg.src = user.avatar;
   const changeImgBtn = new DOMParser().parseFromString(
     `
 		<button
@@ -80,16 +85,11 @@ async function authorizedUser() {
 		`,
     'text/html'
   );
-  changeImgBtn.innerHTML = `
-	
-		`;
+
   profileImg.after(changeImgBtn.querySelector('body > *'));
   const updateAvatarForm = document.querySelector('#changeAvatarModal > form');
   setUpdateAvatarListener(nameParam, updateAvatarForm);
 
-  // profile.querySelector(
-  //   '#profileFunds'
-  // ).innerHTML = `<span class="fs-3 text-black">Funds: </span>$ ${user.credits}`;
   const userCredits = profile.querySelector('#profileFunds');
   const userCreditsElement = document.createElement('span');
   userCreditsElement.classList.add('fs-3');

@@ -2,29 +2,35 @@ import { getAllListings } from '../../api/listings/read/getListings';
 import { renderListingSmall } from '../../render/renderListings';
 import { storage } from '../../storage/localStorage';
 
+import { Modal } from 'bootstrap';
+
 export async function listings() {
   const filterForm = document.querySelector('#filterListingsModal');
-  const filterFormBtn = filterForm.querySelector('#filterBtn');
+  const options = { backdrop: 'static', keyboard: true };
+  const myModal = new Modal(filterForm, options);
+
   const saveFilterSettings = filterForm.querySelector(
     '#filterListingsSaveSettings'
   );
 
-  let formData = new FormData(filterForm);
-  let savedParams = new Map(storage.load('filterSettings'));
-  let params;
-  savedParams.size === 0
-    ? (params = new Map(formData))
-    : (params = savedParams);
+  const savedParams = new Map(storage.load('filterSettings'));
 
+  let params;
+  savedParams.size === 0 ? (params = defaultParams) : (params = savedParams);
+
+  addFilterSettings(filterForm, params);
   render(params);
   renderBadges(params);
 
   let offset = 0;
-  filterFormBtn.addEventListener('click', async () => {
-    formData = new FormData(filterForm);
+  filterForm.addEventListener('submit', async (event) => {
+    event.preventDefault();
+    let formData = new FormData(filterForm);
     params = new Map(formData);
     offset = 0;
     if (saveFilterSettings.checked) storage.save('filterSettings', [...params]);
+
+    myModal.hide();
 
     const listingsContainer = document.querySelector(
       '#listingsContainer > [data-listing-grid]'
@@ -36,10 +42,22 @@ export async function listings() {
 
   const moreListingsBtn = document.querySelector('#loadListings');
   moreListingsBtn.addEventListener('click', async () => {
+    moreListingsBtn.innerHTML = `
+		<div class="spinner-border" role="status">
+  		<span class="visually-hidden">Loading...</span>
+		</div>
+		`;
     let limit = parseFloat(params.get('limit'));
     offset += limit;
     params.set('offset', offset);
-    render(params);
+    try {
+      await render(params);
+    } catch (error) {
+      const err = document.createElement('p');
+      err.innerText = 'an error ocurred: ' + error;
+      moreListingsBtn.after(err);
+    }
+    moreListingsBtn.innerHTML = 'See More Listings';
   });
 }
 
@@ -50,6 +68,11 @@ async function render(params) {
     '#listingsContainer > [data-listing-grid]'
   );
   listingsContainer.append(...listings.map(renderListingSmall));
+
+  const lengthOfListings = listings.length;
+  const perPage = params.get('limit');
+  const moreListingsBtn = document.querySelector('#loadListings');
+  if (lengthOfListings < perPage) moreListingsBtn.remove();
 }
 
 function renderBadges(params) {
@@ -111,3 +134,35 @@ const badge = (title) => {
 
   return badge;
 };
+
+function addFilterSettings(form, savedParams) {
+  const sort = form.querySelector('[name="sort"]');
+  const sortOption = sort.querySelector(`[value=${savedParams.get('sort')}]`);
+  sortOption.selected = true;
+
+  const sortOrder = form.querySelector('[name="sortOrder"]');
+  const sortOrderOption = sortOrder.querySelector(
+    `[value=${savedParams.get('sortOrder')}]`
+  );
+  sortOrderOption.selected = true;
+
+  const active = form.querySelector('[name="active"]');
+  const activeOption = active.querySelector(
+    `[value=${savedParams.get('active')}]`
+  );
+  activeOption.selected = true;
+
+  const tag = form.querySelector('[name="_tag"]');
+  tag.value = savedParams.get('_tag');
+
+  const limit = form.querySelector('[name="limit"]');
+  limit.value = savedParams.get('limit');
+}
+
+const defaultParams = new Map([
+  ['sort', 'created'],
+  ['sortOrder', 'desc'],
+  ['active', 'null'],
+  ['_tag', ''],
+  ['limit', '20'],
+]);
