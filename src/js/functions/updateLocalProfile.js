@@ -18,7 +18,5 @@ export async function updateLocalProfile() {
     email,
   };
 
-  console.log(userDetails);
-
   storage.save('userDetails', userDetails);
 }

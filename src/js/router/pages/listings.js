@@ -2,9 +2,13 @@ import { getAllListings } from '../../api/listings/read/getListings';
 import { renderListingSmall } from '../../render/renderListings';
 import { storage } from '../../storage/localStorage';
 
+import { Modal } from 'bootstrap';
+
 export async function listings() {
   const filterForm = document.querySelector('#filterListingsModal');
-  const filterFormBtn = filterForm.querySelector('#filterBtn');
+  const options = { backdrop: 'static' };
+  const myModal = new Modal(filterForm, options);
+
   const saveFilterSettings = filterForm.querySelector(
     '#filterListingsSaveSettings'
   );
@@ -20,11 +24,14 @@ export async function listings() {
   renderBadges(params);
 
   let offset = 0;
-  filterFormBtn.addEventListener('click', async () => {
+  filterForm.addEventListener('submit', async (event) => {
+    event.preventDefault();
     formData = new FormData(filterForm);
     params = new Map(formData);
     offset = 0;
     if (saveFilterSettings.checked) storage.save('filterSettings', [...params]);
+
+    myModal.hide();
 
     const listingsContainer = document.querySelector(
       '#listingsContainer > [data-listing-grid]'
@@ -36,10 +43,22 @@ export async function listings() {
 
   const moreListingsBtn = document.querySelector('#loadListings');
   moreListingsBtn.addEventListener('click', async () => {
+    moreListingsBtn.innerHTML = `
+		<div class="spinner-border" role="status">
+  		<span class="visually-hidden">Loading...</span>
+		</div>
+		`;
     let limit = parseFloat(params.get('limit'));
     offset += limit;
     params.set('offset', offset);
-    render(params);
+    try {
+      await render(params);
+    } catch (error) {
+      const err = document.createElement('p');
+      err.innerText = 'an error ocurred: ' + error;
+      moreListingsBtn.after(err);
+    }
+    moreListingsBtn.innerHTML = 'See More Listings';
   });
 }
 
@@ -50,6 +69,11 @@ async function render(params) {
     '#listingsContainer > [data-listing-grid]'
   );
   listingsContainer.append(...listings.map(renderListingSmall));
+
+  const lengthOfListings = listings.length;
+  const perPage = params.get('limit');
+  const moreListingsBtn = document.querySelector('#loadListings');
+  if (lengthOfListings < perPage) moreListingsBtn.remove();
 }
 
 function renderBadges(params) {
