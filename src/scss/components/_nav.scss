@@ -1,0 +1,69 @@
+.menu-icon {
+  outline: black;
+  width: 30px;
+  height: 20px;
+
+  & > span {
+    width: 100%;
+    height: 3px;
+    transition: all 200ms ease-in-out;
+  }
+}
+
+nav {
+  & .profile-img {
+    width: 50px;
+    aspect-ratio: 1;
+  }
+
+  .nav-btn {
+    min-height: 60px;
+
+    & a {
+      height: 60px;
+    }
+  }
+}
+
+.navbar-toggler {
+  outline: none !important;
+  box-shadow: none !important;
+  &[aria-expanded='true'] {
+    & .menu-icon > span:nth-child(1) {
+      translate: -12px;
+    }
+    & .menu-icon > span:nth-child(3) {
+      translate: 12px;
+    }
+  }
+}
+
+.nav-btn {
+  position: relative;
+
+  &::after {
+    content: '';
+    position: absolute;
+
+    bottom: 0;
+    width: 0%;
+    height: 2px;
+    background-color: $primary;
+    transition: all 200ms ease-in-out;
+  }
+
+  &:hover {
+    & * {
+      color: $primary;
+    }
+    &::after {
+      width: 100%;
+    }
+  }
+}
+
+@include media-breakpoint-up(lg) {
+  #navbarSupportedContent {
+    background-color: transparent !important;
+  }
+}

@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="view a specific item listing. place a bid, or view what others have already bid."
+    />
+    <title>Listings</title>
+    <script src="../../js/index.js" type="module"></script>
+    <script
+      src="https://kit.fontawesome.com/6430c8691d.js"
+      crossorigin="anonymous"
+    ></script>
+    <!-- <link
+      rel="stylesheet"
+      href="../node_modules/bootstrap/dist/css/bootstrap.min.css"
+    /> -->
+  </head>
+  <body>
+    <header></header>
+
+    <div id="root" class="mx-auto mw-lg px-4">
+      <section id="listingPitch" class="container mt-5">
+        <div class="row gx-3 flex-column flex-md-row">
+          <div class="row align-items-center">
+            <h1 class="col-auto mt-4 mb-3 display-5" id="title"></h1>
+          </div>
+          <div class="row col-12 col-md-5 flex-md-column">
+            <div
+              id="mediaCarousel"
+              class="carousel carousel-dark slide carousel-fade"
+              data-bs-ride="carousel"
+            >
+              <div
+                class="carousel-inner d-flex align-items-center"
+                role="listbox"
+                id="listingImagesCarousel"
+              >
+                <template id="templateCarouselItem">
+                  <div class="carousel-item">
+                    <img
+                      src=""
+                      class="w-100 d-block"
+                      alt="Second slide"
+                      style="aspect-ratio: 1; object-fit: cover"
+                    />
+                  </div>
+                </template>
+              </div>
+              <button
+                class="carousel-control-prev align-items-end mb-4"
+                type="button"
+                data-bs-target="#mediaCarousel"
+                data-bs-slide="prev"
+              >
+                <span
+                  class="carousel-control-prev-icon"
+                  aria-hidden="true"
+                ></span>
+                <span class="visually-hidden">Previous</span>
+              </button>
+              <button
+                class="carousel-control-next align-items-end mb-4"
+                type="button"
+                data-bs-target="#mediaCarousel"
+                data-bs-slide="next"
+              >
+                <span
+                  class="carousel-control-next-icon"
+                  aria-hidden="true"
+                ></span>
+                <span class="visually-hidden">Next</span>
+              </button>
+              <div class="carousel-indicators position-relative mb-0">
+                <template id="templateCarouselIndicator">
+                  <img
+                    src=""
+                    class=""
+                    alt=""
+                    style="
+                      aspect-ratio: 1;
+                      object-fit: cover;
+                      width: 60px;
+                      height: 60px;
+                    "
+                    data-bs-target="#mediaCarousel"
+                    data-bs-slide-to=""
+                  />
+                </template>
+              </div>
+            </div>
+          </div>
+          <div class="col-12 col-md-7 ms-md-3">
+            <a href="" id="seller" class="link-dark text-decoration-none">
+              <div class="row align-items-center">
+                <img
+                  id="profileImg"
+                  style="aspect-ratio: 1; width: 100px"
+                  class="col-auto rounded-circle p-3"
+                  alt=""
+                />
+                <span class="col fs-2" id="name"></span>
+              </div>
+            </a>
+            <div class="row align-items-center">
+              <div class="col-auto me-3">
+                <small class="m-0 d-block"
+                  >Started: <span id="started"></span
+                ></small>
+                <small class="m-0 d-block">
+                  Ends:
+                  <span id="ends"></span>
+                </small>
+              </div>
+              <span
+                class="countdown | col text-primary fs-5"
+                data-listing="endsIn"
+                >2 days left</span
+              >
+            </div>
+            <p class="my-3" style="max-height: 100px" id="description">
+              Lorem ipsum, dolor sit amet consectetur adipisicing elit. Dolore
+              quo minima iure soluta et sed fugit sapiente excepturi eum ullam
+              dolor suscipit aperiam magnam, similique labore, vitae quae. Eos,
+              eligendi.
+            </p>
+            <div class="my-5">
+              <p class="fs-5" id="currentStatus">Current Highest Bid:</p>
+              <div class="d-flex align-items-center">
+                <p
+                  class="col-auto fs-2 fw-bold m-0 mx-2 me-4"
+                  id="highestBid"
+                ></p>
+                <div class="col-8">
+                  <a href="" id="buyer" class="link-dark text-decoration-none">
+                    <div class="row align-items-center w-auto flex-nowrap">
+                      <img
+                        id="highestBidderImg"
+                        style="aspect-ratio: 1; max-width: 40px"
+                        class="rounded-circle col ms-3 p-0"
+                        alt=""
+                      />
+                      <span
+                        class="col fs-6 fs-md-5"
+                        id="highestBidderName"
+                      ></span>
+                    </div>
+                  </a>
+                </div>
+              </div>
+            </div>
+            <div class="">
+              <form class="row" id="addBid">
+                <div class="row justify-content-start ms-0">
+                  <button
+                    type="button"
+                    class="col-auto btn btn-outline-grey rounded-pill px-3 me-2"
+                  >
+                    up $ 10
+                  </button>
+                  <button
+                    type="button"
+                    class="col-auto btn btn-outline-grey rounded-pill px-3"
+                  >
+                    up $ 25
+                  </button>
+                </div>
+                <div class="my-3 position-relative col-6">
+                  <label
+                    for="placeBidValue"
+                    class="input-group-text bg-white position-absolute pe-0 ps-2 rounded-0 rounded-start border-end-0"
+                    >$</label
+                  >
+                  <input
+                    type="number"
+                    step="1"
+                    class="form-control border-start-rounded ps-4"
+                    name="amount"
+                    min="0"
+                    id="placeBidValue"
+                    aria-describedby="helpId"
+                    placeholder="place a bid here"
+                  />
+                  <small>
+                    funds available:
+                    <span data-funds class="fw-bold"></span
+                  ></small>
+                </div>
+                <div class="col-6 d-flex align-items-center">
+                  <button
+                    class="btn btn-secondary text-white py-2 px-4 ms-auto"
+                  >
+                    Place Bid
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section id="listingDetails" class="container mt-5">
+        <div class="btn-group w-100" id="listingDetailsOptions">
+          <button
+            class="btn btn-outline-dark active"
+            data-bs-toggle="collapse"
+            data-bs-target="#listingDetailsDescription"
+            aria-expanded="false"
+            aria-controls="listingDetailsDescription"
+          >
+            Description
+          </button>
+          <button
+            class="btn btn-outline-dark"
+            data-bs-toggle="collapse"
+            data-bs-target="#listingDetailsHistory"
+            aria-expanded="false"
+            aria-controls="listingDetailsHistory"
+          >
+            History
+          </button>
+        </div>
+
+        <div
+          class="collapse show"
+          id="listingDetailsDescription"
+          data-bs-parent="#listingDetails"
+        >
+          <div
+            class="p-4 p-md-5 border rounded-2 mt-2"
+            style="height: 300px; overflow-y: scroll"
+          >
+            <p id="descriptionFull">
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Eveniet
+              at possimus odio optio consectetur soluta doloribus neque? Illo
+              sequi omnis quis quam nobis commodi est saepe, rerum eum odio
+              necessitatibus porro blanditiis asperiores facilis minima qui
+              aliquam, velit sunt consequatur obcaecati dolorum ipsa at eos
+              incidunt? Quidem, debitis quasi. Quisquam dolor voluptate
+              assumenda labore illum, corporis minima quibusdam provident
+              commodi in, laudantium reprehenderit voluptatem necessitatibus
+              veritatis saepe quis. Eveniet, voluptatibus? Quis, totam nemo.
+              Autem perferendis quam quo ab tempore voluptatum. Praesentium
+              odit, facilis nemo blanditiis temporibus ad illum! Dolor nisi
+              tenetur unde rerum corporis id inventore consectetur quaerat
+              placeat ea. commodi in, laudantium reprehenderit voluptatem
+              necessitatibus veritatis saepe quis. Eveniet, voluptatibus? Quis,
+              totam nemo. Autem perferendis quam quo ab tempore voluptatum.
+              Praesentium odit, facilis nemo blanditiis temporibus ad illum!
+              Dolor nisi tenetur unde rerum corporis id inventore consectetur
+              quaerat placeat ea.
+            </p>
+          </div>
+        </div>
+        <div
+          class="collapse border rounded-2 mt-2"
+          id="listingDetailsHistory"
+          data-bs-parent="#listingDetails"
+          style="height: 300px"
+        >
+          <div class="table-responsive p-2 p-md-4" style="height: 300px">
+            <table class="table table-white table-hover">
+              <thead>
+                <tr>
+                  <th scope="col-auto">Bidder</th>
+                  <th scope="col-2">Amount</th>
+                  <th scope="col-auto">Created</th>
+                </tr>
+              </thead>
+              <tbody style="overflow-y: scroll" id="bidHistory"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <section class="mt-5 px-4 mw-lg mx-auto" id="profileListings">
+      <h2 class="px-2"></h2>
+    </section>
+  </body>
+
+  <footer class="mt-5"></footer>
+
+  <template id="productCardSmallPlaceholder">
+    <div class="col">
+      <div class="card mb-3 mw-lg p-0">
+        <div class="placeholder-glow">
+          <span class="w-100 placeholder rounded-top" style="aspect-ratio: 1">
+          </span>
+        </div>
+        <div class="p-3">
+          <p class="placeholder-glow mb-0">
+            <span class="placeholder col-12"></span>
+          </p>
+          <p class="placeholder-glow">
+            <span class="placeholder placeholder-xs col-4"></span>
+          </p>
+          <p class="placeholder-glow row m-0 mt-4">
+            <span class="placeholder placeholder-lg col-8"></span>
+            <span class="placeholder placeholder-lg col-3 ms-auto"></span>
+          </p>
+        </div>
+      </div>
+    </div>
+  </template>
+</html>

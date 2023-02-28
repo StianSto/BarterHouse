@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="view someones profile and their listings. or view your own and get an overview of your total funds, active listings, and your own personal watchlist where you can keep tabs on the listings you have currently bid on and if you are leading"
+    />
+    <title>Profile | BarterHouse</title>
+    <script src="../js/index.js" type="module"></script>
+    <script
+      src="https://kit.fontawesome.com/6430c8691d.js"
+      crossorigin="anonymous"
+    ></script>
+    <!-- <link
+      rel="stylesheet"
+      href="../node_modules/bootstrap/dist/css/bootstrap.min.css"
+    /> -->
+  </head>
+  <body>
+    <header></header>
+    <main id="root">
+      <section id="profileSection" class="container mw-lg mt-5"></section>
+
+      <section
+        id="listingsContainer"
+        class="container-fluid mw-lg px-4 y-5 mt-5"
+      >
+        <h2 class="mb-3">Recent Listings</h2>
+        <div data-listing-grid></div>
+      </section>
+    </main>
+
+    <div
+      class="modal fade"
+      id="changeAvatarModal"
+      tabindex="-1"
+      aria-labelledby="modalLabel"
+      aria-hidden="true"
+    >
+      <form class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="modalLabel">
+              Change Profile Image
+            </h1>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <div class="mb-3">
+              <input
+                type="text"
+                class="form-control"
+                name="avatar"
+                id="avatar"
+                aria-describedby="avatarHelp"
+                placeholder="insert URL"
+                value=""
+              />
+              <small id="avatarHelp" class="form-text text-muted"
+                >Enter a valid Image URL</small
+              >
+            </div>
+            <div class="col-8 mx-auto">
+              <img
+                src=""
+                alt=""
+                id="changeProfileImage"
+                class="w-100 rounded-circle"
+                style="aspect-ratio: 1; object-fit: cover"
+              />
+            </div>
+            <small data-bs-toggle="collapse" data-bs-target="#imageNotShowing"
+              >image not showing?</small
+            >
+            <p class="collapse text-black-50" id="imageNotShowing">
+              <small>
+                most likely the url you submitted is faulty. try using another
+                one or reload the site
+              </small>
+            </p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-grey" data-bs-dismiss="modal">
+              Close
+            </button>
+            <button type="submit" class="btn btn-secondary text-white">
+              Save changes
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,12 @@
+.wave-background {
+  height: clamp(200px, 50vh, 600px);
+  bottom: 0;
+  color: $primary;
+
+  background-image: url('../assets/images/wave-background.svg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  position: fixed;
+  z-index: -100;
+}

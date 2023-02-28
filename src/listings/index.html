@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="View all items avaialbe to buy on BarterHouse, you can filter, and search for a specific item you want to buy."
+    />
+    <title>Listings</title>
+    <script src="../js/index.js" type="module"></script>
+    <script
+      src="https://kit.fontawesome.com/6430c8691d.js"
+      crossorigin="anonymous"
+    ></script>
+    <!-- <link
+      rel="stylesheet"
+      href="../node_modules/bootstrap/dist/css/bootstrap.min.css"
+    /> -->
+  </head>
+  <body>
+    <header></header>
+
+    <main id="root" class="mx-auto px-0">
+      <div id="subnav" class="mt-5 mw-lg mx-auto px-4">
+        <ul class="row text-primary p-0 d-none d-lg-flex">
+          <li class="d-inline-block col-auto">
+            <a href="/" class="text-decoration-none">Home</a>
+          </li>
+          <li class="d-inline-block col-auto">
+            <a href="/listings/?view=hottest" class="text-decoration-none"
+              >Hottest</a
+            >
+          </li>
+          <li class="d-inline-block col-auto">
+            <a href="/listings/?view=newest" class="text-decoration-none"
+              >Newest</a
+            >
+          </li>
+          <li class="d-inline-block col-auto">
+            <a href="/listings/?view=watchlist" class="text-decoration-none"
+              >Watchlist</a
+            >
+          </li>
+          <li class="d-inline-block col-auto ms-auto">
+            <a href="/listings/?view=myListings" class="text-decoration-none"
+              >My Listings</a
+            >
+          </li>
+          <li class="d-inline-block col-auto">
+            <a href="/profile/" class="text-decoration-none">My Profile</a>
+          </li>
+        </ul>
+
+        <div class="input-group">
+          <input
+            type="text"
+            class="form-control rounded-2"
+            placeholder="Search listings"
+            aria-label="Search listings"
+            aria-describedby="button-searchbar"
+          />
+          <button
+            id="button-searchbar"
+            class="btn btn-primary d-flex justify-content-center align-items-center position-absolute h-100"
+            style="right: 0; z-index: 5"
+          >
+            <i class="fa fa-search text-white fs-5"></i>
+          </button>
+        </div>
+      </div>
+      <div id="categories-container" class="container mt-4 mw-lg">
+        <ul
+          class="row row-cols-4 row-cols-lg-auto justify-content-lg-around p-0"
+        >
+          <li class="col list-unstyled mb-2">
+            <a
+              href="/listings/?tag=vehicles"
+              class="text-decoration-none text-black-50 d-flex flex-column align-items-center"
+              ><i class="fa fa-solid fa-laptop fs-3"></i>
+              <span>Vehicles</span>
+            </a>
+          </li>
+          <li class="col list-unstyled mb-2">
+            <a
+              href="/listings/?tag=vehicles"
+              class="text-decoration-none text-black-50 d-flex flex-column align-items-center"
+              ><i class="fa fa-solid fa-laptop fs-3"></i>
+              <span>Vehicles</span>
+            </a>
+          </li>
+          <li class="col list-unstyled mb-2">
+            <a
+              href="/listings/?tag=vehicles"
+              class="text-decoration-none text-black-50 d-flex flex-column align-items-center"
+              ><i class="fa fa-solid fa-laptop fs-3"></i>
+              <span>Vehicles</span>
+            </a>
+          </li>
+          <li class="col list-unstyled mb-2">
+            <a
+              href="/listings/?tag=vehicles"
+              class="text-decoration-none text-black-50 d-flex flex-column align-items-center"
+              ><i class="fa fa-solid fa-laptop fs-3"></i>
+              <span>Vehicles</span>
+            </a>
+          </li>
+          <li class="col list-unstyled mb-2">
+            <a
+              href="/listings/?tag=vehicles"
+              class="text-decoration-none text-black-50 d-flex flex-column align-items-center"
+              ><i class="fa fa-solid fa-laptop fs-3"></i>
+              <span>Vehicles</span>
+            </a>
+          </li>
+          <li class="col list-unstyled mb-2">
+            <a
+              href="/listings/?tag=vehicles"
+              class="text-decoration-none text-black-50 d-flex flex-column align-items-center"
+              ><i class="fa fa-solid fa-laptop fs-3"></i>
+              <span>Vehicles</span>
+            </a>
+          </li>
+          <li class="col list-unstyled mb-2">
+            <a
+              href="/listings/?tag=vehicles"
+              class="text-decoration-none text-black-50 d-flex flex-column align-items-center"
+              ><i class="fa fa-solid fa-laptop fs-3"></i>
+              <span>Vehicles</span>
+            </a>
+          </li>
+          <li class="col list-unstyled mb-2">
+            <a
+              href="/listings/?tag=vehicles"
+              class="text-decoration-none text-black-50 d-flex flex-column align-items-center"
+              ><i class="fa fa-solid fa-laptop fs-3"></i>
+              <span>Vehicles</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <section
+        id="filterListings"
+        class="mw-lg mx-auto px-4 mt-5 container d-flex mb-4 flex-column-reverse flex-md-row justify-content-start"
+      >
+        <div
+          id="filtersBadges"
+          class="row gy-2 gx-2 align-items-center me-auto w-100 py-2"
+        ></div>
+        <button
+          class="btn fs-3 me-auto me-md-1 d-flex align-items-center"
+          data-bs-toggle="modal"
+          data-bs-target="#filterListingsModal"
+        >
+          <span class="me-2 fs-5">Filter</span>
+          <i class="fa fa-sliders"></i>
+        </button>
+      </section>
+
+      <section id="listingsContainer" class="container-fluid mw-lg px-4 mb-5">
+        <div data-listing-grid></div>
+        <div class="row justify-content-center mt-4">
+          <button
+            class="col-auto px-5 py-2 btn btn-outline-primary"
+            id="loadListings"
+          >
+            See More Listings
+          </button>
+        </div>
+      </section>
+    </main>
+  </body>
+
+  <template id="productCardSmall">
+    <div class="col">
+      <div class="card p-0 h-100 justify-content-between">
+        <div>
+          <img
+            src="../assets/images/irene-kredenets-KStSiM1UvPw-unsplash.jpg"
+            class="listing-img | img-fluid rounded-top bg-light w-100"
+            style="aspect-ratio: 5 / 4; object-fit: cover"
+            alt="Card title"
+          />
+        </div>
+        <div class="d-flex justify-content-between h-100">
+          <div class="card-body">
+            <h3 class="card-title fs-4">Card title</h3>
+            <p class="text-primary small">
+              <i class="fa fa-clock me-1"></i>
+              2 days left
+            </p>
+            <div class="card-text mt-4 fs-6 fs-sm-5">
+              <span class="m-0 small"> Highest Bid: </span>
+              <span class="m-0 small d-none text-secondary">
+                In the lead!
+              </span>
+              <span class="me-4 fw-bold fs-4 d-flex flex-nowrap">$ 40</span>
+              <p class="fs-6 fs-md-3 m-0 d-flex align-items-center d-none">
+                <img
+                  src="https://t4.ftcdn.net/jpg/04/08/24/43/360_F_408244382_Ex6k7k8XYzTbiXLNJgIL8gssebpLLBZQ.jpg"
+                  alt=""
+                  class="rounded-circle"
+                  style="aspect-ratio: 1; width: 30px"
+                />
+                <span class="fs-6 fs-md-5 ms-2">Ron F. Swanson</span>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </template>
+
+  <template id="productCardSmallPlaceholder">
+    <div class="col">
+      <div class="card mb-3 mw-lg p-0">
+        <div class="placeholder-glow">
+          <span class="w-100 placeholder rounded-top" style="aspect-ratio: 1">
+          </span>
+        </div>
+        <div class="p-3">
+          <p class="placeholder-glow mb-0">
+            <span class="placeholder col-12"></span>
+          </p>
+          <p class="placeholder-glow">
+            <span class="placeholder placeholder-xs col-4"></span>
+          </p>
+          <p class="placeholder-glow row m-0 mt-4">
+            <span class="placeholder placeholder-lg col-8"></span>
+            <span class="placeholder placeholder-lg col-3 ms-auto"></span>
+          </p>
+        </div>
+      </div>
+    </div>
+  </template>
+
+  <template id="productCardLarge">
+    <div class="card mb-3 mw-lg">
+      <div class="row g-0">
+        <div
+          class="col-md-4 d-flex justify-content-center align-items-center bg-light"
+        >
+          <img
+            src="../assets/images/irene-kredenets-KStSiM1UvPw-unsplash.jpg"
+            class="img-fluid rounded-start"
+            style="aspect-ratio: 1; object-fit: cover; max-height: 60vh"
+            alt="Card title"
+          />
+        </div>
+        <div class="col-md-8 ps-4 pt-3 mx">
+          <div class="card-body d-flex flex-column h-100">
+            <h3 class="card-title fs-1">Card title</h3>
+            <p class="text-primary small">
+              <i class="fa fa-clock me-1"></i>
+              2 days left
+            </p>
+            <p class="card-text">
+              This is a wider card with supporting text below as a natural
+              lead-in to additional content. This content is a little bit
+              longer.
+            </p>
+            <div class="card-text mt-auto">
+              <p class="fs-5 text-primary fw-bold m-0">Highest Bidder</p>
+              <p class="fs-3">
+                <span class="me-4">$ 40</span>
+                <span>
+                  <img
+                    src="https://t4.ftcdn.net/jpg/04/08/24/43/360_F_408244382_Ex6k7k8XYzTbiXLNJgIL8gssebpLLBZQ.jpg"
+                    alt=""
+                    class="rounded-circle"
+                    style="width: 40px; aspect-ratio: 1"
+                  />
+                  <span class="fs-5">Ron F. Swanson</span>
+                </span>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </template>
+
+  <!-- Modal Body -->
+  <!-- if you want to close by clicking outside the modal, delete the last endpoint:data-bs-backdrop and data-bs-keyboard -->
+  <form
+    class="modal fade"
+    id="filterListingsModal"
+    tabindex="-1"
+    data-bs-keyboard="false"
+    role="dialog"
+    aria-labelledby="filterListingsModalTitle"
+    aria-hidden="true"
+  >
+    <div
+      class="modal-dialog modal-dialog-scrollable modal-dialog-centered"
+      role="document"
+    >
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="filterListingsModalTitle">
+            Filter Listings
+          </h5>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ></button>
+        </div>
+        <div class="modal-body">
+          <div class="mt-2">
+            <label for="filterListingsSortOrder">Sort By</label>
+            <div class="input-group">
+              <select
+                class="form-select"
+                name="sort"
+                aria-label="Default select example"
+                id="filterListingsSortOrder"
+              >
+                <option value="created" selected>Created</option>
+                <option value="title">Title</option>
+              </select>
+              <select
+                class="form-select"
+                name="sortOrder"
+                aria-label="Default select example"
+                id="filterListingsSortOrder"
+              >
+                <option value="desc" selected>Descending</option>
+                <option value="asc">Ascending</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="mt-2">
+            <label for="filterListingsActive">Show listings</label>
+            <select
+              class="form-select"
+              name="active"
+              aria-label="Default select example"
+              id="filterListingsSortOrder"
+            >
+              <option value="null" selected>All listings</option>
+              <option value="true">Active</option>
+              <option value="false">Expired</option>
+            </select>
+          </div>
+
+          <div class="mt-2">
+            <label for="floatingInputValue">Keyword</label>
+            <input
+              type="text"
+              class="form-control"
+              id="floatingInputValue"
+              name="_tag"
+              placeholder="enter one tag like 'car', 'phone' etc..."
+            />
+          </div>
+
+          <div class="mt-3 input-group">
+            <span class="input-group-text">Listings per page</span>
+            <input
+              type="number"
+              name="limit"
+              class="form-control"
+              step="1"
+              min="1"
+              max="100"
+              required
+            />
+          </div>
+
+          <div class="mt-4 ms-3">
+            <div class="form-check fs-6">
+              <input
+                class="form-check-input"
+                type="checkbox"
+                id="filterListingsSaveSettings"
+              />
+              <label class="form-check-label" for="filterListingsSaveSettings">
+                Save settings
+              </label>
+            </div>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-grey" data-bs-dismiss="modal">
+            Close
+          </button>
+          <button type="submit" class="btn btn-secondary" id="filterBtn">
+            Filter
+          </button>
+        </div>
+      </div>
+    </div>
+  </form>
+</html>

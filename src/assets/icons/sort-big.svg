@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="42" height="21" viewBox="0 0 42 21">
+  <g id="Group_362" data-name="Group 362" transform="translate(166 -23)">
+    <g id="Group_363" data-name="Group 363" transform="translate(-175 2)">
+      <g id="Rectangle_222" data-name="Rectangle 222" transform="translate(9 21)" fill="#fff" stroke="#313131" stroke-width="1">
+        <rect width="42" height="21" rx="2" stroke="none"/>
+        <rect x="0.5" y="0.5" width="41" height="20" rx="1.5" fill="none"/>
+      </g>
+      <g id="Rectangle_212" data-name="Rectangle 212" transform="translate(9 21)" fill="#313131" stroke="#313131" stroke-width="1">
+        <path d="M2,0H14a0,0,0,0,1,0,0V21a0,0,0,0,1,0,0H2a2,2,0,0,1-2-2V2A2,2,0,0,1,2,0Z" stroke="none"/>
+        <path d="M2,.5H13.5a0,0,0,0,1,0,0v20a0,0,0,0,1,0,0H2A1.5,1.5,0,0,1,.5,19V2A1.5,1.5,0,0,1,2,.5Z" fill="none"/>
+      </g>
+      <g id="Rectangle_223" data-name="Rectangle 223" transform="translate(27 27)" fill="#fff" stroke="#313131" stroke-width="1">
+        <rect width="20" height="2" stroke="none"/>
+        <rect x="0.5" y="0.5" width="19" height="1" fill="none"/>
+      </g>
+      <g id="Rectangle_224" data-name="Rectangle 224" transform="translate(27 34)" fill="#fff" stroke="#313131" stroke-width="1">
+        <rect width="11" height="2" stroke="none"/>
+        <rect x="0.5" y="0.5" width="10" height="1" fill="none"/>
+      </g>
+    </g>
+  </g>
+</svg>

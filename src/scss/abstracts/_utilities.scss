@@ -1,0 +1,14 @@
+@import '../../../node_modules/bootstrap/scss/bootstrap';
+
+$utilities: map-merge(
+  $utilities,
+  (
+    'border':
+      map-merge(
+        map-get($utilities, 'font-size'),
+        (
+          responsive: true,
+        )
+      ),
+  )
+);

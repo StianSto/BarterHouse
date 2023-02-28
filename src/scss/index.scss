@@ -1,0 +1,22 @@
+// 1. Include functions first (so you can manipulate colors, SVGs, calc, etc)
+@import '../../node_modules/bootstrap/scss/functions';
+
+// 2. Include any default variable overrides here
+@import './abstracts/';
+@import './base/';
+@import './components/';
+@import './layout/';
+@import './pages/';
+@import './themes/';
+@import './vendors/';
+// 3. Include remainder of required Bootstrap stylesheets
+@import '../../node_modules/bootstrap/scss/bootstrap';
+
+// 4. Optionally include utilities API last to generate classes based on the Sass map in `_utilities.scss`
+@import '../../node_modules/bootstrap/scss/utilities/api';
+
+// 5. Add additional custom code here
+
+.mw-lg {
+  max-width: 1088px;
+}

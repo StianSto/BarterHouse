@@ -1,0 +1,20 @@
+#hero {
+  background: linear-gradient(
+    128deg,
+    rgba(208, 49, 79, 1) 0%,
+    rgba(226, 94, 119, 1) 30%,
+    rgba(232, 86, 113, 1) 67%,
+    rgba(107, 22, 38, 1) 120%
+  );
+  background-repeat: no-repeat;
+  background-position: 150%;
+  background-size: contain;
+  height: clamp(200px, 40vw, 450px);
+
+  &-wrapper {
+    background: url('/assets/images/hero-background-items.png');
+    background-repeat: no-repeat;
+    background-position: right;
+    background-size: auto 100%;
+  }
+}
