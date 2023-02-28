@@ -6,27 +6,26 @@ import { Modal } from 'bootstrap';
 
 export async function listings() {
   const filterForm = document.querySelector('#filterListingsModal');
-  const options = { backdrop: 'static' };
+  const options = { backdrop: 'static', keyboard: true };
   const myModal = new Modal(filterForm, options);
 
   const saveFilterSettings = filterForm.querySelector(
     '#filterListingsSaveSettings'
   );
 
-  let formData = new FormData(filterForm);
-  let savedParams = new Map(storage.load('filterSettings'));
-  let params;
-  savedParams.size === 0
-    ? (params = new Map(formData))
-    : (params = savedParams);
+  const savedParams = new Map(storage.load('filterSettings'));
 
+  let params;
+  savedParams.size === 0 ? (params = defaultParams) : (params = savedParams);
+
+  addFilterSettings(filterForm, params);
   render(params);
   renderBadges(params);
 
   let offset = 0;
   filterForm.addEventListener('submit', async (event) => {
     event.preventDefault();
-    formData = new FormData(filterForm);
+    let formData = new FormData(filterForm);
     params = new Map(formData);
     offset = 0;
     if (saveFilterSettings.checked) storage.save('filterSettings', [...params]);
@@ -135,3 +134,35 @@ const badge = (title) => {
 
   return badge;
 };
+
+function addFilterSettings(form, savedParams) {
+  const sort = form.querySelector('[name="sort"]');
+  const sortOption = sort.querySelector(`[value=${savedParams.get('sort')}]`);
+  sortOption.selected = true;
+
+  const sortOrder = form.querySelector('[name="sortOrder"]');
+  const sortOrderOption = sortOrder.querySelector(
+    `[value=${savedParams.get('sortOrder')}]`
+  );
+  sortOrderOption.selected = true;
+
+  const active = form.querySelector('[name="active"]');
+  const activeOption = active.querySelector(
+    `[value=${savedParams.get('active')}]`
+  );
+  activeOption.selected = true;
+
+  const tag = form.querySelector('[name="_tag"]');
+  tag.value = savedParams.get('_tag');
+
+  const limit = form.querySelector('[name="limit"]');
+  limit.value = savedParams.get('limit');
+}
+
+const defaultParams = new Map([
+  ['sort', 'created'],
+  ['sortOrder', 'desc'],
+  ['active', 'null'],
+  ['_tag', ''],
+  ['limit', '20'],
+]);
