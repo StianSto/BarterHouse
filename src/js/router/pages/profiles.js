@@ -68,6 +68,12 @@ async function authorizedUser() {
   document.querySelector('#profileSection').after(quickAccessSection);
 
   const profileImg = profile.querySelector('#profileImg');
+
+  const previewImgValue = document.querySelector('#avatar');
+  const previewImg = document.querySelector('#changeProfileImage');
+  console.log(previewImg);
+  previewImgValue.value = user.avatar;
+  previewImg.src = user.avatar;
   const changeImgBtn = new DOMParser().parseFromString(
     `
 		<button
