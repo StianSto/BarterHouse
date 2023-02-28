@@ -22,11 +22,15 @@ export async function viewListing() {
   const listing = await response.json();
 
   const { title, description, media, created, endsAt, bids, seller } = listing;
+  bids.sort((a, b) => b.amount - a.amount);
 
   const createdDate = new Date(created);
   const endsDate = new Date(endsAt);
 
   const addBidForm = document.querySelector('#addBid');
+  const addBidInput = addBidForm.querySelector('#placeBidValue');
+  addBidInput.max = user.credits;
+  addBidInput.min = bids[0] ? bids[0].amount + 1 : 1;
   const endsIn = document.querySelector('[data-listing="endsIn"]');
   const timer = countdown(endsAt);
 
@@ -98,7 +102,6 @@ async function addBidders(bids) {
     return;
   }
 
-  bids.sort((a, b) => b.amount - a.amount);
   const highestBid = bids[0];
   const highestBidderResponse = await getProfile(highestBid.bidderName);
   const highestBidder = await highestBidderResponse.json();
