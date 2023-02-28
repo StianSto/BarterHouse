@@ -1,6 +1,6 @@
 {
   "name": "barterhouse",
-  "version": "0.1.1",
+  "version": "1.0.0",
   "description": "BarterHouse is an online auctioning website that focuses on the trading aspect of auctioning. it is colorful and inviting and easy to use. this website was made as a project durign my time at Noroff",
   "main": "index.js",
   "type": "module",
