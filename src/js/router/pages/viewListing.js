@@ -29,7 +29,7 @@ export async function viewListing() {
 
   const addBidForm = document.querySelector('#addBid');
   const addBidInput = addBidForm.querySelector('#placeBidValue');
-  addBidInput.max = user.credits;
+  addBidInput.max = user?.credits;
   addBidInput.min = bids[0] ? bids[0].amount + 1 : 1;
   const endsIn = document.querySelector('[data-listing="endsIn"]');
   const timer = countdown(endsAt);
