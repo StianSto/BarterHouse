@@ -7,12 +7,15 @@ const user = storage.load('userDetails')?.name;
 export const quickAccess = {
   myListings: async () => {
     const response = await getProfileListings(user, paramsMyListings);
-    return await response.json();
+    const results = await response.json();
+    return results;
   },
 
   watchlist: async () => {
     const response = await getProfileBids(user, paramsWatchlist);
-    return await response.json();
+    const results = await response.json();
+    results.sort((a, b) => b.amount - a.amount);
+    return results;
   },
 };
 

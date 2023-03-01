@@ -22,7 +22,7 @@ export const listingSmall = () => {
               <i class="fa fa-clock me-1"></i>
 							<span data-listing="endsIn"></span>
             </p>
-            <div class="card-text mt-4 fs-6 fs-sm-5 mt-4" >
+            <div class="bid-container | card-text mt-4 fs-6 fs-sm-5 mt-4" >
               <span class="me-4 fw-bold fs-4 d-flex flex-nowrap" data-listing="bid">$ 40</span>
             </div>
           </div>

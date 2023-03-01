@@ -12,6 +12,8 @@ function renderSlideritem(listings) {
   );
   sliderItem.appendChild(clone);
 
+  sliderItem.querySelector('.bid-container').remove();
+
   return sliderItem;
 }
 

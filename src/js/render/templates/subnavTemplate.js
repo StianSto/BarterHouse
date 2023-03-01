@@ -64,8 +64,6 @@ export const subnavTemplate = () => {
     element.querySelector('i').classList.add(...fontAwesomeIcon);
     element.querySelector('span').textContent = name;
 
-    console.log(element);
-
     categoriesContainer.append(element);
   });
 
