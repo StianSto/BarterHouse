@@ -11,10 +11,12 @@
   background-size: contain;
   height: clamp(200px, 40vw, 450px);
 
-  &-wrapper {
-    background: url('/assets/images/hero-background-items.png');
-    background-repeat: no-repeat;
-    background-position: right;
-    background-size: auto 100%;
+  @include media-breakpoint-up(sm) {
+    &-wrapper {
+      background: url('/assets/images/hero-background-items.png');
+      background-repeat: no-repeat;
+      background-position: right;
+      background-size: auto 100%;
+    }
   }
 }
