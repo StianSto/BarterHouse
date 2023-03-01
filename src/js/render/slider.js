@@ -24,7 +24,7 @@ export function createSlider(listings) {
 						class="inner-wrapper row gap-3 flex-nowrap row-cols-2 row-cols-md-3 gx-1"
 					></div>
 				</div>
-				<div class="track bg-grey"></div>
+				<div class="track bg-light"></div>
 			</div>
 		`,
     'text/html'
