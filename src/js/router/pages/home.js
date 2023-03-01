@@ -5,6 +5,7 @@ import { renderListingSmall } from '../../render/renderListings';
 import { createSlider } from '../../render/slider';
 import { storage } from '../../storage/localStorage';
 import { quickAccessTemplate } from '../../render/templates/quickAccessTemplate';
+import { subnavTemplate } from '../../render/templates/subnavTemplate';
 
 const paramsAllListings = new Map([
   ['sort', 'created'],
@@ -17,6 +18,9 @@ const paramsAllListings = new Map([
 ]);
 
 export async function home() {
+  const subnav = document.querySelector('#subnav');
+  subnav.append(subnavTemplate());
+
   if (storage.load('token')) {
     const quickAccessSection = quickAccessTemplate();
     const quickAccessContainer =

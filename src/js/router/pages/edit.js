@@ -1,5 +1,5 @@
 import { getListing } from '../../api/listings';
-import { getSearchParams } from '../../functions/searchParams';
+import { getSearchParams } from '../../functions/getSearchParams';
 import {
   setInlineTagsInputListener,
   createTag,

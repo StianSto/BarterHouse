@@ -3,8 +3,13 @@ import { renderListingSmall } from '../../render/renderListings';
 import { storage } from '../../storage/localStorage';
 
 import { Modal } from 'bootstrap';
+import { subnavTemplate } from '../../render/templates/subnavTemplate';
+import { getSearchParams } from '../../functions/getSearchParams';
 
 export async function listings() {
+  const subnav = document.querySelector('#subnav');
+  subnav.append(subnavTemplate());
+
   const filterForm = document.querySelector('#filterListingsModal');
   const options = { backdrop: 'static', keyboard: true };
   const myModal = new Modal(filterForm, options);
@@ -13,12 +18,17 @@ export async function listings() {
     '#filterListingsSaveSettings'
   );
 
+  // configure params for getting listings
   const savedParams = new Map(storage.load('filterSettings'));
-
   let params;
   savedParams.size === 0 ? (params = defaultParams) : (params = savedParams);
 
+  const tagParam = getSearchParams().get('tag');
+  if (tagParam) params.set('_tag', tagParam);
+
+  // add settings to filter modal
   addFilterSettings(filterForm, params);
+
   render(params);
   renderBadges(params);
 

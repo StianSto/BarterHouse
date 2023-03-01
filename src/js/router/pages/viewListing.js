@@ -2,7 +2,7 @@ import { getListing } from '../../api/listings';
 import { getProfileListings } from '../../api/profile/read/getProfileListings';
 import { getProfile } from '../../api/profile/read/getProfiles';
 import countdown from '../../functions/countdown';
-import { getSearchParams } from '../../functions/searchParams';
+import { getSearchParams } from '../../functions/getSearchParams';
 import { setaddBidListener } from '../../handlers/addBidListener';
 import { createSlider } from '../../render/slider';
 import { storage } from '../../storage/localStorage';
