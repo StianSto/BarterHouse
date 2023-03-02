@@ -1,7 +1,7 @@
 import { createBid } from '../api/listings/create/createBid';
 import { updateLocalProfile } from '../functions/updateLocalProfile';
 import { modalAlertTemplate } from '../render/templates/modalAlertTemplate';
-const { Modal } = await import('bootstrap');
+import { Modal } from 'bootstrap';
 
 export async function setaddBidListener(form, id) {
   form.addEventListener('submit', async (event) => {
