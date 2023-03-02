@@ -13,7 +13,7 @@ const paramsMyListings = new Map([
   ['limit', null],
   ['offset', null],
   ['tag', null],
-  ['_active', null],
+  ['_active', true],
   ['_bids', true],
 ]);
 

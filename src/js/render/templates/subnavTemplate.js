@@ -1,3 +1,4 @@
+import { Tooltip } from 'bootstrap';
 export const subnavTemplate = () => {
   const el = new DOMParser().parseFromString(
     `
@@ -31,18 +32,20 @@ export const subnavTemplate = () => {
 				</li>
 			</ul>
 
-			<div class="input-group">
+			<div class="input-group" data-bs-toggle="tooltip" data-bs-title="Search is not available yet" data-bs-placement="left">
 				<input
 					type="text"
 					class="form-control rounded-2"
 					placeholder="Search listings"
 					aria-label="Search listings"
 					aria-describedby="button-searchbar"
+					disabled
 				/>
 				<button
 					id="button-searchbar"
 					class="btn btn-primary d-flex justify-content-center align-items-center position-absolute h-100"
 					style="right: 0; z-index: 5"
+					disabled
 				>
 					<i class="fa fa-search text-white fs-5"></i>
 				</button>
@@ -55,6 +58,8 @@ export const subnavTemplate = () => {
 		`,
     'text/html'
   );
+
+  new Tooltip(el.querySelector('[data-bs-toggle="tooltip"]'));
 
   const categoriesContainer = el.querySelector('#categoriesContainer ul');
 
