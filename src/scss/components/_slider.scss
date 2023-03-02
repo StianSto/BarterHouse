@@ -20,6 +20,9 @@
 
   &-item {
     scroll-snap-align: start;
+    &-small {
+      width: clamp(min(300px, 100%), 33%, 500px) !important;
+    }
   }
 }
 
@@ -37,12 +40,14 @@
   padding: 0px 20px 10px;
 }
 
+$height: 10px;
+
 .track {
-  background-color: #f1d;
-  height: 2px;
+  background-color: #f1d !important;
+  height: $height;
   width: 100%;
   position: relative;
-  top: -3px;
+  top: -$height;
   z-index: -10;
 }
 
@@ -53,7 +58,7 @@
 }
 
 .outer-wrapper::-webkit-scrollbar {
-  height: 5px;
+  height: $height;
 }
 
 .outer-wrapper::-webkit-scrollbar-track {
@@ -63,6 +68,7 @@
 .outer-wrapper::-webkit-scrollbar-thumb {
   height: 5px;
   background-color: #c68;
+  border-radius: 50rem;
 }
 
 .outer-wrapper::-webkit-scrollbar-thumb:hover {

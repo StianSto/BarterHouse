@@ -1,7 +1,9 @@
-.listing-small {
-  min-width: 200px;
+.listing {
   animation: loadInListing 500ms forwards ease-in-out;
   transition: filter 250ms ease;
+  &-small {
+    max-width: min(520px, 100%);
+  }
   &:hover {
     filter: drop-shadow(2px 2px 4px #d7d7d7);
   }
@@ -9,7 +11,7 @@
 
 [data-listing-grid] {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(250px, 100%), 1fr));
   gap: 1.5rem;
 }
 
