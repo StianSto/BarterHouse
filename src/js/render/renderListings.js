@@ -1,20 +1,27 @@
 import countdown from '../functions/countdown';
 import { storage } from '../storage/localStorage';
-import { listingSmall } from './templates/listings';
+import { listingFull, listingSmall } from './templates/listings';
 
 const defaultImage =
   'https://garden.spoonflower.com/c/11559317/p/f/m/wVUPX7NeVeeoRhPz3Mfzkqn9BCj1zYLRCGSjo-lR3N_5qJPAOioIs2I/Solid%20light%20grey%20g1_3-1.jpg';
 
-export function renderListingSmall({
-  media = '',
-  title = '',
-  bids = '',
-  id = '',
-  endsAt = '',
-}) {
-  const listing = listingSmall();
+export function renderListing(
+  { media = '', title = '', bids = '', id = '', endsAt = '', description = '' },
+  size = 'grid'
+) {
+  let listing;
+  if (size === 'grid') listing = listingSmall();
+  if (size === 'full') {
+    listing = listingFull();
+    const descriptionElement = listing.querySelector(
+      '[data-listings="description"]'
+    );
+    descriptionElement.innerText = `${
+      description ? description.slice(0, 100) : 'no description'
+    } ${description.length > 100 ? '...' : ''}`;
+  }
 
-  const listingLink = listing.querySelector('.listing-small > a');
+  const listingLink = listing.querySelector('.listing > a');
   const listingTitle = listing.querySelector('[data-listing="title"]');
   const listingImg = listing.querySelector('[data-listing="media"]');
 
@@ -23,7 +30,7 @@ export function renderListingSmall({
   listingImg.src = media[0] ? media[0] : defaultImage;
   listingImg.loading = 'lazy';
 
-  bids.sort((a, b) => b.amount - a.amount);
+  if (bids) bids.sort((a, b) => b.amount - a.amount);
   addCountdown(endsAt, bids, listing);
 
   return listing;

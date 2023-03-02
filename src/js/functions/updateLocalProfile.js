@@ -4,16 +4,11 @@ import defaultAvatar from '../../assets/images/default-avatar.png';
 
 export async function updateLocalProfile() {
   const response = await getProfile(storage.load('userDetails').name);
-
   const { name, avatar, credits, email } = await response.json();
-
-  if (!userDetails.avatar) {
-    userDetails.avatar = defaultAvatar;
-  }
 
   const userDetails = {
     name,
-    avatar,
+    avatar: avatar ? avatar : defaultAvatar,
     credits,
     email,
   };

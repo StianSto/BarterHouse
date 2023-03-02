@@ -3,12 +3,10 @@ import { getProfile } from '../../api/profile/read/getProfiles';
 import { authGuard } from '../../functions/authGuard';
 import { quickAccess } from '../../functions/quickAccess';
 import { setUpdateAvatarListener } from '../../handlers/updateAvatarListener';
-import { renderListingSmall } from '../../render/renderListings';
-import { createSlider } from '../../render/slider';
 import { profileTemplate } from '../../render/templates/profileTemplate';
-import { quickAccessTemplate } from '../../render/templates/quickAccessTemplate';
 import { storage } from '../../storage/localStorage';
 import defaultAvatar from '../../../assets/images/default-avatar.png';
+import { render } from '../../render/render';
 
 let nameParam;
 const profile = profileTemplate();
@@ -43,28 +41,15 @@ async function insertProfileInfo() {
 }
 
 async function insertProfileListings() {
-  const listingsContainer = document.querySelector('[data-listing-grid]');
-
   const getListings = await getProfileListings(nameParam);
   const listings = await getListings.json();
-
-  if (listings.length === 0) {
-    const noListings = document.createElement('p');
-    noListings.innerText = 'no listings';
-    return listingsContainer.append(noListings);
-  }
-
-  listingsContainer.append(...listings.map(renderListingSmall));
+  render(listings);
 }
 
 async function authorizedUser() {
   const user = storage.load('userDetails');
 
-  const quickAccessSection = quickAccessTemplate();
-  const quickAccessContainer =
-    quickAccessSection.querySelector('#quickAccessSlider');
-  const listings = await watchlist();
-  quickAccessContainer.append(createSlider(listings));
+  const quickAccessSection = await quickAccess();
   document.querySelector('#profileSection').after(quickAccessSection);
 
   const profileImg = profile.querySelector('#profileImg');
@@ -95,32 +80,4 @@ async function authorizedUser() {
   userCreditsElement.classList.add('fs-3');
   userCreditsElement.innerText = 'Funds: $ ' + user.credits;
   userCredits.append(userCreditsElement);
-}
-
-// will create an array of listings that the user has bid on. will rearrange the returned data s oeach listing includes bids
-export async function watchlist() {
-  const myBids = await quickAccess.watchlist();
-  let results = {};
-
-  myBids.filter((bid) => {
-    const { listing, ...bidData } = bid;
-    listing['bids'] = [bidData];
-
-    let today = new Date();
-    let ends = new Date(bid.listing.endsAt);
-    if (ends.getTime() < today.getTime()) return;
-
-    if (results[bid.listing.id]) {
-      let a = results[bid.listing.id].amount;
-      let b = bid.amount;
-
-      if (b > a) return (results[listing.id] = listing);
-      return;
-    }
-
-    results[listing.id] = listing;
-  });
-
-  const listings = Object.values(results);
-  return listings;
 }

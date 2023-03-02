@@ -4,9 +4,9 @@ import { getProfile } from '../../api/profile/read/getProfiles';
 import countdown from '../../functions/countdown';
 import { getSearchParams } from '../../functions/getSearchParams';
 import { setaddBidListener } from '../../handlers/addBidListener';
-import { createSlider } from '../../render/slider';
 import { storage } from '../../storage/localStorage';
 import defaultAvatar from '../../../assets/images/default-avatar.png';
+import { render } from '../../render/render';
 
 const getListingParams = new Map([
   ['_seller', true],
@@ -20,42 +20,45 @@ export async function viewListing() {
 
   const response = await getListing(id, getListingParams);
   const listing = await response.json();
-
   const { title, description, media, created, endsAt, bids, seller } = listing;
   bids.sort((a, b) => b.amount - a.amount);
 
   const createdDate = new Date(created);
   const endsDate = new Date(endsAt);
 
+  // remove bid form if user is not logged in.
   const addBidForm = document.querySelector('#addBid');
-  const addBidInput = addBidForm.querySelector('#placeBidValue');
-  addBidInput.max = user?.credits;
-  addBidInput.min = bids[0] ? bids[0].amount + 1 : 1;
-  const endsIn = document.querySelector('[data-listing="endsIn"]');
-  const timer = countdown(endsAt);
-
   if (!storage.load('token')) {
     const logInToBid = document.createElement('p');
     logInToBid.innerText = 'log in to add a bid';
     addBidForm.replaceWith(logInToBid);
   } else {
+    const addBidInput = addBidForm.querySelector('#placeBidValue');
+    addBidInput.max = user?.credits;
+    addBidInput.min = bids[0] ? bids[0].amount + 1 : 1;
+
     const funds = document.querySelectorAll('[data-funds]');
     const credits = user.credits;
     funds.forEach((el) => (el.textContent = `$ ${credits}`));
-    addSliders(listing.seller.name);
+    addSellersListings(listing.seller.name);
     addBidders(bids);
   }
 
-  if (timer === false) {
-    addBidForm.remove();
-    document.querySelector('#currentStatus').textContent = 'Winner:';
-    endsIn.textContent = 'Auction ended!';
-  } else if (timer < 1) {
-    endsIn.textContent;
-    setaddBidListener(addBidForm, id);
-  } else {
-    endsIn.textContent = `${timer} ${timer === 1 ? 'day' : 'days'} left`;
-    setaddBidListener(addBidForm, id);
+  const endsIn = document.querySelector('[data-listing="endsIn"]');
+  const timer = countdown(endsAt);
+  setaddBidListener(addBidForm, id);
+
+  switch (timer) {
+    case false:
+      addBidForm.remove();
+      document.querySelector('#currentStatus').textContent = 'Winner:';
+      endsIn.textContent = 'Auction ended!';
+      break;
+    case true:
+      endsIn.textContent = `${timer} ${timer === 1 ? 'day' : 'days'} left`;
+      break;
+    default:
+      break;
   }
 
   if (seller?.name === user?.name) {
@@ -65,11 +68,14 @@ export async function viewListing() {
     document.querySelector('#title').after(editBtn);
   }
 
+  const shortDescription = `${description.slice(0, 150)} ${
+    description.length > 150 ? '...' : ''
+  }`;
   // add content to page
   document.querySelector('#title').textContent = title;
   document.querySelector('#name').textContent = seller.name;
   document.querySelector('#seller').href = `/profiles/?name=${seller.name}`;
-  document.querySelector('#description').textContent = description;
+  document.querySelector('#description').textContent = shortDescription;
   document.querySelector('#descriptionFull').textContent = description;
   document.querySelector('#ends').textContent = endsDate.toLocaleDateString();
   document.querySelector('#started').textContent =
@@ -81,12 +87,17 @@ export async function viewListing() {
   addMedia(media);
 }
 
-async function addSliders(profile) {
+async function addSellersListings(profile) {
   const response = await getProfileListings(profile);
   const listings = await response.json();
+
   const profileListings = document.querySelector('#profileListings');
   profileListings.querySelector('h2').textContent = `${profile}'s Listings`;
-  profileListings.appendChild(createSlider(listings));
+  const container = document.createElement('div');
+  container.setAttribute('data-listing-grid', '');
+  profileListings.append(container);
+
+  render(listings);
 }
 
 async function addBidders(bids) {
@@ -151,9 +162,7 @@ function addMedia(media) {
   const mediaContainer = mediaCarousel.querySelector('.carousel-inner');
 
   if (media.length === 0)
-    media.push(
-      'https://www.chanchao.com.tw/VietnamPrintPack/images/default.jpg'
-    );
+    media = ['https://www.chanchao.com.tw/VietnamPrintPack/images/default.jpg'];
 
   media.forEach((img, index) => {
     const indicatorTemplate = templateCarouselIndicator.content.cloneNode(true);

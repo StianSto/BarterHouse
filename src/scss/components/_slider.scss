@@ -20,6 +20,9 @@
 
   &-item {
     scroll-snap-align: start;
+    &-small {
+      width: clamp(min(300px, 100%), 33%, 500px) !important;
+    }
   }
 }
 

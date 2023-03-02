@@ -1,11 +1,8 @@
-import { getAllListings } from '../../api/listings/read/getListings';
-
-import { watchlist } from '../pages/profiles';
-import { renderListingSmall } from '../../render/renderListings';
-import { createSlider } from '../../render/slider';
 import { storage } from '../../storage/localStorage';
-import { quickAccessTemplate } from '../../render/templates/quickAccessTemplate';
 import { subnavTemplate } from '../../render/templates/subnavTemplate';
+import { quickAccess } from '../../functions/quickAccess';
+import { setMoreListingsListener } from '../../handlers/moreListingsHandler';
+import { render } from '../../render/render';
 
 const paramsAllListings = new Map([
   ['sort', 'created'],
@@ -22,33 +19,14 @@ export async function home() {
   subnav.append(subnavTemplate());
 
   if (storage.load('token')) {
-    const quickAccessSection = quickAccessTemplate();
-    const quickAccessContainer =
-      quickAccessSection.querySelector('#quickAccessSlider');
-
-    const watchlistListings = await watchlist();
-    quickAccessContainer.append(createSlider(watchlistListings));
-
+    const quickAccessSection = await quickAccess();
     const hero = document.querySelector('#hero');
     hero.after(quickAccessSection);
   }
-  render(paramsAllListings);
+
+  render(null, paramsAllListings);
 
   let offset = 0;
   const moreListingsBtn = document.querySelector('#loadListings');
-  moreListingsBtn.addEventListener('click', async () => {
-    let limit = parseFloat(paramsAllListings.get('limit'));
-    offset += limit;
-    paramsAllListings.set('offset', offset);
-    render(paramsAllListings);
-  });
-}
-
-async function render(params) {
-  const getListings = await getAllListings(params);
-  const listings = await getListings.json();
-  const listingsContainer = document.querySelector(
-    '#listingsContainer > [data-listing-grid]'
-  );
-  listingsContainer.append(...listings.map(renderListingSmall));
+  setMoreListingsListener(moreListingsBtn, offset, paramsAllListings);
 }

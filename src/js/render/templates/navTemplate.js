@@ -28,7 +28,7 @@ export const navTemplate = () => {
 				id="navbarSupportedContent"
 			>
 				<div class="d-lg-none d-flex align-items-center mt-4 " id="navProfileMobile">
-					<a href="">
+					<a href="/profiles/">
 						<img
 							src=""
 							alt=""
