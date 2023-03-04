@@ -3,7 +3,7 @@ import { Modal } from 'bootstrap';
 import { subnavTemplate } from '../../render/templates/subnavTemplate';
 import { getSearchParams } from '../../functions/getSearchParams';
 import { renderBadges } from '../../render/renderBadges';
-import { setMoreListingsListener } from '../../handlers/moreListingsHandler';
+import { setRenderGridListener } from '../../handlers/moreListingsHandler';
 import { render } from '../../render/render';
 
 export async function listings() {
@@ -21,57 +21,57 @@ export async function listings() {
   const tagParam = searchParams.get('tag');
   const view = searchParams.get('view');
   if (tagParam) params.set('_tag', tagParam);
-  let offset = 0;
 
+  const renderOptions = {
+    view,
+    params,
+  };
   addFilterSettings(filterForm, params);
-  render(view, params);
+  setFilterFormListener(filterForm, renderOptions);
+  setRenderGridListener(render, renderOptions);
   renderBadges(params);
-
-  setFilterFormListener(filterForm, offset, params, view);
 }
 
-function addFilterSettings(form, savedParams) {
+function addFilterSettings(form, params = defaultParams) {
   const sort = form.querySelector('[name="sort"]');
-  const sortOption = sort.querySelector(`[value=${savedParams.get('sort')}]`);
+  const sortOption = sort.querySelector(`[value=${params.get('sort')}]`);
   sortOption.selected = true;
 
   const sortOrder = form.querySelector('[name="sortOrder"]');
   const sortOrderOption = sortOrder.querySelector(
-    `[value=${savedParams.get('sortOrder')}]`
+    `[value=${params.get('sortOrder')}]`
   );
   sortOrderOption.selected = true;
 
-  const active = form.querySelector('[name="active"]');
-  const activeOption = active.querySelector(
-    `[value=${savedParams.get('active')}]`
-  );
+  const active = form.querySelector('[name="_active"]');
+  const activeOption = active.querySelector(`[value=${params.get('_active')}]`);
   activeOption.selected = true;
 
   const tag = form.querySelector('[name="_tag"]');
-  tag.value = savedParams.get('_tag');
+  tag.value = params.get('_tag');
 
   const limit = form.querySelector('[name="limit"]');
-  limit.value = savedParams.get('limit');
+  limit.value = params.get('limit');
 }
 
 const defaultParams = new Map([
   ['sort', 'created'],
   ['sortOrder', 'desc'],
-  ['active', 'null'],
+  ['_active', 'null'],
   ['_tag', ''],
   ['limit', '20'],
+  ['offset', '0'],
 ]);
 
-function setFilterFormListener(form, offset, params, view) {
-  const options = { backdrop: 'static', keyboard: true };
-  const myModal = new Modal(form, options);
+function setFilterFormListener(form, options) {
+  const myModal = new Modal(form, { backdrop: 'static', keyboard: true });
 
   form.addEventListener('submit', async (event) => {
     event.preventDefault();
 
-    offset = 0;
     let formData = new FormData(form);
-    params = new Map(formData);
+    let params = new Map(formData);
+    options['params'] = params;
 
     const saveFilterSettings = form.querySelector(
       '#filterListingsSaveSettings'
@@ -81,11 +81,8 @@ function setFilterFormListener(form, offset, params, view) {
     const listingsContainer = document.querySelector('[data-listing-grid]');
     listingsContainer.replaceChildren();
 
-    render(view, params);
-    myModal.hide();
+    setRenderGridListener(render, options);
     renderBadges(params);
+    myModal.hide();
   });
-
-  const moreListingsBtn = document.querySelector('#loadListings');
-  setMoreListingsListener(moreListingsBtn, offset, params);
 }

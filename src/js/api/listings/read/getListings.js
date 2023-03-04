@@ -1,6 +1,7 @@
 import headers from '../../headers';
 import createUrl from '../../../functions/createUrl';
 import { LISTINGS_ENDPOINT } from '../../constants';
+import { handleApiResponse } from '../../../handlers/handleApiResponse';
 
 // GET ALL LISTINGS
 const defaultParams = new Map([
@@ -32,16 +33,21 @@ const params = new Map([
 const response = await getAllListings(params)
 */
 
-export async function getAllListings(params = defaultParams) {
+export async function getAllListings(params = []) {
   let response;
-  let mergedParams = new Map([...defaultParams, ...params]);
+  try {
+    let mergedParams = new Map([...defaultParams, ...params]);
+    const URL = createUrl(LISTINGS_ENDPOINT, mergedParams);
 
-  const URL = createUrl(LISTINGS_ENDPOINT, mergedParams);
+    response = await fetch(URL, {
+      method: 'GET',
+      headers: headers('application/json'),
+    });
 
-  response = await fetch(URL, {
-    method: 'GET',
-    headers: headers('application/json'),
-  });
+    handleApiResponse(response);
+  } catch (error) {
+    alert(error);
+  }
 
   return response;
 }
@@ -60,18 +66,26 @@ makes a GET request to get a single listing by id and specified parameters. the 
 @return {Promise} - The response of the GET request to the listings endpoint.
 @example
 const params = new Map([
-	['_seller', "John_Doe"],
+	['_seller', null],
   ['_bids', true],
 ])
 const response = await getListing(123, params)
 */
-export async function getListing(id, params = defaultParamsSingleListing) {
-  const URL = createUrl(`${LISTINGS_ENDPOINT}/${id}`, params);
+export async function getListing(id, params = []) {
+  let response;
+  try {
+    let mergedParams = new Map([...defaultParamsSingleListing, ...params]);
+    const URL = createUrl(`${LISTINGS_ENDPOINT}/${id}`, mergedParams);
 
-  const response = await fetch(URL, {
-    method: 'GET',
-    headers: headers('application/json'),
-  });
+    response = await fetch(URL, {
+      method: 'GET',
+      headers: headers('application/json'),
+    });
+
+    handleApiResponse(response);
+  } catch (error) {
+    alert(error);
+  }
 
   return response;
 }

@@ -1,5 +1,4 @@
 import { getListing } from '../../api/listings';
-import { getProfileListings } from '../../api/profile/read/getProfileListings';
 import { getProfile } from '../../api/profile/read/getProfiles';
 import countdown from '../../functions/countdown';
 import { getSearchParams } from '../../functions/getSearchParams';
@@ -7,6 +6,7 @@ import { setaddBidListener } from '../../handlers/addBidListener';
 import { storage } from '../../storage/localStorage';
 import defaultAvatar from '../../../assets/images/default-avatar.png';
 import { render } from '../../render/render';
+import { setRenderGridListener } from '../../handlers/moreListingsHandler';
 
 const getListingParams = new Map([
   ['_seller', true],
@@ -68,8 +68,8 @@ export async function viewListing() {
     document.querySelector('#title').after(editBtn);
   }
 
-  const shortDescription = `${description.slice(0, 150)} ${
-    description.length > 150 ? '...' : ''
+  const shortDescription = `${description?.slice(0, 150)} ${
+    description?.length > 150 ? '...' : ''
   }`;
   // add content to page
   document.querySelector('#title').textContent = title;
@@ -88,16 +88,17 @@ export async function viewListing() {
 }
 
 async function addSellersListings(profile) {
-  const response = await getProfileListings(profile);
-  const listings = await response.json();
-
   const profileListings = document.querySelector('#profileListings');
   profileListings.querySelector('h2').textContent = `${profile}'s Listings`;
-  const container = document.createElement('div');
-  container.setAttribute('data-listing-grid', '');
-  profileListings.append(container);
 
-  render(listings);
+  const params = new Map([]);
+  const renderOptions = {
+    view: 'name',
+    profile,
+    params,
+  };
+
+  setRenderGridListener(render, renderOptions);
 }
 
 async function addBidders(bids) {
@@ -133,6 +134,7 @@ function createBidHistory(bid) {
   const tableRow = document.createElement('tr');
   const colName = document.createElement('td');
   const name = document.createElement('a');
+
   name.textContent = bid.bidderName;
   name.href = `/profiles/?name=${bid.bidderName}`;
   name.classList.add('link-dark', 'text-decoration-none');
