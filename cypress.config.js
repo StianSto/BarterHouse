@@ -16,4 +16,5 @@ export default defineConfig({
     USER_PASSWORD: process.env.USER_PASSWORD,
     USER_TOKEN: process.env.USER_TOKEN,
   },
+  projectId: 'fjo7zx',
 });
