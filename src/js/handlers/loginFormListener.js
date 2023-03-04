@@ -14,7 +14,7 @@ export function authFormListener(form) {
     if (form.id === 'register') {
       registerResponse = await register(body);
       if (!registerResponse.ok) {
-        errMsg = handleBadResponse(registerResponse);
+        errMsg = await handleBadResponse(registerResponse);
         return form.append(errMsg);
       }
       delete body.name;
@@ -37,6 +37,7 @@ export async function handleBadResponse(response) {
     errMsg.classList.add('text-primary');
   }
   const result = await response.json();
+  console.log(result);
   errMsg.innerText = result.errors[0].message;
 
   return errMsg;
