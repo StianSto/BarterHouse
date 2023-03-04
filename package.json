@@ -5,7 +5,6 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "watch": "sass --watch src/scss:dist/css & npm run dev",
     "dev": "vite",
     "build": "vite build",
@@ -14,7 +13,8 @@
     "lint": "eslint src/**/*.js",
     "lint-fix": "eslint src/**/*.js --cache --fix",
     "prepare": "husky install",
-    "docs": "jsdoc -c ./conf.json -r"
+    "docs": "jsdoc -c ./conf.json -r",
+    "test": "cypress open"
   },
   "repository": {
     "type": "git",
@@ -32,7 +32,10 @@
   },
   "homepage": "https://github.com/StianSto/BarterHouse#readme",
   "devDependencies": {
+    "cypress": "^12.7.0",
+    "dotenv": "^16.0.3",
     "eslint": "^8.33.0",
+    "eslint-plugin-cypress": "^2.12.1",
     "husky": "^8.0.3",
     "jsdoc": "^4.0.0",
     "lint-staged": "^13.1.0",
