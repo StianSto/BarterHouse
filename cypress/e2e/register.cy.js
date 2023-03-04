@@ -62,6 +62,9 @@ context('registration tests', () => {
     cy.wait('@redirect').then(() => {
       expect(localStorage.getItem('token')).to.exist;
       expect(localStorage.getItem('userDetails')).to.exist;
+      cy.location().should((location) =>
+        expect(location.pathname).to.equal('/')
+      );
     });
   });
 });

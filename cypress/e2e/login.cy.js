@@ -3,52 +3,63 @@ const USER_PASSWORD = Cypress.env('USER_PASSWORD');
 const USER_NAME = Cypress.env('USER_NAME');
 
 context('authentication forms', () => {
-  it('logs in user with valid credentials', () => {
+  beforeEach(() => {
     cy.visit('/auth/?form=login');
-    cy.wait(500);
+    cy.intercept('POST', '/api/v1/auction/auth/login').as('loginSubmit');
+  });
 
-    cy.get('form')
-      .should('exist')
-      .within(() => {
-        cy.get('#email').should('exist').type(USER_EMAIL);
-        cy.get('#password').should('exist').type(USER_PASSWORD);
+  it('fails to submit form if user enters invalid email format', () => {
+    cy.get('input[name="email"]').should('exist').type('notNoroff@amail.com');
+    cy.get('input[name="password"]').should('exist').type(USER_PASSWORD);
 
-        cy.intercept('https://api.noroff.dev/api/v1/auction/auth/login').as(
-          'loginSubmit'
-        );
-        cy.root().submit();
-        cy.wait('@loginSubmit').then((interception) => {
-          expect(interception.response.statusCode).to.equal(200);
-        });
+    cy.get('form#login button')
+      .contains('Submit')
+      .click()
+      .then(() => {
+        cy.get('input[name="email"]:invalid').should('exist');
+        cy.get('input[name="password"]:valid').should('exist');
       });
   });
 
-  it('fails to submit form if user enters invalid email', () => {
+  it('responds with an error if user submits with invalid credentials', () => {
+    cy.get('input[name="email"]')
+      .should('exist')
+      .type('notUser@stud.noroff.no');
+    cy.get('input[name="password"]').should('exist').type('notMyPassword');
+
+    cy.get('form#login button')
+      .contains('Submit')
+      .click()
+      .then(() => {
+        cy.get('input[name="email"]:valid').should('exist');
+        cy.get('input[name="password"]:valid').should('exist');
+      });
+    cy.wait('@loginSubmit').then((interception) => {
+      expect(interception.response.statusCode).to.equal(401);
+      cy.get('#errMsg').contains('Invalid email or password');
+    });
+  });
+
+  it('logs in user with valid credentials', () => {
+    cy.clearLocalStorage();
+    cy.intercept('GET', '/').as('redirect');
     cy.visit('/auth/?form=login');
     cy.wait(500);
 
-    cy.get('form')
-      .should('exist')
-      .within(() => {
-        cy.get('#email').should('exist').type('notNoroff@a');
-        cy.get('#password').should('exist').type(USER_PASSWORD);
+    cy.get('#email').should('exist').type(USER_EMAIL);
+    cy.get('#password').should('exist').type(USER_PASSWORD);
 
-        cy.intercept('https://api.noroff.dev/api/v1/auction/auth/login').as(
-          'loginSubmit'
-        );
+    cy.get('form#login button').contains('Submit').click();
+    cy.wait('@loginSubmit').then((interception) => {
+      expect(interception.response.statusCode).to.equal(200);
+    });
 
-        cy.root().submit();
-        cy.wait('@loginSubmit').then((interception) => {
-          expect(interception.response.statusCode).to.equal(400);
-          cy.get('#errMsg').contains('Email must be a valid email');
-        });
-
-        cy.get('#email').clear().type('notNoroff@email.com');
-        cy.root().submit();
-        cy.wait('@loginSubmit').then((interception) => {
-          expect(interception.response.statusCode).to.equal(401);
-          cy.get('#errMsg').contains('Invalid email or password');
-        });
-      });
+    cy.wait('@redirect').then(() => {
+      expect(localStorage.getItem('token')).to.exist;
+      expect(localStorage.getItem('userDetails')).to.exist;
+      cy.location().should((location) =>
+        expect(location.pathname).to.equal('/')
+      );
+    });
   });
 });
