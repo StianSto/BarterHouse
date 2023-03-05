@@ -42,6 +42,7 @@ async function insertProfileInfo() {
   profileSection.append(profile);
 }
 
+
 async function insertProfileListings(profile) {
   const params = new Map([]);
   const renderOptions = {

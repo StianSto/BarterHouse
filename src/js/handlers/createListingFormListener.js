@@ -1,7 +1,9 @@
 import { createListing } from '../api/listings';
 import { renderListing } from '../render/renderListings';
 import { modalFeedback } from './addBidListener';
+
 import { Modal } from 'bootstrap';
+
 
 export function setCreateListingFormListener(form, imagesState) {
   form.addEventListener('submit', async (event) => {
@@ -37,8 +39,10 @@ export function setCreateListingFormListener(form, imagesState) {
       result.errors.forEach((err) => message.append(err.message));
       modalBody.append(status, message);
     }
+
     const modalElement = modalFeedback(modalBody, modalTitle);
     const modal = new Modal(modalElement);
+
     modal.show();
   });
 }

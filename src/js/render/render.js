@@ -35,6 +35,7 @@ export async function render(renderOptions = []) {
     case 'newest':
       response = await getAllListings(params);
       listings = await response.json();
+
       break;
 
     case 'watchlist':
@@ -43,11 +44,14 @@ export async function render(renderOptions = []) {
       break;
 
     case 'myListings':
+
       listings = await myListings(params);
+
       break;
 
     case 'hottest':
       params.set('limit', 100);
+
       response = await getAllListings(params);
       listings = await response.json();
       listings.sort((a, b) => b.bids.length - a.bids.length);
@@ -78,11 +82,14 @@ export async function render(renderOptions = []) {
 
   if (lengthOfListings < perPage) moreListingsBtn.hide();
 
+
   // stop if there are no listings and return a message to user
   if (listings.length === 0) {
     const noListings = document.createElement('p');
     noListings.innerText = "sorry, we couldn't find any matching listings :(";
+
     moreListingsBtn.hide();
+
     return listingsContainer.append(noListings);
   }
 

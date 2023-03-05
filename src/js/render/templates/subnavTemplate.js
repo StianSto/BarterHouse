@@ -33,6 +33,7 @@ export const subnavTemplate = () => {
 				</li>
 			</ul>
 
+
 			<form class="input-group" id="search">
 				<input
 					type="text"
@@ -45,6 +46,7 @@ export const subnavTemplate = () => {
 					oninvalid="this.setCustomValidity('Enter a word to search through listings. ex: car, fashion, camera')"
 					oninput="setCustomValidity('')"
 					required
+
 				/>
 				<button
 					id="button-searchbar"
@@ -54,6 +56,7 @@ export const subnavTemplate = () => {
 					<i class="fa fa-search text-white fs-5"></i>
 				</button>
 			</form>
+
 			<div id="categoriesContainer" class="container mt-4 mw-lg">
         <ul class="row row-cols-4 row-cols-lg-auto justify-content-lg-around p-0"></ul>
       </div>

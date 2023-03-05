@@ -14,6 +14,7 @@ export function renderBadges(params) {
   let view = searchParams.get('view');
   let query = searchParams.get('query');
 
+
   switch (sort) {
     case 'created':
       badgesMap.set('sortBy', sortOrder === 'desc' ? 'Newest' : 'Oldest');
@@ -28,10 +29,12 @@ export function renderBadges(params) {
   switch (view) {
     case 'watchlist':
       badgesMap.set('view', 'My Watchlist');
+      
       limit = null;
       break;
     case 'myListings':
       badgesMap.set('view', 'My Listings');
+
       break;
     case 'newest':
       badgesMap.set('view', 'Newest');
@@ -41,12 +44,14 @@ export function renderBadges(params) {
       badgesMap.set('view', 'Hottest Listings');
       badgesMap.delete('sortBy');
       break;
+
     case 'search':
       badgesMap.set('view', `Search: ${query}`);
       badgesMap.delete('sortBy');
       tag = null;
       limit = null;
       break;
+
     default:
       false;
   }
@@ -54,6 +59,7 @@ export function renderBadges(params) {
   switch (active) {
     case true:
       badgesMap.set('_active', 'Active auctions only');
+
       break;
   }
 
