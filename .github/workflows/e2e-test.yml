@@ -1,0 +1,28 @@
+# thiw workflow will run e2e tests with cypress
+
+name: Automated e2e testing
+
+on:
+  pull_request:
+  workflow_dispatch:
+  
+env: 
+
+  USER_NAME: ${{secrets.USER_NAME}}
+  USER_EMAIL: ${{secrets.USER_EMAIL}}
+  USER_PASSWORD: ${{secrets.USER_PASSWORD}}
+  USER_TOKEN: ${{secrets.USER_TOKEN}}
+  
+jobs: 
+  run-e2e-tests:
+    name: Run e2e test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@main
+        
+      - name: Cypress.io
+        uses: cypress-io/github-action@v4
+        with:
+          browser: electron
+          start: npm run dev
