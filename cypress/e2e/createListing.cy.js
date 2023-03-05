@@ -89,3 +89,27 @@ context('creates a new listing with', () => {
     });
   });
 });
+
+context('creating listings should fail if', () => {
+  beforeEach(() => {
+    localStorage.setItem('token', JSON.stringify(USER_TOKEN));
+    localStorage.setItem('userDetails', JSON.stringify(USER_DETAILS));
+    cy.visit('/create/');
+  });
+
+  it('user submits without a title', () => {
+    cy.get('form#createListing').within(() => {
+      cy.get('input[name="endsAt"]').type(endsAtValue.slice(0, 16));
+    });
+    cy.get('button[type="submit"]').should('contain', 'Create Listing').click();
+    cy.get('input[name="title"]:invalid').should('exist');
+  });
+
+  it('user submits without a date', () => {
+    cy.get('form#createListing').within(() => {
+      cy.get('input[name="title"]').type(endsAtValue.slice(0, 16));
+    });
+    cy.get('input[name="endsAt"]:invalid').should('exist');
+    cy.get('button[type="submit"]').should('contain', 'Create Listing').click();
+  });
+});
