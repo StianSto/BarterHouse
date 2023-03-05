@@ -37,7 +37,6 @@ export async function handleBadResponse(response) {
     errMsg.classList.add('text-primary');
   }
   const result = await response.json();
-  console.log(result);
   errMsg.innerText = result.errors[0].message;
 
   return errMsg;

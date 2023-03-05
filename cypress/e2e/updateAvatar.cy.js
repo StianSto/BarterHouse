@@ -38,7 +38,6 @@ context('update avatar image', () => {
     cy.get('button[type="submit"]').click();
 
     cy.wait('@updateAvatarRequest').then((interception) => {
-      console.log(interception);
       expect(interception.response.statusCode).to.equal(200);
     });
 
