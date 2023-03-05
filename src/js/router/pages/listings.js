@@ -67,8 +67,6 @@ function setFilterFormListener(form, options) {
   const myModal = new Modal(document.querySelector('#filterListingsModal'));
 
   form.addEventListener('submit', async (event) => {
-    console.log(1);
-    console.log(form);
     event.preventDefault();
 
     let formData = new FormData(form);
@@ -84,10 +82,7 @@ function setFilterFormListener(form, options) {
     listingsContainer.replaceChildren();
 
     setRenderGridListener(render, options);
-    console.log(2);
     renderBadges(params);
-    console.log(3);
     myModal.hide();
-    console.log(myModal);
   });
 }

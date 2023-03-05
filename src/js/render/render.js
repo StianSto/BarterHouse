@@ -65,7 +65,6 @@ export async function render(renderOptions = []) {
 
     case 'name':
       response = await getProfileListings(options.get('profile'), params);
-      console.log(response);
       listings = await response.json();
       break;
 
