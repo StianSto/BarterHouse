@@ -44,9 +44,7 @@ export async function render(renderOptions = []) {
       break;
 
     case 'myListings':
-
       listings = await myListings(params);
-
       break;
 
     case 'hottest':
@@ -67,6 +65,7 @@ export async function render(renderOptions = []) {
 
     case 'name':
       response = await getProfileListings(options.get('profile'), params);
+      console.log(response);
       listings = await response.json();
       break;
 
@@ -81,7 +80,6 @@ export async function render(renderOptions = []) {
   const perPage = params.get('limit');
 
   if (lengthOfListings < perPage) moreListingsBtn.hide();
-
 
   // stop if there are no listings and return a message to user
   if (listings.length === 0) {

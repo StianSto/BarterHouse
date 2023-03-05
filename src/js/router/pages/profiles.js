@@ -42,11 +42,11 @@ async function insertProfileInfo() {
   profileSection.append(profile);
 }
 
-
 async function insertProfileListings(profile) {
   const params = new Map([]);
+  params.set('_active', false); // active flag causes error, so i am removing it from the request
   const renderOptions = {
-    view: 'myListings',
+    view: 'name',
     params,
     profile,
   };
