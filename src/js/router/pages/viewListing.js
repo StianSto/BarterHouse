@@ -7,6 +7,7 @@ import { storage } from '../../storage/localStorage';
 import defaultAvatar from '../../../assets/images/default-avatar.png';
 import { render } from '../../render/render';
 import { setRenderGridListener } from '../../handlers/moreListingsHandler';
+import { upBidListener } from '../../handlers/upBidListener';
 
 const getListingParams = new Map([
   ['_seller', true],
@@ -34,6 +35,7 @@ export async function viewListing() {
     addBidForm.replaceWith(logInToBid);
   } else {
     const addBidInput = addBidForm.querySelector('#placeBidValue');
+    upBidListener(addBidInput, bids[0]);
     addBidInput.max = user?.credits;
     addBidInput.min = bids[0] ? bids[0].amount + 1 : 1;
 
