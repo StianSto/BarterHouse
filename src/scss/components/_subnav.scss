@@ -1,0 +1,11 @@
+#subnav {
+  & #categoriesContainer {
+    & li {
+      &:hover {
+        .fa {
+          color: $primary;
+        }
+      }
+    }
+  }
+}

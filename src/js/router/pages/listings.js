@@ -10,7 +10,7 @@ export async function listings() {
   const subnav = document.querySelector('#subnav');
   subnav.append(subnavTemplate());
 
-  const filterForm = document.querySelector('#filterListingsModal');
+  const filterForm = document.querySelector('#filterListingsModal form');
 
   // configure params for getting listings
   let params;
@@ -64,7 +64,7 @@ const defaultParams = new Map([
 ]);
 
 function setFilterFormListener(form, options) {
-  const myModal = new Modal(form, { backdrop: 'static', keyboard: true });
+  const myModal = new Modal(document.querySelector('#filterListingsModal'));
 
   form.addEventListener('submit', async (event) => {
     event.preventDefault();

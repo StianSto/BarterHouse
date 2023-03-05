@@ -14,10 +14,6 @@
       src="https://kit.fontawesome.com/6430c8691d.js"
       crossorigin="anonymous"
     ></script>
-    <!-- <link
-      rel="stylesheet"
-      href="../node_modules/bootstrap/dist/css/bootstrap.min.css"
-    /> -->
   </head>
   <body>
     <header></header>
@@ -103,15 +99,15 @@
         </div>
       </form>
     </div>
+    <template id="changeImageBtn">
+      <button
+        data-bs-toggle="modal"
+        data-bs-target="#changeAvatarModal"
+        class="btn btn-light py-1 rounded-2 position-absolute"
+        style="bottom: 0; left: 0; translate: calc(50% - 1rem)"
+      >
+        change&nbsp;image
+      </button>
+    </template>
   </body>
-  <template id="changeImageBtn">
-    <button
-      data-bs-toggle="modal"
-      data-bs-target="#changeAvatarModal"
-      class="btn btn-light py-1 rounded-2 position-absolute"
-      style="bottom: 0; left: 0; translate: calc(50% - 1rem)"
-    >
-      change&nbsp;image
-    </button>
-  </template>
 </html>

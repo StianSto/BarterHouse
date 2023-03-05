@@ -1,4 +1,3 @@
-
 import { loadMoreBtn } from '../render/loadMoreBtn';
 
 export async function setRenderGridListener(
@@ -25,7 +24,6 @@ export async function setRenderGridListener(
       offset += limit;
 
       await callbackFunction(renderCallback, renderOptions);
-
     } catch (error) {
       const err = document.createElement('p');
       err.innerText = 'an error ocurred: ' + error;
@@ -39,4 +37,3 @@ export async function setRenderGridListener(
 async function callbackFunction(callback, options) {
   await callback(options);
 }
-
