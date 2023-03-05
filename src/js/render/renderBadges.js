@@ -6,10 +6,14 @@ export function renderBadges(params) {
 
   let sort = params.get('sort');
   let sortOrder = params.get('sortOrder');
-  let active = params.get('active');
+  let active = params.get('_active');
   let tag = params.get('_tag');
   let limit = params.get('limit');
-  let view = getSearchParams().get('view');
+
+  const searchParams = getSearchParams();
+  let view = searchParams.get('view');
+  let query = searchParams.get('query');
+
 
   switch (sort) {
     case 'created':
@@ -25,6 +29,12 @@ export function renderBadges(params) {
   switch (view) {
     case 'watchlist':
       badgesMap.set('view', 'My Watchlist');
+      
+      limit = null;
+      break;
+    case 'myListings':
+      badgesMap.set('view', 'My Listings');
+
       break;
     case 'newest':
       badgesMap.set('view', 'Newest');
@@ -34,19 +44,22 @@ export function renderBadges(params) {
       badgesMap.set('view', 'Hottest Listings');
       badgesMap.delete('sortBy');
       break;
+
+    case 'search':
+      badgesMap.set('view', `Search: ${query}`);
+      badgesMap.delete('sortBy');
+      tag = null;
+      limit = null;
+      break;
+
     default:
       false;
   }
 
   switch (active) {
-    case 'true':
-      badgesMap.set('active', 'Active auctions only');
-      break;
-    case 'false':
-      badgesMap.set('active', 'Inactive auctions only');
-      break;
-    default:
-      badgesMap.set('active', 'Active and inactive');
+    case true:
+      badgesMap.set('_active', 'Active auctions only');
+
       break;
   }
 

@@ -1,10 +1,10 @@
 import { storage } from '../../storage/localStorage';
 import { subnavTemplate } from '../../render/templates/subnavTemplate';
 import { quickAccess } from '../../functions/quickAccess';
-import { setMoreListingsListener } from '../../handlers/moreListingsHandler';
+import { setRenderGridListener } from '../../handlers/moreListingsHandler';
 import { render } from '../../render/render';
 
-const paramsAllListings = new Map([
+const params = new Map([
   ['sort', 'created'],
   ['sortOrder', 'desc'],
   ['limit', 12],
@@ -24,9 +24,8 @@ export async function home() {
     hero.after(quickAccessSection);
   }
 
-  render(null, paramsAllListings);
-
-  let offset = 0;
-  const moreListingsBtn = document.querySelector('#loadListings');
-  setMoreListingsListener(moreListingsBtn, offset, paramsAllListings);
+  const renderOptions = {
+    params,
+  };
+  setRenderGridListener(render, renderOptions);
 }

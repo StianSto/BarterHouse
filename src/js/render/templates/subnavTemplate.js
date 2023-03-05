@@ -1,4 +1,5 @@
-import { Tooltip } from 'bootstrap';
+import { setSearchListener } from '../../handlers/setSearchListener';
+
 export const subnavTemplate = () => {
   const el = new DOMParser().parseFromString(
     `
@@ -32,24 +33,30 @@ export const subnavTemplate = () => {
 				</li>
 			</ul>
 
-			<div class="input-group" data-bs-toggle="tooltip" data-bs-title="Search is not available yet" data-bs-placement="left">
+
+			<form class="input-group" id="search">
 				<input
 					type="text"
+					name="query"
 					class="form-control rounded-2"
 					placeholder="Search listings"
 					aria-label="Search listings"
 					aria-describedby="button-searchbar"
-					disabled
+					minlength="1"
+					oninvalid="this.setCustomValidity('Enter a word to search through listings. ex: car, fashion, camera')"
+					oninput="setCustomValidity('')"
+					required
+
 				/>
 				<button
 					id="button-searchbar"
 					class="btn btn-primary d-flex justify-content-center align-items-center position-absolute h-100"
 					style="right: 0; z-index: 5"
-					disabled
 				>
 					<i class="fa fa-search text-white fs-5"></i>
 				</button>
-			</div>
+			</form>
+
 			<div id="categoriesContainer" class="container mt-4 mw-lg">
         <ul class="row row-cols-4 row-cols-lg-auto justify-content-lg-around p-0"></ul>
       </div>
@@ -59,7 +66,8 @@ export const subnavTemplate = () => {
     'text/html'
   );
 
-  new Tooltip(el.querySelector('[data-bs-toggle="tooltip"]'));
+  const search = el.querySelector('#search');
+  setSearchListener(search);
 
   const categoriesContainer = el.querySelector('#categoriesContainer ul');
 

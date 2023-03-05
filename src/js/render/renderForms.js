@@ -47,6 +47,8 @@ export const loginFormInputs = [
     id: 'email',
     type: 'email',
     placeholder: 'Email',
+    title: 'email must be a valid noroff email: "stud.noroff.no", "noroff.no"',
+    pattern: '^[\\w\\-.]+@(stud.)?noroff.no$',
     required: true,
   },
   {
@@ -54,6 +56,7 @@ export const loginFormInputs = [
     id: 'password',
     type: 'password',
     placeholder: 'Password',
+    minlength: 8,
     required: true,
   },
 ];

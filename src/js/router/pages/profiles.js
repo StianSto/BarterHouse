@@ -1,5 +1,5 @@
-import { getProfileListings } from '../../api/profile/read/getProfileListings';
 import { getProfile } from '../../api/profile/read/getProfiles';
+import { getProfileCredits } from '../../api/profile/read/getProfileCredits';
 import { authGuard } from '../../functions/authGuard';
 import { quickAccess } from '../../functions/quickAccess';
 import { setUpdateAvatarListener } from '../../handlers/updateAvatarListener';
@@ -7,21 +7,23 @@ import { profileTemplate } from '../../render/templates/profileTemplate';
 import { storage } from '../../storage/localStorage';
 import defaultAvatar from '../../../assets/images/default-avatar.png';
 import { render } from '../../render/render';
+import { setRenderGridListener } from '../../handlers/moreListingsHandler';
 
 let nameParam;
 const profile = profileTemplate();
 
 export async function profiles() {
   authGuard();
+  const localUser = storage.load('userDetails').name;
 
   const url = window.location.search;
   const params = new URLSearchParams(url);
   nameParam = params.get('name');
-  if (!nameParam) nameParam = storage.load('userDetails').name;
-  if (nameParam === storage.load('userDetails').name) await authorizedUser();
+  if (!nameParam) nameParam = storage.load('userDetails')?.name;
+  if (nameParam === localUser) await authorizedUser(localUser);
 
   insertProfileInfo(nameParam);
-  insertProfileListings();
+  insertProfileListings(localUser);
 }
 
 async function insertProfileInfo() {
@@ -40,44 +42,40 @@ async function insertProfileInfo() {
   profileSection.append(profile);
 }
 
-async function insertProfileListings() {
-  const getListings = await getProfileListings(nameParam);
-  const listings = await getListings.json();
-  render(listings);
+
+async function insertProfileListings(profile) {
+  const params = new Map([]);
+  const renderOptions = {
+    view: 'myListings',
+    params,
+    profile,
+  };
+  setRenderGridListener(render, renderOptions);
 }
 
-async function authorizedUser() {
+async function authorizedUser(localUser) {
   const user = storage.load('userDetails');
 
   const quickAccessSection = await quickAccess();
   document.querySelector('#profileSection').after(quickAccessSection);
 
   const profileImg = profile.querySelector('#profileImg');
+  const changeImgBtn = document.querySelector('template#changeImageBtn');
+  profileImg.after(changeImgBtn.content.cloneNode(true));
 
   const previewImgValue = document.querySelector('#avatar');
   const previewImg = document.querySelector('#changeProfileImage');
   previewImgValue.value = user.avatar;
   previewImg.src = user.avatar;
-  const changeImgBtn = new DOMParser().parseFromString(
-    `
-		<button
-			data-bs-toggle="modal" data-bs-target="#changeAvatarModal"
-			class="btn btn-light py-1 rounded-2 position-absolute"
-			style="bottom: 0; left: 0; translate: calc(50% - 1rem)"
-		>
-			change&nbsp;image
-		</button>
-		`,
-    'text/html'
-  );
 
-  profileImg.after(changeImgBtn.querySelector('body > *'));
   const updateAvatarForm = document.querySelector('#changeAvatarModal > form');
   setUpdateAvatarListener(nameParam, updateAvatarForm);
 
   const userCredits = profile.querySelector('#profileFunds');
   const userCreditsElement = document.createElement('span');
   userCreditsElement.classList.add('fs-3');
-  userCreditsElement.innerText = 'Funds: $ ' + user.credits;
+  let response = await getProfileCredits(localUser);
+  let { credits } = await response.json();
+  userCreditsElement.innerText = 'Funds: $ ' + credits;
   userCredits.append(userCreditsElement);
 }

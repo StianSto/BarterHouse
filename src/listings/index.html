@@ -45,14 +45,7 @@
 
       <section id="listingsContainer" class="container-fluid mw-lg px-4 mb-5">
         <div data-listing-grid></div>
-        <div class="row justify-content-center mt-4">
-          <button
-            class="col-auto px-5 py-2 btn btn-outline-primary"
-            id="loadListings"
-          >
-            See More Listings
-          </button>
-        </div>
+        <div class="row justify-content-center mt-4" id="loadListings"></div>
       </section>
     </main>
   </body>
@@ -222,13 +215,12 @@
             <label for="filterListingsActive">Show listings</label>
             <select
               class="form-select"
-              name="active"
+              name="_active"
               aria-label="Default select example"
               id="filterListingsSortOrder"
             >
               <option value="null" selected>All listings</option>
-              <option value="true">Active</option>
-              <option value="false">Expired</option>
+              <option value="true">Active only</option>
             </select>
           </div>
 

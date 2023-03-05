@@ -1,0 +1,11 @@
+{
+  "errors": [
+    {
+      "code": "invalid_string",
+      "message": "Only noroff.no emails are allowed to register",
+      "path": ["email"]
+    }
+  ],
+  "status": "Bad Request",
+  "statusCode": 400
+}
