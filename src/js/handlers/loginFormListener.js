@@ -14,7 +14,7 @@ export function authFormListener(form) {
     if (form.id === 'register') {
       registerResponse = await register(body);
       if (!registerResponse.ok) {
-        errMsg = handleBadResponse(registerResponse);
+        errMsg = await handleBadResponse(registerResponse);
         return form.append(errMsg);
       }
       delete body.name;

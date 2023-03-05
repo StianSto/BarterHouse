@@ -1,4 +1,5 @@
 import { updateProfile } from '../api/profile/update/update';
+import { updateLocalProfile } from '../functions/updateLocalProfile';
 
 export async function setUpdateAvatarListener(user, form) {
   form.addEventListener('submit', async (event) => {
@@ -9,7 +10,7 @@ export async function setUpdateAvatarListener(user, form) {
     const body = Object.fromEntries(formData);
 
     const response = await updateProfile(user, JSON.stringify(body));
-    if (response.ok) updateProfile();
+    if (response.ok) await updateLocalProfile();
     window.location.reload();
   });
 

@@ -1,7 +1,7 @@
 export const modalAlertTemplate = () => {
   const el = new DOMParser().parseFromString(
     `
-		<div class="modal fade" tabindex="-1">
+		<div class="modal fade" tabindex="-1" data-alert-modal>
 			<div class="modal-dialog modal-lg">
 				<div class="modal-content">
 					<div class="modal-header">

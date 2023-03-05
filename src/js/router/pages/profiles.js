@@ -19,7 +19,7 @@ export async function profiles() {
   const url = window.location.search;
   const params = new URLSearchParams(url);
   nameParam = params.get('name');
-  if (!nameParam) nameParam = storage.load('userDetails').name;
+  if (!nameParam) nameParam = storage.load('userDetails')?.name;
   if (nameParam === localUser) await authorizedUser(localUser);
 
   insertProfileInfo(nameParam);
