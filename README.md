@@ -1,4 +1,5 @@
 # BarterHouse
+![desktop-1600w](https://github.com/StianSto/BarterHouse/assets/95475303/7ecc37e7-e3a2-48db-b30e-38a041bbb6be)
 
 BarterHouse is an online auctioning website that focuses on the trading aspect of auctioning. it is colorful and inviting and easy to use. this website was made as a project durign my time at Noroff
 
@@ -18,7 +19,7 @@ other tools:
 
 ## Getting started
 
-### Installing and running
+### Installing
 
 1. clone the repo:
 
@@ -27,8 +28,10 @@ git clone git@github.com:StianSto/BarterHouse.git
 ```
 
 2. Install Dependencies
-   <br>`npm i`
-
+```bash
+npm i
+```
+### Running
 3. Run app
 
 ```bash
